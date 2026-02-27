@@ -1,6 +1,8 @@
+import Search from "../Search/Search";
+
 const NavBar = () => {
   return (
-    <h1>NavBar</h1>
+    <Search />
   )
 }
 
