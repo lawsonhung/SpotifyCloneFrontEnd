@@ -1,10 +1,7 @@
 import { Autocomplete, TextField, type AutocompleteRenderInputParams } from "@mui/material";
 import { useEffect, useState, type ChangeEvent } from "react";
-import API_URL from "../../api/client";
 
 const Search = () => {
-
-  console.log(API_URL)
 
   useEffect(() => {
 

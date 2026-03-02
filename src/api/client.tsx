@@ -2,6 +2,30 @@ import axios from "axios";
 
 const API_URL = import.meta.env.VITE_REACT_APP_BASE_URL;
 
-console.log(API_URL)
+const apiClient = axios.create({
+  baseURL: API_URL,
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
 
-export default API_URL;
+apiClient.interceptors.request.use(config => {
+  // Token from redux
+  const token = "Token here";
+  if (token)
+    config.headers.Authorization = `Bearer ${token}`;
+  return config;
+});
+
+apiClient.interceptors.response.use(
+  res => res,
+  error => {
+    if (error.response?.status === 401) {
+      // Remove token
+      // Redirect to login page
+    }
+    return Promise.reject(error.response?.data || error.message);
+  }
+)
+
+export default apiClient;

@@ -1,3 +1,3 @@
 import apiClient from "../client";
 
-export const getToken = () => apiClient
+// export const getToken = () => apiClient.post()
