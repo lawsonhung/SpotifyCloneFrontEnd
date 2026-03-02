@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import './App.css'
 import NavBar from './components/NavBar/NavBar'
-import { refreshAccessToken } from './api/auth'
+import { refreshAccessToken } from './api/services/auth'
 import { useDispatch, useSelector } from 'react-redux'
 import { setToken } from './features/token/tokenSlice'
 import type { RootState } from './app/store'

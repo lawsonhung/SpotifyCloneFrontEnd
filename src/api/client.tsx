@@ -1,4 +1,5 @@
 import axios from "axios";
+import { createAsyncThunk } from "@reduxjs/toolkit";
 
 const API_URL = import.meta.env.VITE_REACT_APP_BASE_URL;
 
@@ -10,10 +11,18 @@ const apiClient = axios.create({
 });
 
 apiClient.interceptors.request.use(config => {
-  // Token from redux
-  const token = "Token here";
+  let token = null;
+
+  // Attempting to access redux state outside of React component
+  createAsyncThunk(
+    "user/fetchToken",
+    async (_, { getState }: any) => {
+      token = getState().token.value;
+    })
+
   if (token)
     config.headers.Authorization = `Bearer ${token}`;
+  console.log("apiClient token", token)
   return config;
 });
 
