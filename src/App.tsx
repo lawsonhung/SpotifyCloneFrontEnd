@@ -10,8 +10,9 @@ import Login from './components/Login/Login'
 
 function App() {
 
-  const token = useSelector((state: RootState) => state.token.value);
   const dispatch = useDispatch();
+
+  const token = useSelector((state: RootState) => state.token.value);
 
   useEffect(() => {
 
@@ -29,7 +30,7 @@ function App() {
   return (
     <>
       <NavBar />
-      {(!token) 
+      {(!token)
         ? < Login />
         : <WebPlayback />
       }
