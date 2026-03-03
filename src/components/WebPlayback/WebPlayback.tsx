@@ -2,6 +2,15 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import type { RootState } from "../../app/store";
 
+interface PlayerInit {
+  name: string,
+  getOAuthToken: (callback: (token: string) => void) => void,
+  volume: number,
+  addListener(event: string, handler: Function): void,
+  getCurrentState(): Promise<Function>,
+  connect(): void;
+}
+
 const WebPlayback = () => {
   const token = useSelector((state: RootState) => state.token.value);
 
@@ -20,7 +29,7 @@ const WebPlayback = () => {
   const [isPaused, setPaused] = useState(false);
   const [isActive, setActive] = useState(false);
   const [currentTrack, setTrack] = useState(track);
-  const [player, setPlayer] = useState(undefined);
+  const [player, setPlayer] = useState<PlayerInit | undefined>(undefined);
 
   useEffect(() => {
     const script = document.createElement("script");
@@ -31,7 +40,7 @@ const WebPlayback = () => {
 
     (window as any).onSpotifyWebPlaybackSDKReady = () => {
 
-      const player = new (window as any).Spotify.Player({
+      const player: PlayerInit = new window.Spotify.Player({
         name: "SpotifyClone React Project",
         getOAuthToken: (cb: Function) => { cb(token); },
         volume: 0.5,
