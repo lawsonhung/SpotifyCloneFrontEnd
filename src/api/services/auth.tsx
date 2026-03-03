@@ -1,17 +1,9 @@
+import axios from "axios";
 import apiClient from "../client";
 
-
-export const refreshAccessToken = async (): Promise<string> => {
-  const url = "https://accounts.spotify.com/api/token";
-  const payload = {
-    grant_type: "client_credentials",
-    client_id: import.meta.env.VITE_CLIENT_ID,
-    client_secret: import.meta.env.VITE_CLIENT_SECRET,
-  }
-  const headers = {
-    "Content-Type": "application/x-www-form-urlencoded",
-  }
-  const response = await apiClient.post(url, payload, { headers });
-
-  return response.data
+export const getToken = async (): Promise<string> => {
+  const response = await apiClient.get("http://localhost:3000/api/auth/token");
+  axios.defaults.headers.common["Authorization"] = `Bearer ${response.data.access_token}`;
+  console.log("new token is", response.data.access_token);
+  return response.data.access_token;
 }

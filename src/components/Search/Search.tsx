@@ -1,5 +1,6 @@
 import { Autocomplete, TextField, type AutocompleteRenderInputParams } from "@mui/material";
 import { useEffect, useState, type ChangeEvent } from "react";
+import { search } from "../../api/services/search";
 
 const Search = () => {
 
@@ -11,6 +12,8 @@ const Search = () => {
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     console.log(e.target.value)
+    search(e.target.value);
+    
   }
 
   return (

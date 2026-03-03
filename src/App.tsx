@@ -1,10 +1,12 @@
 import { useEffect } from 'react'
 import './App.css'
 import NavBar from './components/NavBar/NavBar'
-import { refreshAccessToken } from './api/services/auth'
+import { getToken } from './api/services/auth'
 import { useDispatch, useSelector } from 'react-redux'
 import { setToken } from './features/token/tokenSlice'
 import type { RootState } from './app/store'
+import WebPlayback from './components/WebPlayback/WebPlayback'
+import Login from './components/Login/Login'
 
 function App() {
 
@@ -12,17 +14,25 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const getAccessTokenOnLoad = async () => {
-      const tokenRes: any = await refreshAccessToken();
-      console.log(tokenRes);
-      dispatch(setToken(tokenRes.access_token));
+
+    console.log("token on load", token)
+
+    async function getTokenOnLoad() {
+      const token = await getToken();
+      dispatch(setToken(token));
     }
-    getAccessTokenOnLoad();
+    getTokenOnLoad();
   }, [])
+
+  console.log("token from app", token);
 
   return (
     <>
       <NavBar />
+      {(!token) 
+        ? < Login />
+        : <WebPlayback />
+      }
     </>
   )
 }

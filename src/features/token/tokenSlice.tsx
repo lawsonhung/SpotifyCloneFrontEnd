@@ -15,7 +15,6 @@ export const tokenSlice = createSlice({
   reducers: {
     setToken: (state, action: PayloadAction<string>) => {
       state.value = action.payload;
-      console.log("token in redux", state.value)
     }
   }
 })
