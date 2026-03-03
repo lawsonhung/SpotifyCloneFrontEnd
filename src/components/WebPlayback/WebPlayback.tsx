@@ -8,7 +8,9 @@ interface PlayerInit {
   volume: number,
   addListener(event: string, handler: Function): void,
   getCurrentState(): Promise<Function>,
-  connect(): void;
+  connect(): Promise<boolean>,
+  activateElement(): Promise<null>,
+  on(errorType: string, callback: Function): Function,
 }
 
 const WebPlayback = () => {
@@ -38,7 +40,7 @@ const WebPlayback = () => {
 
     document.body.appendChild(script);
 
-    (window as any).onSpotifyWebPlaybackSDKReady = () => {
+    window.onSpotifyWebPlaybackSDKReady = async () => {
 
       const player: PlayerInit = new window.Spotify.Player({
         name: "SpotifyClone React Project",
@@ -68,10 +70,19 @@ const WebPlayback = () => {
         player.getCurrentState().then((state: any) => {
           !state ? setActive(false) : setActive(true);
         })
-      }))
+      }));
 
-      if (token)
-        player.connect();
+      player.on('authentication_error', ({ message }: { message: string }) => {
+        console.error('Failed to authenticate', message);
+        // Refresh access token
+      });
+
+
+      if (token) {
+        const connected = await player.connect();
+        if (connected)
+          player.activateElement();
+      }
     }
   }, [token])
 

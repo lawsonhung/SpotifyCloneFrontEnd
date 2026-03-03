@@ -1,6 +1,7 @@
 declare global {
   interface Window {
-    Spotify: any;
+    Spotify: any,
+    onSpotifyWebPlaybackSDKReady: Function,
   }
 }
 
