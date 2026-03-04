@@ -54,7 +54,7 @@ const Search = ({ suggestions, setSuggestions }: SearchProps) => {
         renderOption={(props, option, state, ownerState) => {
           const { key, ...optionProps } = props;
           return <SearchMenuItem
-            key={key}
+            key={option.item.id}
             optionProps={optionProps}
             option={option}
             state={state} 
