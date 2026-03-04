@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import type { RootState } from "../../app/store";
+import { getRefreshToken } from "../../api";
 
 interface PlayerInit {
   name: string,
@@ -72,9 +73,10 @@ const WebPlayback = () => {
         })
       }));
 
-      player.on('authentication_error', ({ message }: { message: string }) => {
+      player.on('authentication_error', async ({ message }: { message: string }) => {
         console.error('Failed to authenticate', message);
         // Refresh access token
+        const refreshToken = await getRefreshToken();
       });
 
 
@@ -90,7 +92,7 @@ const WebPlayback = () => {
     <>
       <div className="container">
         <div className="main-wrapper">
-          <img src={currentTrack.album.images[0].url} className="now-playing__cover" alt="" />
+          <img src={currentTrack.album.images[0].url || undefined} className="now-playing__cover" alt="" />
           <div className="now-playing__side">
             <div className="now-playing__name">
               {currentTrack.name}
