@@ -1,12 +1,12 @@
 import { Autocomplete, TextField, type AutocompleteRenderInputParams } from "@mui/material";
 import { useEffect, type ChangeEvent, type Dispatch, type SetStateAction } from "react";
 import { search } from "../../api/services/search";
-import type { PartialSearchResult, Track } from "@spotify/web-api-ts-sdk";
+import type { Album, Artist, Track } from "@spotify/web-api-ts-sdk";
 import SearchMenuItem from "../SearchMenuItem/SearchMenuItem";
 
 interface SearchProps {
-  suggestions: PartialSearchResult,
-  setSuggestions: Dispatch<SetStateAction<PartialSearchResult>>,
+  suggestions: (Track | Artist | Album)[],
+  setSuggestions: Dispatch<SetStateAction<(Track | Artist | Album)[]>>,
 }
 
 const Search = ({ suggestions, setSuggestions }: SearchProps) => {
@@ -19,7 +19,16 @@ const Search = ({ suggestions, setSuggestions }: SearchProps) => {
     console.log(e.target.value)
     const results = await search(e.target.value);
     console.log(results)
-    setSuggestions(results);
+    let allSuggestions = [];
+    allSuggestions.push(...results.tracks.items);
+    allSuggestions.push(...results.artists.items);
+    allSuggestions.push(...results.albums.items);
+    // allSuggestions.push(...results.playlists.items);
+    // allSuggestions.push(...results.shows.items);
+    // allSuggestions.push(...results.episodes.items);
+    // allSuggestions.push(...results.audiobooks.items);
+    console.log(allSuggestions);
+    setSuggestions(allSuggestions);
   }
 
   return (
@@ -36,7 +45,9 @@ const Search = ({ suggestions, setSuggestions }: SearchProps) => {
           />
         }}
         options={
-          suggestions?.tracks?.items.map((track: Track) => { return { label: track.name, track: track } }) || []
+          suggestions?.map((searchResult) => {
+            return { label: searchResult.name, item: searchResult }
+          }) || []
         }
         renderOption={(props, option, state, ownerState) => {
           const { key, ...optionProps } = props;
