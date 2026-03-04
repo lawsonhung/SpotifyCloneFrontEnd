@@ -77,8 +77,9 @@ const WebPlayback = () => {
       player.on('authentication_error', async ({ message }: { message: string }) => {
         console.error('Failed to authenticate', message);
         await getRefreshToken();
-        const refreshTokenResponse = await refreshToken();
-        console.log(refreshTokenResponse);
+        // Test refresh token
+        // const refreshTokenResponse = await refreshToken();
+        // console.log(refreshTokenResponse);
       });
 
 

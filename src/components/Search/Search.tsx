@@ -1,13 +1,14 @@
 import { Autocomplete, TextField, type AutocompleteRenderInputParams } from "@mui/material";
 import { useEffect, type ChangeEvent, type Dispatch, type SetStateAction } from "react";
 import { search } from "../../api/services/search";
+import type { PartialSearchResult, Track } from "@spotify/web-api-ts-sdk";
 
 interface SearchProps {
-  suggestions: {}[],
-  setSuggestions: Dispatch<SetStateAction<{}[]>>,
+  suggestions: PartialSearchResult,
+  setSuggestions: Dispatch<SetStateAction<PartialSearchResult>>,
 }
 
-const Search = ({suggestions, setSuggestions}: SearchProps) => {
+const Search = ({ suggestions, setSuggestions }: SearchProps) => {
 
   useEffect(() => {
 
@@ -16,7 +17,7 @@ const Search = ({suggestions, setSuggestions}: SearchProps) => {
   const handleChange = async (e: ChangeEvent<HTMLInputElement>) => {
     console.log(e.target.value)
     const results = await search(e.target.value);
-
+    console.log(results)
     setSuggestions(results);
   }
 
@@ -25,16 +26,18 @@ const Search = ({suggestions, setSuggestions}: SearchProps) => {
       <Autocomplete
         renderInput={(params: AutocompleteRenderInputParams): React.ReactNode => {
           return <TextField
-          {...params}
-          name="suggestions"
-          label="Search"
-          variant="standard"
-          value={suggestions}
-          onChange={handleChange}
+            {...params}
+            name="suggestions"
+            label="Search"
+            variant="standard"
+            value={suggestions}
+            onChange={handleChange}
           />
         }}
-        // options={(suggestions as any).tracks.items.map((track: any) => track.name)}
-        options={suggestions}
+        options={
+          suggestions?.tracks?.items.map((track: Track) => { return { label: track.name } }) || []
+
+        }
         sx={{ width: 300 }}
       />
     </>
