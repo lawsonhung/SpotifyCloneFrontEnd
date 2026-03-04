@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../../app/store";
 import { getRefreshToken, refreshToken } from "../../api";
 import "./WebPlayback.css";
+import { setToken } from "../../features/token/tokenSlice";
+import type { AccessToken } from "@spotify/web-api-ts-sdk";
 
 interface PlayerInit {
   name: string,
@@ -16,6 +18,8 @@ interface PlayerInit {
 }
 
 const WebPlayback = () => {
+  const dispatch = useDispatch();
+
   const token = useSelector((state: RootState) => state.token.value);
 
   const track = {
@@ -78,8 +82,9 @@ const WebPlayback = () => {
         console.error('Failed to authenticate', message);
         await getRefreshToken();
         // Test refresh token
-        // const refreshTokenResponse = await refreshToken();
-        // console.log(refreshTokenResponse);
+        const refreshTokenResponse = await refreshToken();
+        console.log(refreshTokenResponse);
+        dispatch(setToken((refreshTokenResponse as AccessToken).access_token))
       });
 
 

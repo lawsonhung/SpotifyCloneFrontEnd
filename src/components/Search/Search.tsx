@@ -2,6 +2,7 @@ import { Autocomplete, TextField, type AutocompleteRenderInputParams } from "@mu
 import { useEffect, type ChangeEvent, type Dispatch, type SetStateAction } from "react";
 import { search } from "../../api/services/search";
 import type { PartialSearchResult, Track } from "@spotify/web-api-ts-sdk";
+import SearchMenuItem from "../SearchMenuItem/SearchMenuItem";
 
 interface SearchProps {
   suggestions: PartialSearchResult,
@@ -35,9 +36,18 @@ const Search = ({ suggestions, setSuggestions }: SearchProps) => {
           />
         }}
         options={
-          suggestions?.tracks?.items.map((track: Track) => { return { label: track.name } }) || []
-
+          suggestions?.tracks?.items.map((track: Track) => { return { label: track.name, track: track } }) || []
         }
+        renderOption={(props, option, state, ownerState) => {
+          const { key, ...optionProps } = props;
+          return <SearchMenuItem
+            key={key}
+            optionProps={optionProps}
+            option={option}
+            state={state}
+            ownerState={ownerState}
+          />
+        }}
         sx={{ width: 300 }}
       />
     </>
