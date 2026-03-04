@@ -1,11 +1,11 @@
 import { Box, ListItem, Stack } from "@mui/material";
 import { Image } from "mui-image";
-import type { Album, Artist, Track } from "@spotify/web-api-ts-sdk";
+import type { Album, Artist, Audiobook, Episode, Playlist, Show, Track } from "@spotify/web-api-ts-sdk";
 
 interface SearchMenuItemProps {
   option: {
     label: string,
-    item: Track | Album | Artist,
+    item: Track | Album | Artist | Playlist | Show | Episode | Audiobook,
   }
   optionProps: any,
   state: any,
@@ -30,8 +30,22 @@ const SearchMenuItem = ({ option, optionProps, state, ownerState }: SearchMenuIt
       srcURL = (item as Artist).images[0].url;
       break;
     case "album":
-      srcURL = (item as Album).images[0].url
+      srcURL = (item as Album).images[0].url;
       secondaryText = (item as Track).artists[0].name;
+      break;
+    case "playlist":
+      srcURL = (item as Playlist).images[0].url;
+      secondaryText = (item as Playlist)?.owner.display_name;
+      break;
+    case "show":
+      srcURL = (item as Show).images[0].url;
+      break;
+    case "episode":
+      srcURL = (item as Episode).images[0].url;
+      break;
+    case "audiobook":
+      srcURL = (item as Audiobook).images[0].url;
+      secondaryText = (item as Audiobook).authors[0].name;
       break;
     default:
       srcURL = "";

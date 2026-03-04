@@ -1,12 +1,12 @@
 import { Autocomplete, TextField, type AutocompleteRenderInputParams } from "@mui/material";
 import { useEffect, type ChangeEvent, type Dispatch, type SetStateAction } from "react";
 import { search } from "../../api/services/search";
-import type { Album, Artist, Track } from "@spotify/web-api-ts-sdk";
+import type { Album, Artist, Audiobook, Episode, Playlist, Show, Track } from "@spotify/web-api-ts-sdk";
 import SearchMenuItem from "../SearchMenuItem/SearchMenuItem";
 
 interface SearchProps {
-  suggestions: (Track | Artist | Album)[],
-  setSuggestions: Dispatch<SetStateAction<(Track | Artist | Album)[]>>,
+  suggestions: (Track | Artist | Album | Playlist | Show | Episode | Audiobook)[],
+  setSuggestions: Dispatch<SetStateAction<(Track | Artist | Album | Playlist | Show | Episode | Audiobook)[]>>,
 }
 
 const Search = ({ suggestions, setSuggestions }: SearchProps) => {
@@ -23,10 +23,12 @@ const Search = ({ suggestions, setSuggestions }: SearchProps) => {
     allSuggestions.push(...results.tracks.items);
     allSuggestions.push(...results.artists.items);
     allSuggestions.push(...results.albums.items);
-    // allSuggestions.push(...results.playlists.items);
-    // allSuggestions.push(...results.shows.items);
-    // allSuggestions.push(...results.episodes.items);
-    // allSuggestions.push(...results.audiobooks.items);
+    results.playlists.items.map((playlist: Playlist) => {
+      if (playlist) allSuggestions.push(playlist);
+    } )
+    allSuggestions.push(...results.shows.items);
+    allSuggestions.push(...results.episodes.items);
+    allSuggestions.push(...results.audiobooks.items);
     console.log(allSuggestions);
     setSuggestions(allSuggestions);
   }
@@ -55,7 +57,7 @@ const Search = ({ suggestions, setSuggestions }: SearchProps) => {
             key={key}
             optionProps={optionProps}
             option={option}
-            state={state}
+            state={state} 
             ownerState={ownerState}
           />
         }}

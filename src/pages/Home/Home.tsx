@@ -4,11 +4,11 @@ import WebPlayback from "../../components/WebPlayback/WebPlayback";
 import Results from "../Results/Results";
 import { useSelector } from "react-redux";
 import type { RootState } from "../../app/store";
-import type { Album, Artist, Track } from "@spotify/web-api-ts-sdk";
+import type { Album, Artist, Audiobook, Episode, Playlist, Show, Track } from "@spotify/web-api-ts-sdk";
 
 const Home = () => {
   useSelector((state: RootState) => state.token.value);
-  const [suggestions, setSuggestions] = useState<(Track | Artist | Album)[]>([]);
+  const [suggestions, setSuggestions] = useState<(Track | Artist | Album | Playlist | Show | Episode | Audiobook)[]>([]);
 
   return (
     <>
