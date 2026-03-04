@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import type { RootState } from "../../app/store";
-import { getRefreshToken } from "../../api";
+import { getRefreshToken, refreshToken } from "../../api";
+import "./WebPlayback.css";
 
 interface PlayerInit {
   name: string,
@@ -75,8 +76,9 @@ const WebPlayback = () => {
 
       player.on('authentication_error', async ({ message }: { message: string }) => {
         console.error('Failed to authenticate', message);
-        // Refresh access token
-        const refreshToken = await getRefreshToken();
+        await getRefreshToken();
+        const refreshTokenResponse = await refreshToken();
+        console.log(refreshTokenResponse);
       });
 
 
@@ -89,39 +91,35 @@ const WebPlayback = () => {
   }, [token])
 
   return (
-    <>
-      <div className="container">
-        <div className="main-wrapper">
-          <img src={currentTrack.album.images[0].url || undefined} className="now-playing__cover" alt="" />
-          <div className="now-playing__side">
-            <div className="now-playing__name">
-              {currentTrack.name}
-            </div>
-            <div className="now-playing__artist">
-              {currentTrack.artists[0].name}
-            </div>
-          </div>
-          <button
-            className="btn-spotify"
-            onClick={() => { (player as any).previousTrack() }}
-          >
-            &lt;&lt;
-          </button>
-          <button
-            className="btn-spotify"
-            onClick={() => { (player as any).togglePlay() }}
-          >
-            {isPaused ? "Play" : "Pause"}
-          </button>
-          <button
-            className="btn-spotify"
-            onClick={() => { (player as any).nextTrack() }}
-          >
-            &gt;&gt;
-          </button>
+    <div className="playbackWrapper">
+      <img src={currentTrack.album.images[0].url || undefined} className="now-playing__cover" alt="" />
+      <div className="now-playing__side">
+        <div className="now-playing__name">
+          {currentTrack.name}
+        </div>
+        <div className="now-playing__artist">
+          {currentTrack.artists[0].name}
         </div>
       </div>
-    </>
+      <button
+        className="btn-spotify"
+        onClick={() => { (player as any).previousTrack() }}
+      >
+        &lt;&lt;
+      </button>
+      <button
+        className="btn-spotify"
+        onClick={() => { (player as any).togglePlay() }}
+      >
+        {isPaused ? "Play" : "Pause"}
+      </button>
+      <button
+        className="btn-spotify"
+        onClick={() => { (player as any).nextTrack() }}
+      >
+        &gt;&gt;
+      </button>
+    </div>
   )
 }
 

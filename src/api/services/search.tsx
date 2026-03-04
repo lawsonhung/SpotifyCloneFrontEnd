@@ -6,4 +6,5 @@ export const search = async (searchTerm: string) => {
   console.log("searching with token", axios.defaults.headers.common["Authorization"])
   const res = await apiClient.get(url);
   console.log("Search response", res.data)
+  return res.data;
 }
