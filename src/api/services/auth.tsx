@@ -28,6 +28,5 @@ export const refreshToken = async (): Promise<Object> => {
     ...apiClient.defaults.params,
     "refreshToken": response.data.refresh_token,
   }
-  console.log("refreshed Token", response.data)
   return response.data;
 }
