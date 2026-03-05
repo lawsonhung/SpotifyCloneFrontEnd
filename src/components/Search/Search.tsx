@@ -1,12 +1,13 @@
-import { Autocomplete, TextField, type AutocompleteRenderInputParams } from "@mui/material";
+import { Autocomplete, TextField, type AutocompleteRenderInputParams, type SelectChangeEvent } from "@mui/material";
 import { useEffect, type ChangeEvent, type Dispatch, type SetStateAction } from "react";
 import { search } from "../../api/services/search";
-import type { Album, Artist, Audiobook, Episode, Playlist, Show, Track } from "@spotify/web-api-ts-sdk";
+import type { Playlist } from "@spotify/web-api-ts-sdk";
 import SearchMenuItem from "../SearchMenuItem/SearchMenuItem";
+import type { SearchMenuItemOption, SearchMenuItemType } from "../../types/SearchMenuItemOption";
 
 interface SearchProps {
-  searchResults: (Track | Artist | Album | Playlist | Show | Episode | Audiobook)[],
-  setSearchResults: Dispatch<SetStateAction<(Track | Artist | Album | Playlist | Show | Episode | Audiobook)[]>>,
+  searchResults: SearchMenuItemType[],
+  setSearchResults: Dispatch<SetStateAction<SearchMenuItemType[]>>,
 }
 
 const Search = ({ searchResults, setSearchResults }: SearchProps) => {
@@ -29,6 +30,10 @@ const Search = ({ searchResults, setSearchResults }: SearchProps) => {
     allSearchResults.push(...results.episodes.items);
     allSearchResults.push(...results.audiobooks.items);
     setSearchResults(allSearchResults);
+  }
+
+  const handleAutocompleteChange = async (e: SelectChangeEvent, newValue: SearchMenuItemOption | null) => {
+
   }
 
   return (

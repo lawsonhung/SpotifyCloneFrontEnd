@@ -1,22 +1,20 @@
 import { Box, Container, ListItem, Stack } from "@mui/material";
 import { Image } from "mui-image";
 import type { Album, Artist, Audiobook, Episode, Playlist, Show, Track } from "@spotify/web-api-ts-sdk";
+import type { SearchMenuItemOption } from "../../types/SearchMenuItemOption";
 
 interface SearchMenuItemProps {
-  option: {
-    label: string,
-    item: Track | Album | Artist | Playlist | Show | Episode | Audiobook,
-  }
+  option: SearchMenuItemOption,
   optionProps: any,
   state: any,
   ownerState: any,
 }
 
-const SearchMenuItem = ({ option, optionProps }: SearchMenuItemProps) => {
-  // console.log(option)
-  // console.log(optionProps)
-  // console.log(state)
-  // console.log(ownerState)
+const SearchMenuItem = ({ option, optionProps, state, ownerState }: SearchMenuItemProps) => {
+  console.log(option)
+  console.log(optionProps)
+  console.log(state)
+  console.log(ownerState)
   const { item } = option;
   let srcURL = "";
   let secondaryText = "";
