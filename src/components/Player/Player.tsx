@@ -35,6 +35,8 @@ const Player = () => {
         sliderHandleColor: "#1DB954",
         trackNameColor: "#FFFFFF",
       }}
+      showSaveIcon
+      play
     />
 
   )
