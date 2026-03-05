@@ -1,9 +1,11 @@
-import { Autocomplete, TextField, type AutocompleteRenderInputParams, type SelectChangeEvent } from "@mui/material";
-import { useEffect, type ChangeEvent, type Dispatch, type SetStateAction, type SyntheticEvent } from "react";
+import { Autocomplete, TextField, type AutocompleteRenderInputParams } from "@mui/material";
+import { type ChangeEvent, type Dispatch, type SetStateAction, type SyntheticEvent } from "react";
 import { search } from "../../api/services/search";
 import type { Playlist } from "@spotify/web-api-ts-sdk";
 import SearchMenuItem from "../SearchMenuItem/SearchMenuItem";
 import type { SearchMenuItemOption, SearchMenuItemType } from "../../types/SearchMenuItemOption";
+import { useDispatch } from "react-redux";
+import { setCurrentTrack } from "../../features/currentTrack/currentTrackSlice";
 
 interface SearchProps {
   searchResults: SearchMenuItemType[],
@@ -12,9 +14,7 @@ interface SearchProps {
 
 const Search = ({ searchResults, setSearchResults }: SearchProps) => {
 
-  useEffect(() => {
-
-  }, [])
+  const dispatch = useDispatch();
 
   const handleChange = async (e: ChangeEvent<HTMLInputElement>) => {
     const results = await search(e.target.value);
@@ -34,10 +34,9 @@ const Search = ({ searchResults, setSearchResults }: SearchProps) => {
 
   const handleAutocompleteChange = async (e: SyntheticEvent, newValue: SearchMenuItemOption | null) => {
     console.log(newValue);
-    const {item} = newValue as SearchMenuItemOption;
-    if (item.type == "track") {
-      console.log("Play song")
-    }
+    const { item } = newValue as SearchMenuItemOption;
+    if (item.type == "track")
+      dispatch(setCurrentTrack(item));
   }
 
   return (
