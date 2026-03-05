@@ -1,10 +1,10 @@
 import { useState } from "react";
 import Search from "../../components/Search/Search";
-import WebPlayback from "../../components/WebPlayback/WebPlayback";
 import Results from "../Results/Results";
 import { useSelector } from "react-redux";
 import type { RootState } from "../../app/store";
 import type { SearchMenuItemType } from "../../types/SearchMenuItemOption";
+import Player from "../../components/Player/Player";
 
 const Home = () => {
   useSelector((state: RootState) => state.token.value);
@@ -14,7 +14,7 @@ const Home = () => {
     <>
       <Search setSearchResults={setSearchResults} searchResults={searchResults}/>
       <Results />
-      <WebPlayback />
+      <Player />
     </>
   )
 }
