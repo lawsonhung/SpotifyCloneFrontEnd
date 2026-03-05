@@ -67,7 +67,22 @@ const Search = ({ searchResults, setSearchResults }: SearchProps) => {
         />
       }}
       onChange={handleAutocompleteChange}
-      sx={{ width: "50%", alignSelf: "center" }}
+      sx={{
+        width: "50%",
+        alignSelf: "center",
+        backgroundColor: "#313131",
+        borderRadius: "24px",
+        paddingLeft: "1.5em",
+        paddingRight: "1.5em",
+        marginTop: "0.5em",
+        marginBottm: "0.5em",
+        "& .MuiOutlinedInput-root": {
+          borderRadius: "100%",
+        },
+        '& .MuiAutocomplete-paper': {
+          borderRadius: '16px',
+        },
+      }}
     />
   )
 

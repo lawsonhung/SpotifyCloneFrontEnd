@@ -1,4 +1,5 @@
 .results {
   height: 100%;
-  background-color: #191414;
+  background: linear-gradient(#2F3060, #181818);
+  border-radius: 8px;
 }
