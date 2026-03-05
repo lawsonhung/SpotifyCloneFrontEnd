@@ -8,11 +8,11 @@ import type { Album, Artist, Audiobook, Episode, Playlist, Show, Track } from "@
 
 const Home = () => {
   useSelector((state: RootState) => state.token.value);
-  const [suggestions, setSuggestions] = useState<(Track | Artist | Album | Playlist | Show | Episode | Audiobook)[]>([]);
+  const [searchResults, setSearchResults] = useState<(Track | Artist | Album | Playlist | Show | Episode | Audiobook)[]>([]);
 
   return (
     <>
-      <Search setSuggestions={setSuggestions} suggestions={suggestions}/>
+      <Search setSearchResults={setSearchResults} searchResults={searchResults}/>
       <Results />
       <WebPlayback />
     </>

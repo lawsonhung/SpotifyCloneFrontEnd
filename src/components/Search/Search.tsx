@@ -5,11 +5,11 @@ import type { Album, Artist, Audiobook, Episode, Playlist, Show, Track } from "@
 import SearchMenuItem from "../SearchMenuItem/SearchMenuItem";
 
 interface SearchProps {
-  suggestions: (Track | Artist | Album | Playlist | Show | Episode | Audiobook)[],
-  setSuggestions: Dispatch<SetStateAction<(Track | Artist | Album | Playlist | Show | Episode | Audiobook)[]>>,
+  searchResults: (Track | Artist | Album | Playlist | Show | Episode | Audiobook)[],
+  setSearchResults: Dispatch<SetStateAction<(Track | Artist | Album | Playlist | Show | Episode | Audiobook)[]>>,
 }
 
-const Search = ({ suggestions, setSuggestions }: SearchProps) => {
+const Search = ({ searchResults, setSearchResults }: SearchProps) => {
 
   useEffect(() => {
 
@@ -19,18 +19,18 @@ const Search = ({ suggestions, setSuggestions }: SearchProps) => {
     console.log(e.target.value)
     const results = await search(e.target.value);
     console.log(results)
-    let allSuggestions = [];
-    allSuggestions.push(...results.tracks.items);
-    allSuggestions.push(...results.artists.items);
-    allSuggestions.push(...results.albums.items);
+    let allSearchResults = [];
+    allSearchResults.push(...results.tracks.items);
+    allSearchResults.push(...results.artists.items);
+    allSearchResults.push(...results.albums.items);
     results.playlists.items.map((playlist: Playlist) => {
-      if (playlist) allSuggestions.push(playlist);
+      if (playlist) allSearchResults.push(playlist);
     } )
-    allSuggestions.push(...results.shows.items);
-    allSuggestions.push(...results.episodes.items);
-    allSuggestions.push(...results.audiobooks.items);
-    console.log(allSuggestions);
-    setSuggestions(allSuggestions);
+    allSearchResults.push(...results.shows.items);
+    allSearchResults.push(...results.episodes.items);
+    allSearchResults.push(...results.audiobooks.items);
+    console.log(allSearchResults);
+    setSearchResults(allSearchResults);
   }
 
   return (
@@ -39,15 +39,15 @@ const Search = ({ suggestions, setSuggestions }: SearchProps) => {
         renderInput={(params: AutocompleteRenderInputParams): React.ReactNode => {
           return <TextField
             {...params}
-            name="suggestions"
+            name="searchResults"
             label="Search"
             variant="standard"
-            value={suggestions}
+            value={searchResults}
             onChange={handleChange}
           />
         }}
         options={
-          suggestions?.map((searchResult) => {
+          searchResults?.map((searchResult) => {
             return { label: searchResult.name, item: searchResult }
           }) || []
         }
