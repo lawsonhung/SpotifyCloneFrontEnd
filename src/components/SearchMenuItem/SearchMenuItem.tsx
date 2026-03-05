@@ -51,6 +51,7 @@ const SearchMenuItem = ({ option, optionProps, state, ownerState }: SearchMenuIt
     default:
       srcURL = "";
   }
+
   return (
     <Box
       {...optionProps}

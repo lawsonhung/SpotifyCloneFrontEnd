@@ -1,5 +1,5 @@
 import { Autocomplete, TextField, type AutocompleteRenderInputParams, type SelectChangeEvent } from "@mui/material";
-import { useEffect, type ChangeEvent, type Dispatch, type SetStateAction } from "react";
+import { useEffect, type ChangeEvent, type Dispatch, type SetStateAction, type SyntheticEvent } from "react";
 import { search } from "../../api/services/search";
 import type { Playlist } from "@spotify/web-api-ts-sdk";
 import SearchMenuItem from "../SearchMenuItem/SearchMenuItem";
@@ -32,8 +32,12 @@ const Search = ({ searchResults, setSearchResults }: SearchProps) => {
     setSearchResults(allSearchResults);
   }
 
-  const handleAutocompleteChange = async (e: SelectChangeEvent, newValue: SearchMenuItemOption | null) => {
-
+  const handleAutocompleteChange = async (e: SyntheticEvent, newValue: SearchMenuItemOption | null) => {
+    console.log(newValue);
+    const {item} = newValue as SearchMenuItemOption;
+    if (item.type == "track") {
+      console.log("Play song")
+    }
   }
 
   return (
@@ -63,6 +67,7 @@ const Search = ({ searchResults, setSearchResults }: SearchProps) => {
           ownerState={ownerState}
         />
       }}
+      onChange={handleAutocompleteChange}
       sx={{ width: "50%", alignSelf: "center" }}
     />
   )
