@@ -17,6 +17,7 @@ apiClient.interceptors.response.use(
   res => res,
   error => {
     if (error.response?.status === 401) {
+      console.log("apiClient error 401");
       // Remove token
       // Redirect to login page
     }

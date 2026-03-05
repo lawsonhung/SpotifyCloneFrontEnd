@@ -11,6 +11,7 @@ const Player = () => {
 
   const token = useSelector((state: RootState) => state.token.value);
   const currentTrack = useSelector((state: RootState) => state.currentTrack);
+  console.log("token", token);
 
   const getOAuthToken: Props["getOAuthToken"] = async (cb: Function) => {
     const response = await refreshToken();
