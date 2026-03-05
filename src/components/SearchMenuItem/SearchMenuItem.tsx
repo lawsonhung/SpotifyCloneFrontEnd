@@ -1,4 +1,4 @@
-import { Box, ListItem, Stack } from "@mui/material";
+import { Box, Container, ListItem, Stack } from "@mui/material";
 import { Image } from "mui-image";
 import type { Album, Artist, Audiobook, Episode, Playlist, Show, Track } from "@spotify/web-api-ts-sdk";
 
@@ -12,7 +12,7 @@ interface SearchMenuItemProps {
   ownerState: any,
 }
 
-const SearchMenuItem = ({ option, optionProps, state, ownerState }: SearchMenuItemProps) => {
+const SearchMenuItem = ({ option, optionProps }: SearchMenuItemProps) => {
   // console.log(option)
   // console.log(optionProps)
   // console.log(state)
@@ -54,16 +54,24 @@ const SearchMenuItem = ({ option, optionProps, state, ownerState }: SearchMenuIt
     <Box
       {...optionProps}
     >
-      <Image
-        src={srcURL}
-        alt={item.name}
-        height={"3em"}
-        width={"3em"}
+      <Container
+        disableGutters
         style={{
-          objectFit: "contain",
+          height: "3em",
+          width: "3em",
         }}
-      />
-      <Stack marginInlineStart={"0.25em"}>
+      >
+        <Image
+          src={srcURL}
+          alt={item.name}
+          height={"100%"}
+          style={{
+            objectFit: "contain",
+          }}
+        />
+      </Container>
+
+      <Stack marginInlineStart={"0.25em"} width={"100%"}>
         <ListItem disablePadding>
           {option.item.name}
         </ListItem>
@@ -71,6 +79,7 @@ const SearchMenuItem = ({ option, optionProps, state, ownerState }: SearchMenuIt
           {secondaryText}
         </ListItem>
       </Stack>
+
     </Box>
   )
 }
