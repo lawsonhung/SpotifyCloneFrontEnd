@@ -6,6 +6,7 @@ import SearchMenuItem from "../SearchMenuItem/SearchMenuItem";
 import type { SearchMenuItemOption, SearchMenuItemType } from "../../types/SearchMenuItemOption";
 import { useDispatch } from "react-redux";
 import { setCurrentTrack } from "../../features/currentTrack/currentTrackSlice";
+import { setMainDisplayItem } from "../../features/mainDisplayItem/mainDisplayItem";
 
 interface SearchProps {
   searchResults: SearchMenuItemType[],
@@ -37,6 +38,8 @@ const Search = ({ searchResults, setSearchResults }: SearchProps) => {
     const { item } = newValue as SearchMenuItemOption;
     if (item.type == "track")
       dispatch(setCurrentTrack(item));
+    else
+      dispatch(setMainDisplayItem(item));
   }
 
   return (
@@ -75,7 +78,7 @@ const Search = ({ searchResults, setSearchResults }: SearchProps) => {
         paddingLeft: "1.5em",
         paddingRight: "1.5em",
         marginTop: "0.5em",
-        marginBottm: "0.5em",
+        marginBottom: "0.5em",
         "& .MuiOutlinedInput-root": {
           borderRadius: "100%",
         },
