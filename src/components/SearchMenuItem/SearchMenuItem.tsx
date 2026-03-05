@@ -24,28 +24,31 @@ const SearchMenuItem = ({ option, optionProps }: SearchMenuItemProps) => {
   switch (item.type) {
     case "track":
       srcURL = (item as Track).album.images[0].url;
-      secondaryText = (item as Track).artists[0].name;
+      secondaryText = "Song • " + (item as Track).artists[0].name;
       break;
     case "artist":
       srcURL = (item as Artist).images[0].url;
+      secondaryText = "Artist"
       break;
     case "album":
       srcURL = (item as Album).images[0].url;
-      secondaryText = (item as Track).artists[0].name;
+      secondaryText = "Album • " + (item as Track).artists[0].name;
       break;
     case "playlist":
       srcURL = (item as Playlist).images[0].url;
-      secondaryText = (item as Playlist)?.owner.display_name;
+      secondaryText = "Playlist • " + (item as Playlist)?.owner.display_name;
       break;
     case "show":
       srcURL = (item as Show).images[0].url;
+      secondaryText = "Show"
       break;
     case "episode":
       srcURL = (item as Episode).images[0].url;
+      secondaryText = "Episode"
       break;
     case "audiobook":
       srcURL = (item as Audiobook).images[0].url;
-      secondaryText = (item as Audiobook).authors[0].name;
+      secondaryText = "Audiobook • " + (item as Audiobook).authors[0].name;
       break;
     default:
       srcURL = "";
@@ -75,7 +78,13 @@ const SearchMenuItem = ({ option, optionProps }: SearchMenuItemProps) => {
         <ListItem disablePadding>
           {option.item.name}
         </ListItem>
-        <ListItem disablePadding>
+        <ListItem 
+        disablePadding
+        style={{
+          fontSize: "0.75em",
+          color: "#FFFFFFB3",
+        }}
+        >
           {secondaryText}
         </ListItem>
       </Stack>
