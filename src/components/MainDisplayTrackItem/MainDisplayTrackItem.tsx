@@ -1,14 +1,14 @@
-import { Box, Button, Container, Grid, ListItem, Typography } from "@mui/material";
+import { Box, Button, ListItem, Typography } from "@mui/material";
 import type { Track } from "@spotify/web-api-ts-sdk";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { setCurrentTrack } from "../../features/currentTrack/currentTrackSlice";
 
-interface MainDisplayItemProps {
+interface MainDisplayTrackItemProps {
   track: Track,
 }
 
-const MainDisplayItem = ({ track }: MainDisplayItemProps) => {
+const MainDisplayTrackItem = ({ track }: MainDisplayTrackItemProps) => {
 
   const dispatch = useDispatch();
 
@@ -69,4 +69,4 @@ const MainDisplayItem = ({ track }: MainDisplayItemProps) => {
   )
 }
 
-export default MainDisplayItem;
+export default MainDisplayTrackItem;
