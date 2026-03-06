@@ -1,4 +1,4 @@
-import { Button, Grid, ListItem, Typography } from "@mui/material";
+import { Box, Button, Container, Grid, ListItem, Typography } from "@mui/material";
 import type { Track } from "@spotify/web-api-ts-sdk";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
@@ -34,11 +34,9 @@ const MainDisplayItem = ({ track }: MainDisplayItemProps) => {
       startIcon={hovered ? <>▶</> : <>{track.track_number}</>}
       onClick={handleClick}
     >
-      <Grid
-        direction={"row"}
+      <Box
         sx={{
           display: "flex",
-          justifyContent: "space-between",
           width: "100%",
         }}
       >
@@ -46,25 +44,27 @@ const MainDisplayItem = ({ track }: MainDisplayItemProps) => {
         <ListItem
           sx={{
             textTransform: "none",
+            flex: "1 1 100%"
           }}
         >
           <Typography>
             {track.name}
+            {track.explicit ?
+              " • Explicit"
+              :
+              null
+            }
           </Typography>
-          {track.explicit ?
-            <Typography sx={{ ml: 1, textTransform: "none" }}> • Explicit</Typography>
-            :
-            null
-          }
         </ListItem>
 
         <ListItem
           sx={{
             justifyContent: "flex-end",
+            flex: "1",
           }}
         >{durationInMinutesSeconds()}</ListItem>
 
-      </Grid>
+      </Box>
     </Button>
   )
 }
