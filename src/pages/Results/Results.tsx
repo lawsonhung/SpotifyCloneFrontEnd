@@ -3,8 +3,8 @@ import type { RootState } from "../../app/store";
 import { Box, Button, Stack, Typography } from "@mui/material";
 import type { Album, Artist, Track } from "@spotify/web-api-ts-sdk";
 import MainDisplayItem from "../../components/MainDisplayItem/MainDisplayItem";
-import { getAlbumsBy, getTracksInAlbum } from "../../api";
-import { useEffect, useState } from "react";
+import { getAlbumsBy, getNextPageOfItems, getTracksInAlbum } from "../../api";
+import { useEffect, useRef, useState } from "react";
 import MainDisplayAlbumItem from "../../components/MainDisplayAlbumItem/MainDisplayAlbumItem";
 
 const Results = () => {
@@ -14,8 +14,10 @@ const Results = () => {
   console.log("mainDisplayItem", mainDisplayItem);
 
   const [albumName, setAlbumName] = useState<string | null>(null);
-  const [tracks, setTracks] = useState([]);
+  const [tracks, setTracks] = useState<Track[]>([]);
   const [albums, setAlbums] = useState([]);
+  const nextPageUrl = useRef<null | string>(null);
+  // let nextPageUrl: string | null = null;
 
   useEffect(() => {
     const getAlbums = async () => {
@@ -36,6 +38,7 @@ const Results = () => {
 
         console.log("tracksRes", tracksRes);
         setTracks(tracksRes.items);
+        nextPageUrl.current = tracksRes.next;
       }
 
     }
@@ -46,6 +49,15 @@ const Results = () => {
   let backgroundImageUrl;
   if ((mainDisplayItem.value as Artist).images)
     backgroundImageUrl = (mainDisplayItem.value as Artist).images[0].url;
+
+  const handleClick = async () => {
+    if (nextPageUrl.current) {
+      const nextPage = await getNextPageOfItems(nextPageUrl.current);
+      console.log("nextPage", nextPage)
+      nextPageUrl.current = nextPage.next;
+      setTracks([...tracks, ...nextPage.items])
+    }
+  }
 
   return (
     <Box
@@ -87,12 +99,18 @@ const Results = () => {
             return <MainDisplayItem track={track} key={track.id} />
           })}
         </Stack>
-        <Button
-          variant="text"
-          sx={{
-            textTransform: "none",
-          }}
-        >See more</Button>
+
+        {nextPageUrl.current ?
+          <Button
+            variant="text"
+            sx={{
+              textTransform: "none",
+            }}
+            onClick={handleClick}
+          >See more</Button>
+          :
+          null
+        }
 
         <Typography variant="h4" fontWeight={"bold"}>Albums</Typography>
         <Stack direction={"row"} spacing={2}>

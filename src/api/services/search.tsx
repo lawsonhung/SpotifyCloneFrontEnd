@@ -16,7 +16,12 @@ export const getAlbumsBy = async (artistId: string) => {
 
 export const getTracksInAlbum = async (albumId: string) => {
   console.log("getting tracks in album")
-  const url = `https://api.spotify.com/v1/albums/${albumId}/tracks?limit=10`;
+  const url = `https://api.spotify.com/v1/albums/${albumId}/tracks?limit=5`;
+  const res = await apiClient.get(url);
+  return res.data;
+}
+
+export const getNextPageOfItems = async (url: string) => {
   const res = await apiClient.get(url);
   return res.data;
 }
