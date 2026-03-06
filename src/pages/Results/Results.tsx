@@ -118,7 +118,13 @@ const Results = () => {
           null}
         <Stack direction={"row"} spacing={2}>
           {albums.map((album: Album) => {
-            return <MainDisplayAlbumItem album={album} key={album.id} />
+            return <MainDisplayAlbumItem 
+            album={album} 
+            key={album.id} 
+            setTracks={setTracks} 
+            setAlbumName={setAlbumName} 
+            nextPageUrl={nextPageUrl}
+            />
           })}
         </Stack>
 
