@@ -1,10 +1,11 @@
 import { useSelector } from "react-redux";
 import type { RootState } from "../../app/store";
 import { Box, Stack, Typography } from "@mui/material";
-import type { Artist } from "@spotify/web-api-ts-sdk";
+import type { Album, Artist, Track } from "@spotify/web-api-ts-sdk";
 import MainDisplayItem from "../../components/MainDisplayItem/MainDisplayItem";
 import { getAlbumsBy, getTracksInAlbum } from "../../api";
 import { useEffect, useState } from "react";
+import MainDisplayAlbumItem from "../../components/MainDisplayAlbumItem/MainDisplayAlbumItem";
 
 const Results = () => {
 
@@ -14,19 +15,34 @@ const Results = () => {
 
   const [albumName, setAlbumName] = useState<string | null>(null);
   const [tracks, setTracks] = useState([]);
+  const [albums, setAlbums] = useState([]);
 
   useEffect(() => {
     const getAlbums = async () => {
-      const albums = await getAlbumsBy((mainDisplayItem.value as Artist).id);
-      console.log("albums",albums);
-      setAlbumName(albums.items[0].name);
-      const tracks = await getTracksInAlbum((albums.items[0].id));
-      console.log("tracks", tracks);
-      setTracks(tracks.items);
+      let albumsRes;
+
+      if ((mainDisplayItem.value as Artist).id)
+        albumsRes = await getAlbumsBy((mainDisplayItem.value as Artist).id);
+
+      console.log("albumsRes", albumsRes);
+      if (albumsRes) {
+        setAlbumName(albumsRes.items[0].name);
+        setAlbums(albumsRes.items);
+        
+        let tracksRes;
+        
+        if (albumsRes.items[0].id)
+          tracksRes = await getTracksInAlbum((albumsRes.items[0].id));
+        
+        console.log("tracksRes", tracksRes);
+        setTracks(tracksRes.items);
+      }
+      
     }
     getAlbums();
 
   }, [mainDisplayItem]);
+
   let backgroundImageUrl;
   if ((mainDisplayItem.value as Artist).images)
     backgroundImageUrl = (mainDisplayItem.value as Artist).images[0].url;
@@ -66,12 +82,16 @@ const Results = () => {
       >
         <Typography variant="h4" fontWeight={"bold"}>{albumName}</Typography>
         <Stack>
-          {tracks.map((track) => {
-            return <MainDisplayItem track={track}/>
+          {tracks.map((track: Track) => {
+            return <MainDisplayItem track={track} key={track.id}/>
           })}
         </Stack>
-        <Stack>
-          
+
+        <Typography variant="h4" fontWeight={"bold"}>Albums</Typography>
+        <Stack direction={"row"} spacing={2}>
+          {albums.map((album: Album) => {
+            return <MainDisplayAlbumItem album={album} key={album.id} />
+          })}
         </Stack>
       </Box>
     </Box >

@@ -1,5 +1,5 @@
 import { Autocomplete, TextField, type AutocompleteRenderInputParams } from "@mui/material";
-import { type ChangeEvent, type Dispatch, type SetStateAction, type SyntheticEvent } from "react";
+import { useRef, type ChangeEvent, type Dispatch, type SetStateAction, type SyntheticEvent } from "react";
 import { search } from "../../api/services/search";
 import type { Playlist } from "@spotify/web-api-ts-sdk";
 import SearchMenuItem from "../SearchMenuItem/SearchMenuItem";
@@ -7,6 +7,7 @@ import type { SearchMenuItemOption, SearchMenuItemType } from "../../types/Searc
 import { useDispatch } from "react-redux";
 import { setCurrentTrack } from "../../features/currentTrack/currentTrackSlice";
 import { setMainDisplayItem } from "../../features/mainDisplayItem/mainDisplayItem";
+import ThrottledTextField from "../ThrottledTextField/ThrottledTextField";
 
 interface SearchProps {
   searchResults: SearchMenuItemType[],
@@ -17,8 +18,8 @@ const Search = ({ searchResults, setSearchResults }: SearchProps) => {
 
   const dispatch = useDispatch();
 
-  const handleChange = async (e: ChangeEvent<HTMLInputElement>) => {
-    const results = await search(e.target.value);
+  const handleChange = async (value: string) => {
+    const results = await search(value);
     console.log(results)
     let allSearchResults = [];
     allSearchResults.push(...results.tracks.items);
@@ -27,9 +28,10 @@ const Search = ({ searchResults, setSearchResults }: SearchProps) => {
     results.playlists.items.map((playlist: Playlist) => {
       if (playlist) allSearchResults.push(playlist);
     })
-    allSearchResults.push(...results.shows.items);
-    allSearchResults.push(...results.episodes.items);
-    allSearchResults.push(...results.audiobooks.items);
+    // allSearchResults.push(...results.shows.items);
+    // allSearchResults.push(...results.episodes.items);
+    // allSearchResults.push(...results.audiobooks.items);
+    
     setSearchResults(allSearchResults);
   }
 
@@ -45,15 +47,18 @@ const Search = ({ searchResults, setSearchResults }: SearchProps) => {
   return (
     <Autocomplete
       renderInput={(params: AutocompleteRenderInputParams): React.ReactNode => {
-        return <TextField
-          {...params}
+        return <ThrottledTextField
+          params={params}
           name="searchResults"
           label="Search"
           variant="standard"
           value={searchResults}
+          {...params}
           onChange={handleChange}
+          delay={1000}
         />
       }}
+      filterOptions={x => x}
       options={
         searchResults?.map((searchResult) => {
           return { label: searchResult.name, item: searchResult }

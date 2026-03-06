@@ -11,10 +11,10 @@ interface SearchMenuItemProps {
 }
 
 const SearchMenuItem = ({ option, optionProps, state, ownerState }: SearchMenuItemProps) => {
-  console.log(option)
-  console.log(optionProps)
-  console.log(state)
-  console.log(ownerState)
+  // console.log(option)
+  // console.log(optionProps)
+  // console.log(state)
+  // console.log(ownerState)
   const { item } = option;
   let srcURL = "";
   let secondaryText = "";

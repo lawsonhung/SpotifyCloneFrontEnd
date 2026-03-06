@@ -1,19 +1,22 @@
 import apiClient from "../client";
 
 export const search = async (searchTerm: string) => {
-  const url = `https://api.spotify.com/v1/search?q=${searchTerm}&type=album,artist,playlist,track,show,episode,audiobook`;
+  // const url = `https://api.spotify.com/v1/search?q=${searchTerm}&type=album,artist,playlist,track,show,episode,audiobook`;
+  const url = `https://api.spotify.com/v1/search?q=${searchTerm}&type=album,artist,playlist,track`;
   const res = await apiClient.get(url);
   return res.data;
 }
 
 export const getAlbumsBy = async (artistId: string) => {
-  const url = `https://api.spotify.com/v1/artists/${artistId}/albums`;
+  console.log("getting albums by artist")
+  const url = `https://api.spotify.com/v1/artists/${artistId}/albums?limit=5`;
   const res = await apiClient.get(url);
   return res.data;
 }
 
 export const getTracksInAlbum = async (albumId: string) => {
-  const url = `https://api.spotify.com/v1/albums/${albumId}/tracks`;
+  console.log("getting tracks in album")
+  const url = `https://api.spotify.com/v1/albums/${albumId}/tracks?limit=10`;
   const res = await apiClient.get(url);
   return res.data;
 }
