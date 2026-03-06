@@ -1,4 +1,4 @@
-import { Box, Button, Grid, ListItem, Stack } from "@mui/material";
+import { Button, Grid, ListItem, Typography } from "@mui/material";
 import type { Track } from "@spotify/web-api-ts-sdk";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
@@ -42,12 +42,28 @@ const MainDisplayItem = ({ track }: MainDisplayItemProps) => {
           width: "100%",
         }}
       >
-        <ListItem>{track.name}</ListItem>
+
+        <ListItem
+          sx={{
+            textTransform: "none",
+          }}
+        >
+          <Typography>
+            {track.name}
+          </Typography>
+          {track.explicit ?
+            <Typography sx={{ ml: 1, textTransform: "none" }}> • Explicit</Typography>
+            :
+            null
+          }
+        </ListItem>
+
         <ListItem
           sx={{
             justifyContent: "flex-end",
           }}
         >{durationInMinutesSeconds()}</ListItem>
+
       </Grid>
     </Button>
   )

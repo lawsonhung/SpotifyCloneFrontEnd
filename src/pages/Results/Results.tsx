@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import type { RootState } from "../../app/store";
-import { Box, Stack, Typography } from "@mui/material";
+import { Box, Button, Stack, Typography } from "@mui/material";
 import type { Album, Artist, Track } from "@spotify/web-api-ts-sdk";
 import MainDisplayItem from "../../components/MainDisplayItem/MainDisplayItem";
 import { getAlbumsBy, getTracksInAlbum } from "../../api";
@@ -28,16 +28,16 @@ const Results = () => {
       if (albumsRes) {
         setAlbumName(albumsRes.items[0].name);
         setAlbums(albumsRes.items);
-        
+
         let tracksRes;
-        
+
         if (albumsRes.items[0].id)
           tracksRes = await getTracksInAlbum((albumsRes.items[0].id));
-        
+
         console.log("tracksRes", tracksRes);
         setTracks(tracksRes.items);
       }
-      
+
     }
     getAlbums();
 
@@ -80,12 +80,19 @@ const Results = () => {
           paddingBottom: "0.5em",
         }}
       >
+
         <Typography variant="h4" fontWeight={"bold"}>{albumName}</Typography>
         <Stack>
           {tracks.map((track: Track) => {
-            return <MainDisplayItem track={track} key={track.id}/>
+            return <MainDisplayItem track={track} key={track.id} />
           })}
         </Stack>
+        <Button
+          variant="text"
+          sx={{
+            textTransform: "none",
+          }}
+        >See more</Button>
 
         <Typography variant="h4" fontWeight={"bold"}>Albums</Typography>
         <Stack direction={"row"} spacing={2}>
@@ -93,6 +100,7 @@ const Results = () => {
             return <MainDisplayAlbumItem album={album} key={album.id} />
           })}
         </Stack>
+
       </Box>
     </Box >
   )
