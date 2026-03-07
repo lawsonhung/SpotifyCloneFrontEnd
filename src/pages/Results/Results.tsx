@@ -1,4 +1,4 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../../app/store";
 import { Box, Button, Stack, Typography } from "@mui/material";
 import type { Album, Artist, Track } from "@spotify/web-api-ts-sdk";
@@ -6,18 +6,21 @@ import MainDisplayTrackItem from "../../components/MainDisplayTrackItem/MainDisp
 import { getAlbumsBy, getNextPageOfItems, getTracksInAlbum } from "../../api";
 import { useEffect, useRef, useState } from "react";
 import MainDisplayAlbumItem from "../../components/MainDisplayAlbumItem/MainDisplayAlbumItem";
+import TrackList from "../../components/TrackList/TrackList";
+import { setDisplayTracks } from "../../features/displayTracks/displayTracks";
 
 const Results = () => {
 
+  const dispatch = useDispatch();
+
   const mainDisplayItem = useSelector((state: RootState) => state.mainDisplayItem);
+  const tracks = useSelector((state: RootState) => state.displayTracks.value);
 
   console.log("mainDisplayItem", mainDisplayItem);
 
   const [albumName, setAlbumName] = useState<string | null>(null);
-  const [tracks, setTracks] = useState<Track[]>([]);
   const [albums, setAlbums] = useState([]);
   const nextPageUrl = useRef<null | string>(null);
-  // let nextPageUrl: string | null = null;
 
   useEffect(() => {
     const getAlbums = async () => {
@@ -37,7 +40,7 @@ const Results = () => {
           tracksRes = await getTracksInAlbum((albumsRes.items[0].id));
 
         console.log("tracksRes", tracksRes);
-        setTracks(tracksRes.items);
+        dispatch(setDisplayTracks(tracksRes.items));
         nextPageUrl.current = tracksRes.next;
       }
 
@@ -55,7 +58,7 @@ const Results = () => {
       const nextPage = await getNextPageOfItems(nextPageUrl.current);
       console.log("nextPage", nextPage)
       nextPageUrl.current = nextPage.next;
-      setTracks([...tracks, ...nextPage.items])
+      dispatch(setDisplayTracks([...tracks, ...nextPage.items]))
     }
   }
 
@@ -111,6 +114,8 @@ const Results = () => {
           :
           null
         }
+
+        <TrackList />
         
         {albums.length > 1 ?
           <Typography variant="h4" fontWeight={"bold"}>Albums</Typography>
@@ -121,7 +126,6 @@ const Results = () => {
             return <MainDisplayAlbumItem 
             album={album} 
             key={album.id} 
-            setTracks={setTracks} 
             setAlbumName={setAlbumName} 
             nextPageUrl={nextPageUrl}
             />

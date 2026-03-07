@@ -1,5 +1,5 @@
-import { Autocomplete, TextField, type AutocompleteRenderInputParams } from "@mui/material";
-import { useRef, type ChangeEvent, type Dispatch, type SetStateAction, type SyntheticEvent } from "react";
+import { Autocomplete, type AutocompleteRenderInputParams } from "@mui/material";
+import { type Dispatch, type SetStateAction, type SyntheticEvent } from "react";
 import { search } from "../../api/services/search";
 import type { Playlist } from "@spotify/web-api-ts-sdk";
 import SearchMenuItem from "../SearchMenuItem/SearchMenuItem";

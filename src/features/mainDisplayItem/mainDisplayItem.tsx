@@ -1,10 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { Album, Artist, Audiobook, Episode, Playlist, Show, Track } from "@spotify/web-api-ts-sdk";
 
-export type MainDisplayItemState = Track | Album | Artist | Playlist | Show | Episode | Audiobook | {value: {}};
+export type MainDisplayItemState = Track | Album | Artist | Playlist | Show | Episode | Audiobook | {value: {}, nextPageUrl: string};
 
 const initialState: MainDisplayItemState = {
-  value: {}
+  value: {},
+  nextPageUrl: "",
 };
 
 export const mainDisplayItemSlice = createSlice({
@@ -13,6 +14,9 @@ export const mainDisplayItemSlice = createSlice({
   reducers: {
     setMainDisplayItem: (state, action) => {
       state.value = action.payload;
+    },
+    setNextPageUrl: (state, action) => {
+      state.nextPageUrl = action.payload;
     }
   }
 })
