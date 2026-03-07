@@ -1,4 +1,4 @@
-import { Box, ListItem, ListItemButton, ListItemIcon, ListItemText, Stack } from "@mui/material";
+import { Box, ListItem, ListItemButton, ListItemIcon, ListItemText, Stack, Typography } from "@mui/material";
 import type { Playlist } from "@spotify/web-api-ts-sdk";
 import Image from "mui-image";
 
@@ -22,8 +22,13 @@ const LibraryPlaylistItem = ({ playlist }: LibraryPlaylistItemProps) => {
         sx={{
           paddingTop: 0,
           paddingBottom: 0,
+          paddingLeft: "0.5em",
+          paddingRight: "0.5em",
+          marginTop: "0.25em",
+          marginBottom: "0.25em",
           width: "100%",
           height: "100%",
+          borderRadius: "8px",
         }}
       >
 
@@ -45,26 +50,37 @@ const LibraryPlaylistItem = ({ playlist }: LibraryPlaylistItemProps) => {
           />
         </ListItemIcon>
 
-        <Stack>
-          <ListItemText
-            primary={playlist.name}
+        <Stack
+          marginTop={"0.1em"}
+          marginBottom={"0.1em"}
+        >
+          <Typography
+            variant="subtitle1"
             sx={{
               paddingTop: 0,
               paddingBottom: 0,
+              marginTop: 0,
+              marginBottom: 0,
               width: "100%",
               height: "100%",
               textTransform: "none",
             }}
-          />
-          <ListItemText
-           primary={`Playlist • ${playlist.items.total} songs`} 
-           sx={{
-            textTransform: "none",
-           }}
-           />
+          >
+            {playlist.name}
+          </Typography>
+          <Typography
+            variant="subtitle2"
+            sx={{
+              textTransform: "none",
+              marginTop: 0,
+              marginBottom: 0,
+            }}
+          >
+            {`Playlist • ${playlist.items.total} songs `}
+          </Typography>
         </Stack>
       </ListItemButton>
-    </ListItem>
+    </ListItem >
   )
 }
 
