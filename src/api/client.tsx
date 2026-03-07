@@ -1,4 +1,5 @@
 import axios from "axios";
+import axiosThrottle from "axios-request-throttle";
 
 const BACKEND_API_BASE_URL = import.meta.env.VITE_BACKEND_API_BASE_URL;
 
@@ -8,6 +9,8 @@ const APIClient = axios.create({
     "Content-Type": "application/json",
   },
 });
+
+axiosThrottle.use(APIClient, { requestsPerSecond: 1 });
 
 APIClient.interceptors.request.use(config => {
   return config;

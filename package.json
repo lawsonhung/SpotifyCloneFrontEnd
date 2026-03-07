@@ -17,6 +17,7 @@
     "@reduxjs/toolkit": "^2.11.2",
     "@spotify/web-api-ts-sdk": "^1.2.0",
     "axios": "^1.13.6",
+    "axios-request-throttle": "^1.0.0",
     "mui-image": "^1.0.9",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
