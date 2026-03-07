@@ -20,12 +20,20 @@ const Library = () => {
   return (
     <Paper
       sx={{
+        display: "flex",
+        flexDirection: "column",
         borderRadius: "8px",
         padding: "1em",
+        width: "30%"
       }}
     >
       <Typography fontWeight={"bold"}>Your Library</Typography>
-      <List>
+      <List
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
         {playlists?.items.map((playlist: Playlist) => {return (<LibraryPlaylistItem key={playlist.id} playlist={playlist} />
         )}
       )}
