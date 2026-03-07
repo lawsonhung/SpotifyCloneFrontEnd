@@ -20,6 +20,7 @@ const Home = () => {
     }}
     >
       <Search setSearchResults={setSearchResults} searchResults={searchResults} />
+      
       <Results />
       <Player />
     </Box>
