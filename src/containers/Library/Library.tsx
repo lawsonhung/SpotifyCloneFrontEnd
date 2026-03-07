@@ -1,4 +1,4 @@
-import { Drawer, Paper } from "@mui/material"
+import { Drawer, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Paper } from "@mui/material"
 import { useEffect } from "react";
 import { getPlaylists } from "../../api/services/playlist";
 
@@ -20,7 +20,18 @@ const Library = () => {
     >
       <h1>Library</h1>
       <Drawer variant="permanent" open={true}>
+        <List>
+          <ListItem>
+            <ListItemButton>
 
+              <ListItemIcon></ListItemIcon>
+              <ListItemText>
+
+              </ListItemText>
+
+            </ListItemButton>
+          </ListItem>
+        </List>
       </Drawer>
     </Paper>
   )
