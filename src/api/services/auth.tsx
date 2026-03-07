@@ -1,20 +1,20 @@
-import apiClient from "../client";
+import APIClient from "../client";
 
 export const getToken = async (): Promise<string> => {
-  const response = await apiClient.get("http://localhost:3000/api/auth/token");
-  apiClient.defaults.headers.common["Authorization"] = `Bearer ${response.data.access_token}`;
-  apiClient.defaults.params = {
-    ...apiClient.defaults.params,
+  const response = await APIClient.get("http://localhost:3000/api/auth/token");
+  APIClient.defaults.headers.common["Authorization"] = `Bearer ${response.data.access_token}`;
+  APIClient.defaults.params = {
+    ...APIClient.defaults.params,
     "refreshToken": response.data.refresh_token,
   }
   return response.data.access_token;
 }
 
 export const getRefreshToken = async (): Promise<string> => {
-  const response = await apiClient.get("http://localhost:3000/api/auth/token");
-  apiClient.defaults.headers.common["Authorization"] = `Bearer ${response.data.access_token}`;
-  apiClient.defaults.params = {
-    ...apiClient.defaults.params,
+  const response = await APIClient.get("http://localhost:3000/api/auth/token");
+  APIClient.defaults.headers.common["Authorization"] = `Bearer ${response.data.access_token}`;
+  APIClient.defaults.params = {
+    ...APIClient.defaults.params,
     "refreshToken": response.data.refresh_token,
   }
   console.log("refresh token", response.data.refresh_token)
@@ -22,10 +22,10 @@ export const getRefreshToken = async (): Promise<string> => {
 }
 
 export const refreshToken = async (): Promise<{access_token: string, refresh_token: string}> => {
-  const response = await apiClient.get("http://localhost:3000/api/auth/refreshToken");
-  apiClient.defaults.headers.common["Authorization"] = `Bearer ${response.data.access_token}`;
-  apiClient.defaults.params = {
-    ...apiClient.defaults.params,
+  const response = await APIClient.get("http://localhost:3000/api/auth/refreshToken");
+  APIClient.defaults.headers.common["Authorization"] = `Bearer ${response.data.access_token}`;
+  APIClient.defaults.params = {
+    ...APIClient.defaults.params,
     "refreshToken": response.data.refresh_token,
   }
   return response.data;

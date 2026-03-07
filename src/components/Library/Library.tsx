@@ -5,7 +5,7 @@ const Library = () => {
 
   useEffect(() => {
 
-  })
+  }, [])
 
   return (
     <Paper

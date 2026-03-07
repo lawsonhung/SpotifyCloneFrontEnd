@@ -1,23 +1,23 @@
 import axios from "axios";
 
-const API_URL = import.meta.env.VITE_REACT_APP_BASE_URL;
+const API_BASE_URL = import.meta.env.VITE_REACT_APP_BASE_URL;
 
-const apiClient = axios.create({
-  baseURL: API_URL,
+const APIClient = axios.create({
+  baseURL: API_BASE_URL,
   headers: {
     "Content-Type": "application/json",
   },
 });
 
-apiClient.interceptors.request.use(config => {
+APIClient.interceptors.request.use(config => {
   return config;
 });
 
-apiClient.interceptors.response.use(
+APIClient.interceptors.response.use(
   res => res,
   error => {
     if (error.response?.status === 401) {
-      console.log("apiClient error 401");
+      console.log("APIClient error 401");
       // Remove token
       // Redirect to login page
     }
@@ -25,4 +25,4 @@ apiClient.interceptors.response.use(
   }
 )
 
-export default apiClient;
+export default APIClient;
