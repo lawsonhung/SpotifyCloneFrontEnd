@@ -5,7 +5,8 @@ import { useSelector } from "react-redux";
 import type { RootState } from "../../app/store";
 import type { SearchMenuItemType } from "../../types/SearchMenuItemOption";
 import Player from "../../components/Player/Player";
-import { Box } from "@mui/material";
+import { Box, Stack } from "@mui/material";
+import Library from "../../components/Library/Library";
 
 const Home = () => {
   useSelector((state: RootState) => state.token.value);
@@ -13,15 +14,23 @@ const Home = () => {
 
   return (
     <Box
-    sx={{
-      display: "flex",
-      flexDirection: "column",
-      height: "100%"
-    }}
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        height: "100%"
+      }}
     >
       <Search setSearchResults={setSearchResults} searchResults={searchResults} />
-      
-      <Results />
+      <Stack 
+      direction={"row"}
+      spacing={1}
+        sx={{
+          height: "100%",
+        }}
+      >
+        <Library />
+        <Results />
+      </Stack>
       <Player />
     </Box>
   )

@@ -18,7 +18,7 @@ const Results = () => {
 
   const [albumName, setAlbumName] = useState<string | null>(null);
   const [albums, setAlbums] = useState([]);
-  
+
 
   useEffect(() => {
     // const getAlbums = async () => {
@@ -52,57 +52,78 @@ const Results = () => {
     backgroundImageUrl = (mainDisplayItem.value as Artist).images[0].url;
 
   return (
-    <Box
-      sx={{
-        height: "100%",
-        background: "linear-gradient(#2F3060, #181818)",
-        borderRadius: "8px",
-        flex: "1",
-        overflow: "scroll",
-      }}
-    >
+    <>
+      {Object.keys(mainDisplayItem.value).length == 0 ?
 
-      <Box
-        sx={{
-          height: "40%",
-          backgroundImage: `url(${backgroundImageUrl})`,
-          display: "flex",
-          flexDirection: "column-reverse",
-          backgroundRepeat: "no-repeat",
-          backgroundSize: "cover",
-          backgroundPositionY: "20%",
-        }}
-      >
-        <Typography variant="h1" fontWeight={900} margin={"0.1em"}>{(mainDisplayItem.value as Artist).name}</Typography>
-      </Box >
+        <Typography variant="h1"
+          sx={{
+            textAlign: "center",
+            width: "100%",
+            height: "100%",
+            background: "linear-gradient(#2F3060, #181818)",
+            borderRadius: "8px",
+          }}
+        >
+          Look for something
+        </Typography>
 
-      <Box
-        sx={{
-          paddingLeft: "1em",
-          paddingRight: "1em",
-          paddingTop: "0.5em",
-          paddingBottom: "0.5em",
-        }}
-      >
+        :
 
-        <TrackList />
-        
-        {albums.length > 1 ?
-          <Typography variant="h4" fontWeight={"bold"}>Albums</Typography>
-          :
-          null}
-        <Stack direction={"row"} spacing={2}>
-          {albums.map((album: Album) => {
-            return <MainDisplayAlbumItem 
-            album={album} 
-            key={album.id} 
-            setAlbumName={setAlbumName} 
-            />
-          })}
-        </Stack>
+        <Box
+          sx={{
+            height: "100%",
+            background: "linear-gradient(#2F3060, #181818)",
+            borderRadius: "8px",
+            flex: "1",
+            overflow: "scroll",
+          }}
+        >
 
-      </Box>
-    </Box >
+          <Box
+            sx={{
+              height: "40%",
+              backgroundImage: `url(${backgroundImageUrl})`,
+              display: "flex",
+              flexDirection: "column-reverse",
+              backgroundRepeat: "no-repeat",
+              backgroundSize: "cover",
+              backgroundPositionY: "20%",
+            }}
+          >
+            <Typography variant="h1" fontWeight={900} margin={"0.1em"}>{(mainDisplayItem.value as Artist).name}</Typography>
+          </Box >
+
+          <Box
+            sx={{
+              paddingLeft: "1em",
+              paddingRight: "1em",
+              paddingTop: "0.5em",
+              paddingBottom: "0.5em",
+            }}
+          >
+
+            <TrackList />
+
+            {albums.length > 1 ?
+              <Typography variant="h4" fontWeight={"bold"}>Albums</Typography>
+              :
+              null}
+            <Stack direction={"row"} spacing={2}>
+              {albums.map((album: Album) => {
+                return <MainDisplayAlbumItem
+                  album={album}
+                  key={album.id}
+                  setAlbumName={setAlbumName}
+                />
+              })}
+            </Stack>
+
+          </Box>
+        </Box >
+
+      }
+    </>
+
   )
 }
 
