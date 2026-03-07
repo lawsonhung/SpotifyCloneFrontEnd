@@ -1,4 +1,4 @@
-import { List, Paper, Stack, Typography } from "@mui/material"
+import { Paper, Stack, Typography } from "@mui/material"
 import { useEffect, useState } from "react";
 import { getPlaylists } from "../../api/services/playlist";
 import LibraryPlaylistItem from "../../components/LibraryPlaylistItem/LibraryPlaylistItem";
@@ -24,7 +24,9 @@ const Library = () => {
         flexDirection: "column",
         borderRadius: "8px",
         padding: "0.5em",
-        width: "30%"
+        width: "20%",
+        height: "100%",
+        overflow: "scroll",
       }}
     >
       <Typography
@@ -32,7 +34,13 @@ const Library = () => {
         paddingTop="0.5em"
         paddingLeft="0.5em"
       >Your Library</Typography>
-      <Stack>
+      <Stack
+        sx={{
+          overflowY: "scroll",
+          overflowX: "hidden",
+          whiteSpace: "nowrap",
+        }}
+      >
         {playlists?.items.map((playlist: Playlist) => {
           return (<LibraryPlaylistItem key={playlist.id} playlist={playlist} />
           )

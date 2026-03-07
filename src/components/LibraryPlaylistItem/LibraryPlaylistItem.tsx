@@ -1,6 +1,5 @@
-import { Box, ListItem, ListItemButton, ListItemIcon, ListItemText, Stack, Typography } from "@mui/material";
+import { Box, ListItem, ListItemButton, ListItemIcon, Stack, Typography } from "@mui/material";
 import type { Playlist } from "@spotify/web-api-ts-sdk";
-import Image from "mui-image";
 
 interface LibraryPlaylistItemProps {
   playlist: Playlist,
@@ -53,6 +52,7 @@ const LibraryPlaylistItem = ({ playlist }: LibraryPlaylistItemProps) => {
         <Stack
           marginTop={"0.1em"}
           marginBottom={"0.1em"}
+          width={"100%"}
         >
           <Typography
             variant="subtitle1"
@@ -64,6 +64,9 @@ const LibraryPlaylistItem = ({ playlist }: LibraryPlaylistItemProps) => {
               width: "100%",
               height: "100%",
               textTransform: "none",
+              whiteSpace: "nowrap",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
             }}
           >
             {playlist.name}
@@ -76,7 +79,7 @@ const LibraryPlaylistItem = ({ playlist }: LibraryPlaylistItemProps) => {
               marginBottom: 0,
             }}
           >
-            {`Playlist • ${playlist.items.total} songs `}
+            {`Playlist • ${(playlist as any).items.total} songs `}
           </Typography>
         </Stack>
       </ListItemButton>

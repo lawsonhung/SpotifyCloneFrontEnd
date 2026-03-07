@@ -17,20 +17,23 @@ const Home = () => {
       sx={{
         display: "flex",
         flexDirection: "column",
-        height: "100%"
+        height: "100%",
       }}
     >
       <Search setSearchResults={setSearchResults} searchResults={searchResults} />
-      <Stack 
-      direction={"row"}
-      spacing={1}
+
+      <Stack
+        direction={"row"}
+        flex={1}
+        spacing={1}
         sx={{
-          height: "100%",
+          maxHeight: "81%",
         }}
       >
         <Library />
         <Results />
       </Stack>
+
       <Player />
     </Box>
   )
