@@ -1,51 +1,18 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import type { RootState } from "../../app/store";
 import { Box, Stack, Typography } from "@mui/material";
 import type { Album, Artist } from "@spotify/web-api-ts-sdk";
-import { getAlbumsBy, getTracksInAlbum } from "../../api";
-import { useEffect, useState } from "react";
 import MainDisplayAlbumItem from "../../components/MainDisplayAlbumItem/MainDisplayAlbumItem";
 import TrackList from "../../components/TrackList/TrackList";
-import { setNextPageUrl, setTracks } from "../../features/mainDisplayItem/mainDisplayItem";
 
 const Results = () => {
 
-  const dispatch = useDispatch();
-
   const mainDisplayItem = useSelector((state: RootState) => state.mainDisplayItem);
 
-  console.log("mainDisplayItem", mainDisplayItem);
+  console.log("mainDisplayItem changed", mainDisplayItem);
 
-  const [albumName, setAlbumName] = useState<string | null>(null);
-  const [albums, setAlbums] = useState([]);
+  const albums = useSelector((state: RootState) => state.mainDisplayItem.albums);
 
-
-  useEffect(() => {
-    // const getAlbums = async () => {
-    //   let albumsRes;
-
-    //   if ((mainDisplayItem.value as Artist).id)
-    //     albumsRes = await getAlbumsBy((mainDisplayItem.value as Artist).id);
-
-    //   console.log("albumsRes", albumsRes);
-    //   if (albumsRes) {
-    //     setAlbumName(albumsRes.items[0].name);
-    //     setAlbums(albumsRes.items);
-
-    //     let tracksRes;
-
-    //     if (albumsRes.items[0].id)
-    //       tracksRes = await getTracksInAlbum((albumsRes.items[0].id));
-
-    //     console.log("tracksRes", tracksRes);
-    //     dispatch(setTracks(tracksRes.items));
-    //     dispatch(setNextPageUrl(tracksRes.next));
-    //   }
-
-    // }
-    // // getAlbums();
-
-  }, [mainDisplayItem]);
 
   let backgroundImageUrl;
   if ((mainDisplayItem.value as Artist).images)
@@ -113,7 +80,6 @@ const Results = () => {
                 return <MainDisplayAlbumItem
                   album={album}
                   key={album.id}
-                  setAlbumName={setAlbumName}
                 />
               })}
             </Stack>

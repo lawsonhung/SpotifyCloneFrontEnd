@@ -3,16 +3,20 @@ import type { Album, Artist, Audiobook, Episode, Playlist, Show, Track } from "@
 
 interface MainDisplayItemInterface {
   value: {},
-  nextPageUrl: string,
+  albumName: string,
   tracks: Track[],
+  nextPageUrl: string,
+  albums: Album[],
 }
 
 export type MainDisplayItemState = Track | Album | Artist | Playlist | Show | Episode | Audiobook | MainDisplayItemInterface;
 
 const initialState: MainDisplayItemState = {
   value: {},
-  nextPageUrl: "",
+  albumName: "",
   tracks: [],
+  nextPageUrl: "",
+  albums: [],
 };
 
 export const mainDisplayItemSlice = createSlice({
@@ -22,15 +26,21 @@ export const mainDisplayItemSlice = createSlice({
     setMainDisplayItem: (state, action) => {
       state.value = action.payload;
     },
-    setNextPageUrl: (state, action) => {
-      state.nextPageUrl = action.payload;
+    setAlbumName: (state, action) => {
+      state.albumName = action.payload;
     },
     setTracks: (state, action) => {
       state.tracks = action.payload;
-    }
+    },
+    setNextPageUrl: (state, action) => {
+      state.nextPageUrl = action.payload;
+    },
+    setAlbums: (state, action) => {
+      state.albums = action.payload;
+    },
   }
 })
 
-export const { setMainDisplayItem, setNextPageUrl, setTracks } = mainDisplayItemSlice.actions;
+export const { setMainDisplayItem, setAlbumName, setTracks, setNextPageUrl, setAlbums } = mainDisplayItemSlice.actions;
 
 export default mainDisplayItemSlice.reducer;

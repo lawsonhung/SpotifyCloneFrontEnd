@@ -1,12 +1,12 @@
 import { Autocomplete, type AutocompleteRenderInputParams } from "@mui/material";
 import { type Dispatch, type SetStateAction, type SyntheticEvent } from "react";
-import { search } from "../../api/services/search";
+import { getAlbumsBy, getTracksInAlbum, search } from "../../api/services/search";
 import type { Playlist } from "@spotify/web-api-ts-sdk";
 import SearchMenuItem from "../SearchMenuItem/SearchMenuItem";
 import type { SearchMenuItemOption, SearchMenuItemType } from "../../types/SearchMenuItemOption";
 import { useDispatch } from "react-redux";
 import { setCurrentTrack } from "../../features/currentTrack/currentTrackSlice";
-import { setMainDisplayItem } from "../../features/mainDisplayItem/mainDisplayItem";
+import { setAlbumName, setAlbums, setMainDisplayItem, setNextPageUrl, setTracks } from "../../features/mainDisplayItem/mainDisplayItem";
 import ThrottledTextField from "../ThrottledTextField/ThrottledTextField";
 
 interface SearchProps {
@@ -31,7 +31,7 @@ const Search = ({ searchResults, setSearchResults }: SearchProps) => {
     // allSearchResults.push(...results.shows.items);
     // allSearchResults.push(...results.episodes.items);
     // allSearchResults.push(...results.audiobooks.items);
-    
+
     setSearchResults(allSearchResults);
   }
 
@@ -40,8 +40,16 @@ const Search = ({ searchResults, setSearchResults }: SearchProps) => {
     const { item } = newValue as SearchMenuItemOption;
     if (item.type == "track")
       dispatch(setCurrentTrack(item));
-    else
+    else {
       dispatch(setMainDisplayItem(item));
+      const albumsRes = await getAlbumsBy(item.id);
+      dispatch(setAlbumName(albumsRes.items[0].name));
+      dispatch(setAlbums(albumsRes.items));
+
+      const tracksRes = await getTracksInAlbum(albumsRes.items[0].id);
+      dispatch(setTracks(tracksRes.items));
+      dispatch(setNextPageUrl(tracksRes.next));
+    }
   }
 
   return (

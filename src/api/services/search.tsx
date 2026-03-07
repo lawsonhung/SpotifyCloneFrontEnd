@@ -8,19 +8,17 @@ export const search = async (searchTerm: string) => {
 }
 
 export const getAlbumsBy = async (artistId: string) => {
-  console.log("getting albums by artist")
+  console.log("⏳⏳ getting albums by artist")
   const url = `/artists/${artistId}/albums?limit=5`;
-  console.error("Wait until Sat4:10pm to try")
-  // const res = await SpotifyAPIClient.get(url);
-  // return res.data;
+  const res = await SpotifyAPIClient.get(url);
+  return res.data;
 }
 
 export const getTracksInAlbum = async (albumId: string) => {
-  console.log("getting tracks in album")
+  console.log("⏳⏳ getting tracks in album")
   const url = `/albums/${albumId}/tracks?limit=5`;
-  console.error("Wait until Sat4:10pm to try")
-  // const res = await SpotifyAPIClient.get(url);
-  // return res.data;
+  const res = await SpotifyAPIClient.get(url);
+  return res.data;
 }
 
 export const getNextPageOfItems = async (url: string) => {
