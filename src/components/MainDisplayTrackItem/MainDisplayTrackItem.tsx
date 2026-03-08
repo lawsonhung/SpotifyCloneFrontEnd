@@ -13,12 +13,12 @@ const MainDisplayTrackItem = ({ track }: MainDisplayTrackItemProps) => {
 
   const dispatch = useDispatch();
 
-  const imgUrl = useRef(null);
+  const [imgUrl, setImgUrl] = useState<string | null>(null);
 
   useEffect(() => {
     const getTrackInfo = async () => {
       const trackInfo = await getTrack(track.id);
-      imgUrl.current = trackInfo.album.images[1].url;
+      setImgUrl(trackInfo.album.images[1].url);
     }
     getTrackInfo();
   }, [])
@@ -64,10 +64,10 @@ const MainDisplayTrackItem = ({ track }: MainDisplayTrackItemProps) => {
         }}
       >
 
-        {imgUrl.current ?
+        {imgUrl ?
           <Box
             component={"img"}
-            src={imgUrl.current}
+            src={imgUrl}
             alt={track.name}
             sx={{
               objectFit: "cover",
