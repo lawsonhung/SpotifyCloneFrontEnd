@@ -42,20 +42,29 @@ const MainDisplayTrackItem = ({ track }: MainDisplayTrackItemProps) => {
       variant="text"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      startIcon={hovered ?
-        <Typography
-          color="textSecondary"
-        >
-          ▶
-        </Typography>
-        :
-        <Typography
-          color="textSecondary"
-        >
-          {track.track_number}
-        </Typography>}
-      onClick={handleClick}
     >
+
+      <Box
+        sx={{
+          width: "2em",
+        }}
+      >
+        {hovered ?
+          <Typography
+            color="textSecondary"
+            marginRight="1em"
+          >
+            ▶
+          </Typography>
+          :
+          <Typography
+            color="textSecondary"
+            marginRight="1em"
+          >
+            {track.track_number}
+          </Typography>
+        }
+      </Box>
 
       <Box
         sx={{
