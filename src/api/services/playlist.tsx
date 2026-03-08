@@ -11,3 +11,10 @@ export const getPlaylistItems = async (playlistId: string) => {
   const res = await SpotifyAPIClient.get(url);
   return res.data;
 }
+
+export const createPlaylist = async (name: string) => {
+  const url = `/me/playlists`;
+  const payload = { "name": name };
+  const res = await SpotifyAPIClient.post(url, payload);
+  return res.data;
+}

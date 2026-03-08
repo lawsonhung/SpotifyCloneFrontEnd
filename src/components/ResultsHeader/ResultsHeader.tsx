@@ -3,7 +3,7 @@ import Typography from "@mui/material/Typography";
 import type { Artist, Playlist, User } from "@spotify/web-api-ts-sdk";
 import { useSelector } from "react-redux";
 import type { RootState } from "../../app/store";
-import { Container, Stack } from "@mui/material";
+import { Stack } from "@mui/material";
 
 const ResultsHeader = () => {
 
@@ -53,7 +53,7 @@ const ResultsHeader = () => {
               {(mainDisplayItem.value as Playlist).owner.display_name}
             </Typography>
             <Typography component="span" color="textSecondary" variant="subtitle2">
-              &nbsp;• {(mainDisplayItem.value as any).items.total} songs
+              &nbsp;• {(mainDisplayItem.value as any).items.total.toLocaleString("en-US")} songs
             </Typography>
           </Typography>
 

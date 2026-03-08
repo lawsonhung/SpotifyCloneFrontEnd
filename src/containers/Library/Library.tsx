@@ -1,8 +1,9 @@
-import { Paper, Stack, Typography } from "@mui/material"
+import { IconButton, Paper, Stack, Typography } from "@mui/material"
 import { useEffect, useRef } from "react";
 import { getPlaylists } from "../../api/services/playlist";
 import LibraryPlaylistItem from "../../components/LibraryPlaylistItem/LibraryPlaylistItem";
 import type { Page, Playlist } from "@spotify/web-api-ts-sdk";
+import LibraryHeader from "../../components/LibraryHeader/LibraryHeader";
 
 const Library = () => {
 
@@ -28,11 +29,9 @@ const Library = () => {
         overflow: "scroll",
       }}
     >
-      <Typography
-        fontWeight="bold"
-        paddingTop="0.5em"
-        paddingLeft="0.5em"
-      >Your Library</Typography>
+      <LibraryHeader />
+      
+
       <Stack
         sx={{
           overflowY: "scroll",
