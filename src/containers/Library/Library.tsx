@@ -11,7 +11,6 @@ const Library = () => {
   useEffect(() => {
     const populatePlaylists = async () => {
       const playlists = await getPlaylists();
-      console.log("playlists", playlists);
       setPlaylists(playlists);
     }
     populatePlaylists();

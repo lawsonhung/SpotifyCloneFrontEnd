@@ -13,8 +13,6 @@ const AlbumList = () => {
   const albums = useSelector((state: RootState) => state.mainDisplayItem.albums);
   const nextPageOfAlbumsUrl = useSelector((state: RootState) => state.mainDisplayItem.nextPageOfAlbumsUrl);
 
-  console.log("nextPageOfAlbumsUrl", nextPageOfAlbumsUrl);
-
   const handleClick = async () => {
     const nextPage = await getNextPageOfItems(nextPageOfAlbumsUrl);
     dispatch(setNextPageOfAlbumsUrl(nextPage.next));
