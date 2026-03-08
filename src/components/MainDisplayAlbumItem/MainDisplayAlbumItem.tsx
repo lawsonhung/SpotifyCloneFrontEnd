@@ -3,7 +3,7 @@ import type { Album } from "@spotify/web-api-ts-sdk";
 import Image from "mui-image";
 import { getTracksInAlbum } from "../../api";
 import { useDispatch } from "react-redux";
-import { setAlbumName, setNextPageUrl, setTracks } from "../../features/mainDisplayItem/mainDisplayItem";
+import { setAlbumName, setNextPageOfTracksUrl, setTracks } from "../../features/mainDisplayItem/mainDisplayItem";
 
 interface MainDisplayAlbumItem {
   album: Album;
@@ -18,7 +18,7 @@ const MainDisplayAlbumItem = ({ album }: MainDisplayAlbumItem) => {
     const tracks = await getTracksInAlbum(album.id);
     dispatch(setAlbumName(album.name));
     dispatch(setTracks(tracks.items));
-    dispatch(setNextPageUrl(tracks.next));
+    dispatch(setNextPageOfTracksUrl(tracks.next));
   }
 
   return (

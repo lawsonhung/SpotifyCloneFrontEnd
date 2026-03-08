@@ -6,7 +6,7 @@ import SearchMenuItem from "../SearchMenuItem/SearchMenuItem";
 import type { SearchMenuItemOption, SearchMenuItemType } from "../../types/SearchMenuItemOption";
 import { useDispatch } from "react-redux";
 import { setCurrentTrack } from "../../features/currentTrack/currentTrackSlice";
-import { setAlbumName, setAlbums, setMainDisplayItem, setNextPageUrl, setTracks } from "../../features/mainDisplayItem/mainDisplayItem";
+import { setAlbumName, setAlbums, setMainDisplayItem, setNextPageOfTracksUrl, setTracks } from "../../features/mainDisplayItem/mainDisplayItem";
 import ThrottledTextField from "../ThrottledTextField/ThrottledTextField";
 
 interface SearchProps {
@@ -47,7 +47,7 @@ const Search = ({ searchResults, setSearchResults }: SearchProps) => {
 
       const tracksRes = await getTracksInAlbum(albumsRes.items[0].id);
       dispatch(setTracks(tracksRes.items));
-      dispatch(setNextPageUrl(tracksRes.next));
+      dispatch(setNextPageOfTracksUrl(tracksRes.next));
     }
   }
 

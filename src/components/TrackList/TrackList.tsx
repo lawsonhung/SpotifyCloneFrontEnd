@@ -4,7 +4,7 @@ import { Button, Stack, Typography } from "@mui/material";
 import type { Track } from "@spotify/web-api-ts-sdk";
 import MainDisplayTrackItem from "../MainDisplayTrackItem/MainDisplayTrackItem";
 import { getNextPageOfItems } from "../../api";
-import { setNextPageUrl, setTracks } from "../../features/mainDisplayItem/mainDisplayItem";
+import { setNextPageOfTracksUrl, setTracks } from "../../features/mainDisplayItem/mainDisplayItem";
 
 const TrackList = () => {
 
@@ -12,12 +12,12 @@ const TrackList = () => {
 
   const albumName = useSelector((state: RootState) => state.mainDisplayItem.albumName);
   const tracks = useSelector((state: RootState) => state.mainDisplayItem.tracks);
-  const nextPageUrl = useSelector((state: RootState) => state.mainDisplayItem.nextPageUrl);
+  const nextPageOfTracksUrl = useSelector((state: RootState) => state.mainDisplayItem.nextPageOfTracksUrl);
 
   const handleClick = async () => {
-    if (nextPageUrl) {
-      const nextPage = await getNextPageOfItems(nextPageUrl);
-      dispatch(setNextPageUrl(nextPage.next));
+    if (nextPageOfTracksUrl) {
+      const nextPage = await getNextPageOfItems(nextPageOfTracksUrl);
+      dispatch(setNextPageOfTracksUrl(nextPage.next));
       dispatch(setTracks([...tracks, ...nextPage.items]))
     }
   }
@@ -36,7 +36,7 @@ const TrackList = () => {
         return <MainDisplayTrackItem track={track} key={track.id} />
       })}
 
-      {nextPageUrl ?
+      {nextPageOfTracksUrl ?
         <Button
           variant="text"
           sx={{
