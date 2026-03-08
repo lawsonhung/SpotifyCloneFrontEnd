@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../../app/store";
-import { Box, Button, Stack, Typography } from "@mui/material";
+import { Box, Button, Grid, Stack, Typography } from "@mui/material";
 import type { Album } from "@spotify/web-api-ts-sdk";
 import MainDisplayAlbumItem from "../MainDisplayAlbumItem/MainDisplayAlbumItem";
 import { getNextPageOfItems } from "../../api";
@@ -29,14 +29,17 @@ const AlbumList = () => {
         :
         null}
 
-      <Stack direction={"row"} spacing={2}>
+      <Grid 
+      container 
+      columns={5}
+      >
         {albums.map((album: Album) => {
           return <MainDisplayAlbumItem
             album={album}
             key={album.id}
           />
         })}
-      </Stack>
+      </Grid>
 
       {nextPageOfAlbumsUrl ?
         <Button

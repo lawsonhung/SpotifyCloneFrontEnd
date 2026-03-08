@@ -17,7 +17,7 @@ const TrackList = () => {
   const handleClick = async () => {
     const nextPage = await getNextPageOfItems(nextPageOfTracksUrl);
     dispatch(setNextPageOfTracksUrl(nextPage.next));
-    dispatch(setTracks([...tracks, ...nextPage.items]))
+    dispatch(setTracks([...tracks, ...nextPage.items]));
   }
 
   return (
