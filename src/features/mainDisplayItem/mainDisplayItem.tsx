@@ -7,6 +7,7 @@ interface MainDisplayItemInterface {
   tracks: Track[],
   nextPageOfTracksUrl: string,
   albums: Album[],
+  nextPageOfAlbumsUrl: string,
 }
 
 export type MainDisplayItemState = Track | Album | Artist | Playlist | Show | Episode | Audiobook | MainDisplayItemInterface;
@@ -17,6 +18,7 @@ const initialState: MainDisplayItemState = {
   tracks: [],
   nextPageOfTracksUrl: "",
   albums: [],
+  nextPageOfAlbumsUrl: "",
 };
 
 export const mainDisplayItemSlice = createSlice({
@@ -38,9 +40,12 @@ export const mainDisplayItemSlice = createSlice({
     setAlbums: (state, action) => {
       state.albums = action.payload;
     },
+    setNextPageOfAlbumsUrl: (state, action) => {
+      state.nextPageOfAlbumsUrl = action.payload;
+    },
   }
 })
 
-export const { setMainDisplayItem, setAlbumName, setTracks, setNextPageOfTracksUrl, setAlbums } = mainDisplayItemSlice.actions;
+export const { setMainDisplayItem, setAlbumName, setTracks, setNextPageOfTracksUrl, setAlbums, setNextPageOfAlbumsUrl } = mainDisplayItemSlice.actions;
 
 export default mainDisplayItemSlice.reducer;

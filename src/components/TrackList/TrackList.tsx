@@ -15,11 +15,9 @@ const TrackList = () => {
   const nextPageOfTracksUrl = useSelector((state: RootState) => state.mainDisplayItem.nextPageOfTracksUrl);
 
   const handleClick = async () => {
-    if (nextPageOfTracksUrl) {
-      const nextPage = await getNextPageOfItems(nextPageOfTracksUrl);
-      dispatch(setNextPageOfTracksUrl(nextPage.next));
-      dispatch(setTracks([...tracks, ...nextPage.items]))
-    }
+    const nextPage = await getNextPageOfItems(nextPageOfTracksUrl);
+    dispatch(setNextPageOfTracksUrl(nextPage.next));
+    dispatch(setTracks([...tracks, ...nextPage.items]))
   }
 
   return (
