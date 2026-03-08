@@ -1,16 +1,30 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Search from "../../components/Search/Search";
 import Results from "../../containers/Results/Results";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../../app/store";
 import type { SearchMenuItemType } from "../../types/SearchMenuItemOption";
 import Player from "../../components/Player/Player";
 import { Box, Stack } from "@mui/material";
 import Library from "../../containers/Library/Library";
+import { getMyInfo } from "../../api";
+import { setUserData } from "../../features/userData/userDataSlice";
 
 const Home = () => {
+
+  const dispatch = useDispatch();
+
   useSelector((state: RootState) => state.token.value);
   const [searchResults, setSearchResults] = useState<(SearchMenuItemType)[]>([]);
+
+  useEffect(() => {
+    const populateUserInfo = async () => {
+      const myInfo = await getMyInfo();
+      dispatch(setUserData(myInfo));
+    }
+
+    populateUserInfo();
+  }, [])
 
   return (
     <Box
