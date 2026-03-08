@@ -1,5 +1,4 @@
 import { Box, Container, ListItem, Stack } from "@mui/material";
-import { Image } from "mui-image";
 import type { Album, Artist, Audiobook, Episode, Playlist, Show, Track } from "@spotify/web-api-ts-sdk";
 import type { SearchMenuItemOption } from "../../types/SearchMenuItemOption";
 

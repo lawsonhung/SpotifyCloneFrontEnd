@@ -1,6 +1,5 @@
-import { Button, Container, Grid, Stack, Typography } from "@mui/material";
+import { Box, Button, Container, Grid, Stack, Typography } from "@mui/material";
 import type { Album } from "@spotify/web-api-ts-sdk";
-import Image from "mui-image";
 import { getTracksInAlbum } from "../../api";
 import { useDispatch } from "react-redux";
 import { setAlbumName, setNextPageOfTracksUrl, setTracks } from "../../features/mainDisplayItem/mainDisplayItem";
@@ -32,9 +31,14 @@ const MainDisplayAlbumItem = ({ album }: MainDisplayAlbumItem) => {
               objectFit: "cover",
             }}
           >
-            <Image
+            <Box
+              component={"img"}
               src={album.images[0].url}
               alt={album.name}
+              sx={{
+                objectFit: "cover",
+                width: "100%",
+              }}
             />
           </Container>
 
