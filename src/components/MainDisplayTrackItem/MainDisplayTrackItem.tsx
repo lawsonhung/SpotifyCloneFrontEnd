@@ -31,7 +31,18 @@ const MainDisplayTrackItem = ({ track }: MainDisplayTrackItemProps) => {
       variant="text"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      startIcon={hovered ? <>▶</> : <>{track.track_number}</>}
+      startIcon={hovered ?
+        <Typography
+          color="textSecondary"
+        >
+          ▶
+        </Typography>
+        :
+        <Typography
+          color="textSecondary"
+        >
+          {track.track_number}
+        </Typography>}
       onClick={handleClick}
     >
       <Box
@@ -47,7 +58,7 @@ const MainDisplayTrackItem = ({ track }: MainDisplayTrackItemProps) => {
             flex: "1 1 100%"
           }}
         >
-          <Typography>
+          <Typography variant="body1" color="textPrimary">
             {track.name}
             {track.explicit ?
               " • Explicit"
@@ -62,7 +73,11 @@ const MainDisplayTrackItem = ({ track }: MainDisplayTrackItemProps) => {
             justifyContent: "flex-end",
             flex: "1",
           }}
-        >{durationInMinutesSeconds()}</ListItem>
+        >
+          <Typography color="textSecondary" fontSize="0.9em">
+            {durationInMinutesSeconds()}
+          </Typography>
+        </ListItem>
 
       </Box>
     </Button>

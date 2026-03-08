@@ -36,7 +36,6 @@ const Search = ({ searchResults, setSearchResults }: SearchProps) => {
   }
 
   const handleAutocompleteChange = async (_: SyntheticEvent, newValue: SearchMenuItemOption | null) => {
-    console.log(newValue);
     const { item } = newValue as SearchMenuItemOption;
     if (item.type == "track")
       dispatch(setCurrentTrack(item));

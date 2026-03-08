@@ -25,10 +25,13 @@ const TrackList = () => {
   return (
     <Stack>
 
-      <Typography variant="h4" fontWeight={"bold"}>
+      <Typography
+        variant="h4"
+        fontWeight={"bold"}
+      >
         {albumName}
       </Typography>
-      
+
       {tracks.map((track: Track) => {
         return <MainDisplayTrackItem track={track} key={track.id} />
       })}
@@ -37,11 +40,22 @@ const TrackList = () => {
         <Button
           variant="text"
           sx={{
-            textTransform: "none",
-            fontWeight: "bold",
+            justifyContent: "left",
+            width: "fit-content",
           }}
-        onClick={handleClick}
-        >See more</Button>
+          onClick={handleClick}
+        >
+          <Typography color="textSecondary"
+            sx={{
+              textTransform: "none",
+              fontWeight: "bold",
+              "&:hover": {
+                color: "white",
+              }
+            }}>
+            See more
+          </Typography>
+        </Button>
         :
         null
       }

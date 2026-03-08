@@ -73,6 +73,7 @@ const LibraryPlaylistItem = ({ playlist }: LibraryPlaylistItemProps) => {
           </Typography>
           <Typography
             variant="subtitle2"
+            color="textSecondary"
             sx={{
               textTransform: "none",
               marginTop: 0,

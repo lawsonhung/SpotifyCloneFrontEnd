@@ -22,7 +22,7 @@ const MainDisplayAlbumItem = ({ album }: MainDisplayAlbumItem) => {
   }
 
   return (
-    <Button onClick={handleClick}>
+    <Button onClick={handleClick} sx={{ alignItems: "flex-start" }}>
       <Stack>
         <Container
           sx={{
@@ -34,8 +34,25 @@ const MainDisplayAlbumItem = ({ album }: MainDisplayAlbumItem) => {
             alt={album.name}
           />
         </Container>
-        <Typography sx={{textTransform: "none"}}>{album.name}</Typography>
-        <Typography sx={{textTransform: "none"}}>{year} • Album</Typography>
+        <Typography
+        color="textPrimary"
+          sx={{
+            textTransform: "none",
+            textAlign: "left",
+          }}
+        >
+          {album.name}
+        </Typography>
+        <Typography
+        variant="subtitle2"
+        color="textSecondary"
+          sx={{
+            textTransform: "none",
+            textAlign: "left",
+          }}
+        >
+          {year} • Album
+        </Typography>
       </Stack>
     </Button>
   )

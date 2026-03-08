@@ -8,11 +8,9 @@ import TrackList from "../../components/TrackList/TrackList";
 const Results = () => {
 
   const mainDisplayItem = useSelector((state: RootState) => state.mainDisplayItem);
-
-  console.log("mainDisplayItem changed", mainDisplayItem);
-
   const albums = useSelector((state: RootState) => state.mainDisplayItem.albums);
 
+  console.log("mainDisplayItem changed", mainDisplayItem);
 
   let backgroundImageUrl;
   if ((mainDisplayItem.value as Artist).images)
