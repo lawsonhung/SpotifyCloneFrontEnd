@@ -1,17 +1,17 @@
 import { Paper, Stack, Typography } from "@mui/material"
-import { useEffect, useState } from "react";
+import { useEffect, useRef } from "react";
 import { getPlaylists } from "../../api/services/playlist";
 import LibraryPlaylistItem from "../../components/LibraryPlaylistItem/LibraryPlaylistItem";
 import type { Page, Playlist } from "@spotify/web-api-ts-sdk";
 
 const Library = () => {
 
-  const [playlists, setPlaylists] = useState<Page<Playlist> | null>(null);
+  const playlists = useRef<Page<Playlist> | null>(null);
 
   useEffect(() => {
     const populatePlaylists = async () => {
-      const playlists = await getPlaylists();
-      setPlaylists(playlists);
+      const playlistsRes = await getPlaylists();
+      playlists.current = playlistsRes;
     }
     populatePlaylists();
   }, [])
@@ -40,7 +40,7 @@ const Library = () => {
           whiteSpace: "nowrap",
         }}
       >
-        {playlists?.items.map((playlist: Playlist) => {
+        {playlists.current?.items.map((playlist: Playlist) => {
           return (<LibraryPlaylistItem key={playlist.id} playlist={playlist} />
           )
         }

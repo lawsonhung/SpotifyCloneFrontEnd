@@ -1,5 +1,8 @@
 import { Box, ListItem, ListItemButton, ListItemIcon, Stack, Typography } from "@mui/material";
 import type { Playlist } from "@spotify/web-api-ts-sdk";
+import { useDispatch } from "react-redux";
+import { setAlbumName, setAlbums, setMainDisplayItem, setNextPageOfAlbumsUrl, setNextPageOfTracksUrl, setTracks } from "../../features/mainDisplayItem/mainDisplayItem";
+import { getPlaylistItems } from "../../api/services/playlist";
 
 interface LibraryPlaylistItemProps {
   playlist: Playlist,
@@ -7,8 +10,20 @@ interface LibraryPlaylistItemProps {
 
 const LibraryPlaylistItem = ({ playlist }: LibraryPlaylistItemProps) => {
 
-  const handleClick = () => {
-    
+  const dispatch = useDispatch();
+
+  const handleClick = async () => {
+    dispatch(setAlbumName(""));
+    dispatch(setAlbums([]));
+    dispatch(setNextPageOfAlbumsUrl(""));
+
+    dispatch(setMainDisplayItem(playlist));
+
+    const playlistItems = await getPlaylistItems(playlist.id);
+
+    console.log("playlistItems", playlistItems)
+    dispatch(setTracks(playlistItems.items.map((playListItem: {item: Object} ) => playListItem.item)));
+    dispatch(setNextPageOfTracksUrl(playlistItems.next));
   }
 
   return (
@@ -34,6 +49,7 @@ const LibraryPlaylistItem = ({ playlist }: LibraryPlaylistItemProps) => {
           height: "100%",
           borderRadius: "8px",
         }}
+        disabled={playlist.owner.id !== import.meta.env.VITE_MY_SPOTIFY_ID}
         onClick={handleClick}
       >
 
@@ -86,7 +102,7 @@ const LibraryPlaylistItem = ({ playlist }: LibraryPlaylistItemProps) => {
               marginBottom: 0,
             }}
           >
-            {`Playlist • ${(playlist as any).items.total} songs `}
+            {`Playlist • ${playlist.owner.display_name}`}
           </Typography>
         </Stack>
       </ListItemButton>

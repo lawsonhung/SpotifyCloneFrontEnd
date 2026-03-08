@@ -1,15 +1,16 @@
 import { Box, Button, ListItem, Typography } from "@mui/material";
 import type { Track } from "@spotify/web-api-ts-sdk";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { setCurrentTrack } from "../../features/currentTrack/currentTrackSlice";
 import { getTrack } from "../../api";
 
 interface MainDisplayTrackItemProps {
   track: Track,
+  index: number,
 }
 
-const MainDisplayTrackItem = ({ track }: MainDisplayTrackItemProps) => {
+const MainDisplayTrackItem = ({ track, index }: MainDisplayTrackItemProps) => {
 
   const dispatch = useDispatch();
 
@@ -20,7 +21,7 @@ const MainDisplayTrackItem = ({ track }: MainDisplayTrackItemProps) => {
       const trackInfo = await getTrack(track.id);
       setImgUrl(trackInfo.album.images[1].url);
     }
-    getTrackInfo();
+    // getTrackInfo();
   }, [])
 
   const [hovered, setHovered] = useState(false);
@@ -42,6 +43,7 @@ const MainDisplayTrackItem = ({ track }: MainDisplayTrackItemProps) => {
       variant="text"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
+      onClick={handleClick}
     >
 
       <Box
@@ -61,7 +63,7 @@ const MainDisplayTrackItem = ({ track }: MainDisplayTrackItemProps) => {
             color="textSecondary"
             marginRight="1em"
           >
-            {track.track_number}
+            {index}
           </Typography>
         }
       </Box>

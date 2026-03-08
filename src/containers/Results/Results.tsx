@@ -1,14 +1,13 @@
 import { useSelector } from "react-redux";
 import type { RootState } from "../../app/store";
 import { Box, Typography } from "@mui/material";
-import type { Artist } from "@spotify/web-api-ts-sdk";
+import type { Artist, Playlist } from "@spotify/web-api-ts-sdk";
 import TrackList from "../../components/TrackList/TrackList";
 import AlbumList from "../../components/AlbumList/AlbumList";
 
 const Results = () => {
 
   const mainDisplayItem = useSelector((state: RootState) => state.mainDisplayItem);
-
 
   let backgroundImageUrl;
   if ((mainDisplayItem.value as Artist).images)
@@ -51,9 +50,24 @@ const Results = () => {
               backgroundRepeat: "no-repeat",
               backgroundSize: "cover",
               backgroundPositionY: "20%",
+              padding: "0.1em",
             }}
           >
-            <Typography variant="h1" fontWeight={900} margin={"0.1em"}>{(mainDisplayItem.value as Artist).name}</Typography>
+
+            {(mainDisplayItem.value as Playlist).type == "playlist" ?
+              <Typography
+                fontWeight="bold"
+              >
+                {(mainDisplayItem.value as Playlist).owner.display_name}
+              </Typography>
+              :
+              null
+            }
+
+            <Typography variant="h1" fontWeight={900}>
+              {(mainDisplayItem.value as Artist).name}
+            </Typography>
+
           </Box >
 
           <Box

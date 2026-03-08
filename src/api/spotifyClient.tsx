@@ -27,7 +27,8 @@ SpotifyAPIClient.interceptors.response.use(
         break;
 
       case 429:
-        console.error(`Error ${error.response.status} - Retry-After ${error.response?.headers["Retry-After"]} seconds`)
+        console.log("error headers", (error.response.headers as any)("Retry-After"));
+        console.error(`Error ${error.response.status} - Retry-After ${(error.response.headers as any)("Retry-After")} seconds`)
         break;
 
       default:

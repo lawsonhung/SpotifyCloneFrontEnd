@@ -5,3 +5,9 @@ export const getPlaylists = async () => {
   const res = await SpotifyAPIClient.get(url);
   return res.data;
 }
+
+export const getPlaylistItems = async (playlistId: string) => {
+  const url = `/playlists/${playlistId}/items?limit=20`;
+  const res = await SpotifyAPIClient.get(url);
+  return res.data;
+}
