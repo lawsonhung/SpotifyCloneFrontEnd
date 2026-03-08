@@ -47,13 +47,8 @@ const Results = () => {
               paddingBottom: "0.5em",
             }}
           >
-
             <TrackList />
-
             <AlbumList />
-
-
-
           </Box>
         </Box >
 

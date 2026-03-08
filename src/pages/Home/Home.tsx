@@ -35,6 +35,7 @@ const Home = () => {
         backgroundColor: "black",
       }}
     >
+
       <Search setSearchResults={setSearchResults} searchResults={searchResults} />
 
       <Stack
@@ -50,6 +51,7 @@ const Home = () => {
       </Stack>
 
       <Player />
+
     </Box>
   )
 }
