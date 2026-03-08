@@ -3,6 +3,7 @@ import Typography from "@mui/material/Typography";
 import type { Artist, Playlist, User } from "@spotify/web-api-ts-sdk";
 import { useSelector } from "react-redux";
 import type { RootState } from "../../app/store";
+import { Container, Stack } from "@mui/material";
 
 const ResultsHeader = () => {
 
@@ -29,7 +30,8 @@ const ResultsHeader = () => {
     >
 
       {(mainDisplayItem.value as Playlist).type == "playlist" ?
-        <Box maxHeight="2em">
+        <Stack maxHeight="2em" direction="row" margin="0.5em">
+
           <Box
             component="img"
             src={profilePictureUrl}
@@ -37,15 +39,25 @@ const ResultsHeader = () => {
             sx={{
               objectFit: "cover",
               height: "100%",
+              borderRadius: "50%",
+              marginRight: "0.5em",
             }}
           />
-          <Typography fontWeight="bold" component="span">
-            {(mainDisplayItem.value as Playlist).owner.display_name}
+
+          <Typography
+            sx={{
+              alignContent: "center",
+            }}
+          >
+            <Typography fontWeight="bold" component="span">
+              {(mainDisplayItem.value as Playlist).owner.display_name}
+            </Typography>
+            <Typography component="span" color="textSecondary" variant="subtitle2">
+              &nbsp;• {(mainDisplayItem.value as any).items.total} songs
+            </Typography>
           </Typography>
-          <Typography component="span" color="textSecondary" variant="subtitle2">
-            &nbsp;• {(mainDisplayItem.value as any).items.total} songs
-          </Typography>
-        </Box>
+
+        </Stack>
         :
         null
       }
