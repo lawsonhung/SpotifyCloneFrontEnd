@@ -22,7 +22,11 @@ const SearchMenuItem = ({ option, optionProps, state, ownerState }: SearchMenuIt
   switch (item.type) {
     case "track":
       srcURL = (item as Track).album.images[0].url;
-      secondaryText = "Song • " + (item as Track).artists[0].name;
+      let artists = (item as Track).artists.length == 1 ? 
+        (item as Track).artists[0].name 
+        :
+        (item as Track).artists.map(artist => artist.name).join(", ");
+      secondaryText = "Song • " + artists;
       break;
     case "artist":
       srcURL = (item as Artist).images[0].url;
