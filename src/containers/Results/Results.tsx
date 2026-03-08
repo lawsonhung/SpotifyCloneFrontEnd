@@ -55,10 +55,13 @@ const Results = () => {
           >
 
             {(mainDisplayItem.value as Playlist).type == "playlist" ?
-              <Typography
-                fontWeight="bold"
-              >
-                {(mainDisplayItem.value as Playlist).owner.display_name}
+              <Typography>
+                <Typography fontWeight="bold" component="span">
+                  {(mainDisplayItem.value as Playlist).owner.display_name}
+                </Typography>
+                <Typography component="span" color="textSecondary" variant="subtitle2">
+                &nbsp;• {(mainDisplayItem.value as any).items.total} songs
+                </Typography>
               </Typography>
               :
               null

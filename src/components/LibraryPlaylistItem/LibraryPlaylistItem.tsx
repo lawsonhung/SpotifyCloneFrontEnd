@@ -17,11 +17,11 @@ const LibraryPlaylistItem = ({ playlist }: LibraryPlaylistItemProps) => {
     dispatch(setAlbums([]));
     dispatch(setNextPageOfAlbumsUrl(""));
 
+    const playlistItems = await getPlaylistItems(playlist.id);
+    console.log("playlistItems", playlistItems);
+
     dispatch(setMainDisplayItem(playlist));
 
-    const playlistItems = await getPlaylistItems(playlist.id);
-
-    console.log("playlistItems", playlistItems)
     dispatch(setTracks(playlistItems.items.map((playListItem: {item: Object} ) => playListItem.item)));
     dispatch(setNextPageOfTracksUrl(playlistItems.next));
   }
