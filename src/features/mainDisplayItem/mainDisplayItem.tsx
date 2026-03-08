@@ -27,6 +27,7 @@ export const mainDisplayItemSlice = createSlice({
   reducers: {
     setMainDisplayItem: (state, action) => {
       state.value = action.payload;
+      console.log("mainDisplayItem changed", state.value);
     },
     setAlbumName: (state, action) => {
       state.albumName = action.payload;

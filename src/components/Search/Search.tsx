@@ -1,5 +1,5 @@
-import { Autocomplete, type AutocompleteRenderInputParams } from "@mui/material";
-import { type Dispatch, type SetStateAction, type SyntheticEvent } from "react";
+import { Autocomplete, TextField, type AutocompleteRenderInputParams } from "@mui/material";
+import { type ChangeEventHandler, type Dispatch, type SetStateAction, type SyntheticEvent } from "react";
 import { getAlbumsBy, getTracksInAlbum, search } from "../../api/services/search";
 import type { Playlist } from "@spotify/web-api-ts-sdk";
 import SearchMenuItem from "../SearchMenuItem/SearchMenuItem";
@@ -7,7 +7,6 @@ import type { SearchMenuItemOption, SearchMenuItemType } from "../../types/Searc
 import { useDispatch } from "react-redux";
 import { setCurrentTrack } from "../../features/currentTrack/currentTrackSlice";
 import { setAlbumName, setAlbums, setMainDisplayItem, setNextPageOfAlbumsUrl, setNextPageOfTracksUrl, setTracks } from "../../features/mainDisplayItem/mainDisplayItem";
-import ThrottledTextField from "../ThrottledTextField/ThrottledTextField";
 
 interface SearchProps {
   searchResults: SearchMenuItemType[],
@@ -18,9 +17,8 @@ const Search = ({ searchResults, setSearchResults }: SearchProps) => {
 
   const dispatch = useDispatch();
 
-  const handleChange = async (value: string) => {
-    const results = await search(value);
-    console.log(results)
+  const handleChange: ChangeEventHandler<HTMLInputElement> = async (e) => {
+    const results = await search(e.target.value);
     let allSearchResults = [];
     allSearchResults.push(...results.tracks.items);
     allSearchResults.push(...results.artists.items);
@@ -55,15 +53,13 @@ const Search = ({ searchResults, setSearchResults }: SearchProps) => {
   return (
     <Autocomplete
       renderInput={(params: AutocompleteRenderInputParams): React.ReactNode => {
-        return <ThrottledTextField
-          params={params}
+        return <TextField
+        {...params}
           name="searchResults"
           label="Search"
           variant="standard"
           value={searchResults}
-          {...params}
           onChange={handleChange}
-          delay={1000}
         />
       }}
       filterOptions={x => x}

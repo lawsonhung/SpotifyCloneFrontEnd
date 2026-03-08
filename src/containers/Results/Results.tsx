@@ -1,17 +1,14 @@
 import { useSelector } from "react-redux";
 import type { RootState } from "../../app/store";
-import { Box, Stack, Typography } from "@mui/material";
-import type { Album, Artist } from "@spotify/web-api-ts-sdk";
-import MainDisplayAlbumItem from "../../components/MainDisplayAlbumItem/MainDisplayAlbumItem";
+import { Box, Typography } from "@mui/material";
+import type { Artist } from "@spotify/web-api-ts-sdk";
 import TrackList from "../../components/TrackList/TrackList";
 import AlbumList from "../../components/AlbumList/AlbumList";
 
 const Results = () => {
 
   const mainDisplayItem = useSelector((state: RootState) => state.mainDisplayItem);
-  const albums = useSelector((state: RootState) => state.mainDisplayItem.albums);
 
-  console.log("mainDisplayItem changed", mainDisplayItem);
 
   let backgroundImageUrl;
   if ((mainDisplayItem.value as Artist).images)
@@ -72,7 +69,7 @@ const Results = () => {
 
             <AlbumList />
 
-            
+
 
           </Box>
         </Box >
