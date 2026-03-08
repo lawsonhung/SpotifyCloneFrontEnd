@@ -27,6 +27,7 @@ const MainDisplayAlbumItem = ({ album }: MainDisplayAlbumItem) => {
         <Stack>
 
           <Container
+            disableGutters
             sx={{
               objectFit: "cover",
             }}
