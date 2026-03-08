@@ -4,6 +4,7 @@ import { Box, Stack, Typography } from "@mui/material";
 import type { Album, Artist } from "@spotify/web-api-ts-sdk";
 import MainDisplayAlbumItem from "../../components/MainDisplayAlbumItem/MainDisplayAlbumItem";
 import TrackList from "../../components/TrackList/TrackList";
+import AlbumList from "../../components/AlbumList/AlbumList";
 
 const Results = () => {
 
@@ -69,18 +70,9 @@ const Results = () => {
 
             <TrackList />
 
-            {albums.length > 1 ?
-              <Typography variant="h4" fontWeight={"bold"}>Albums</Typography>
-              :
-              null}
-            <Stack direction={"row"} spacing={2}>
-              {albums.map((album: Album) => {
-                return <MainDisplayAlbumItem
-                  album={album}
-                  key={album.id}
-                />
-              })}
-            </Stack>
+            <AlbumList />
+
+            
 
           </Box>
         </Box >

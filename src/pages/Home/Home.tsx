@@ -18,6 +18,7 @@ const Home = () => {
         display: "flex",
         flexDirection: "column",
         height: "100%",
+        backgroundColor: "black",
       }}
     >
       <Search setSearchResults={setSearchResults} searchResults={searchResults} />
