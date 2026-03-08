@@ -6,6 +6,11 @@ interface LibraryPlaylistItemProps {
 }
 
 const LibraryPlaylistItem = ({ playlist }: LibraryPlaylistItemProps) => {
+
+  const handleClick = () => {
+    
+  }
+
   return (
     <ListItem
       disableGutters
@@ -29,6 +34,7 @@ const LibraryPlaylistItem = ({ playlist }: LibraryPlaylistItemProps) => {
           height: "100%",
           borderRadius: "8px",
         }}
+        onClick={handleClick}
       >
 
         <ListItemIcon

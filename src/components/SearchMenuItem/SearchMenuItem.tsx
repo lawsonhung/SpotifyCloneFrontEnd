@@ -59,20 +59,27 @@ const SearchMenuItem = ({ option, optionProps, state, ownerState }: SearchMenuIt
   return (
     <Box
       {...optionProps}
+      sx={{
+        borderRadius: "8px",
+        marginLeft: "0.5em",
+        marginRight: "0.5em",
+      }}
     >
       <Container
         disableGutters
         style={{
           height: "3em",
-          width: "3em",
+          width: "4em",
         }}
       >
-        <Image
+        <Box
+          component={"img"}
           src={srcURL}
           alt={item.name}
-          height={"100%"}
-          style={{
-            objectFit: "contain",
+          sx={{
+            objectFit: "cover",
+            width: "100%",
+            maxHeight: "3em",
           }}
         />
       </Container>
