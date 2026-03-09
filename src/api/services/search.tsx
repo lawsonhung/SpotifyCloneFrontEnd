@@ -17,18 +17,21 @@ export const getAlbumsBy = async (artistId: string) => {
 export const getTracksInAlbum = async (albumId: string) => {
   console.log("⏳⏳ getting tracks in album");
   const url = `/albums/${albumId}/tracks?limit=5`;
-  const res = await SpotifyAPIClient.get(url);
-  return res.data;
+  console.log("😭 Retry at 10:30pm Monday")
+  // const res = await SpotifyAPIClient.get(url);
+  // return res.data;
 }
 
 export const getTrack = async (trackId: string) => {
+  console.log("⏳⏳ getting track");
   const url = `/tracks/${trackId}`;
-  // console.log("🥺 Wait until 6pm Sunday to make calls again")
-  const res = await SpotifyAPIClient.get(url);
-  return res.data;
+  console.log("😭 Retry at 10:30pm Monday")
+  // const res = await SpotifyAPIClient.get(url);
+  // return res.data;
 }
 
 export const getNextPageOfItems = async (url: string) => {
+  console.log("⏳⏳ getting next page");
   const res = await SpotifyAPIClient.get(url);
   return res.data;
 }

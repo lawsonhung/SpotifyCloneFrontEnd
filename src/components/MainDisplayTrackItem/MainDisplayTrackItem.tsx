@@ -17,11 +17,11 @@ const MainDisplayTrackItem = ({ track, index }: MainDisplayTrackItemProps) => {
   const imgUrl = useRef<string | null>(null);
 
   useEffect(() => {
-    const getTrackInfo = async () => {
-      const trackInfo = await getTrack(track.id);
-      imgUrl.current = trackInfo.album.images[1].url;
-    }
-    getTrackInfo();
+    // const getTrackInfo = async () => {
+    //   const trackInfo = await getTrack(track.id);
+    //   imgUrl.current = trackInfo.album.images[1].url;
+    // }
+    // getTrackInfo();
   }, [])
 
   const [hovered, setHovered] = useState(false);
