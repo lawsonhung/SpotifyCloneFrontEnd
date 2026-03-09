@@ -3,7 +3,7 @@ import type { Playlist, Track } from "@spotify/web-api-ts-sdk";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { useDispatch } from "react-redux";
 import { setCurrentTrack } from "../../features/currentTrack/currentTrackSlice";
-import { getPlaylists, getTrack } from "../../api";
+import { addItemsToPlaylist, getPlaylists, getTrack } from "../../api";
 import { setPlaylists } from "../../features/library/library";
 
 interface MainDisplayTrackItemProps {
@@ -47,8 +47,12 @@ const MainDisplayTrackItem = ({ track, index }: MainDisplayTrackItemProps) => {
     setAnchorEl(e.target as HTMLButtonElement);
   }
 
-  const onAddToPlaylist = (e: MouseEvent) => {
-    console.log("id", (e.currentTarget as HTMLElement).dataset.id)
+  const onAddToPlaylist = async (e: MouseEvent) => {
+    const playlistId = (e.currentTarget as HTMLElement).dataset.id as string;
+    console.log("playlist id", playlistId)
+    console.log("track", track);
+    const addToPlaylistRes = await addItemsToPlaylist(playlistId, [track.uri]);
+
     onClosePlaylistMenu();
   }
 

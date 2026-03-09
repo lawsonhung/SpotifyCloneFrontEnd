@@ -18,3 +18,10 @@ export const createPlaylist = async (name: string) => {
   const res = await SpotifyAPIClient.post(url, payload);
   return res.data;
 }
+
+export const addItemsToPlaylist = async (playlistId: string, uriArray: string[]) => {
+  const url = `/playlists/${playlistId}/items`;
+  const payload = {"uris": uriArray};
+  const res = await SpotifyAPIClient.post(url, payload);
+  return res.data;
+}
