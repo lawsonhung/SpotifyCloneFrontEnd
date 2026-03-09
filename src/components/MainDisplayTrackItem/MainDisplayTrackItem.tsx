@@ -1,4 +1,4 @@
-import { Box, Button, ButtonGroup, IconButton, ListItem, Typography } from "@mui/material";
+import { Box, Button, ButtonGroup, IconButton, ListItem, Menu, MenuItem, Typography } from "@mui/material";
 import type { Track } from "@spotify/web-api-ts-sdk";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
@@ -25,6 +25,8 @@ const MainDisplayTrackItem = ({ track, index }: MainDisplayTrackItemProps) => {
   }, [])
 
   const [hovered, setHovered] = useState(false);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
 
   const durationInMinutesSeconds = (): string => {
     const totalSeconds = Math.floor(track.duration_ms / 1000);
@@ -35,6 +37,15 @@ const MainDisplayTrackItem = ({ track, index }: MainDisplayTrackItemProps) => {
 
   const handleClick = () => {
     dispatch(setCurrentTrack(track));
+  }
+
+  const onAddToPlaylist = async (e: MouseEvent) => {
+    setAnchorEl(e.target as HTMLButtonElement);
+  }
+
+  const handleCloseAddtoPlaylist = () => {
+    setAnchorEl(null);
+    setHovered(false);
   }
 
   return (
@@ -117,11 +128,33 @@ const MainDisplayTrackItem = ({ track, index }: MainDisplayTrackItemProps) => {
       </Button>
 
       {hovered ?
-        <Button
-          variant="text"
-        >
-          +
-        </Button>
+        <>
+          <IconButton
+            id={track.id + "-add-to-playlist-button"}
+            aria-label="add to playlist"
+            aria-controls={open ? "menuid" : undefined}
+            aria-haspopup="true"
+            aria-expanded={open ? "true" : undefined}
+            onClick={(e) => onAddToPlaylist(e as unknown as MouseEvent)}
+          >
+            +
+          </IconButton>
+          <Menu
+            id={track.id + "add-to-playlist-menu"}
+            anchorEl={anchorEl}
+            open={open}
+            onClose={handleCloseAddtoPlaylist}
+            slotProps={{
+              list : {
+                "aria-labelledby": `${track.id}-add-to-playlist-button`
+              }
+            }}
+          >
+            <MenuItem onClick={handleCloseAddtoPlaylist}>
+              PlaylistNamePlaceholder
+            </MenuItem>
+          </Menu>
+        </>
         :
         null
       }
