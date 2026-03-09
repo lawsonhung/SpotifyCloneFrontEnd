@@ -157,6 +157,7 @@ const MainDisplayTrackItem = ({ track, index }: MainDisplayTrackItemProps) => {
           track={track}
           setHovered={setHovered}
           setSnackbarOpen={setSnackbarOpen}
+          handleRightClick={handleRightClick}
         />
         :
         null
@@ -169,6 +170,7 @@ const MainDisplayTrackItem = ({ track, index }: MainDisplayTrackItemProps) => {
           justifyContent: "flex-end",
           flex: "1",
         }}
+        onContextMenu={handleRightClick}
       >
         <Typography color="textSecondary" fontSize="0.9em">
           {durationInMinutesSeconds()}

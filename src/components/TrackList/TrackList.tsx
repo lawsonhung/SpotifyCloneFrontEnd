@@ -36,7 +36,8 @@ const TrackList = () => {
 
       {tracks.map((track: Track, index: number) => {
         return <MainDisplayTrackItem 
-        track={track} key={track.id} 
+        track={track} 
+        key={track.id} 
         index={index + 1}
          />
       })}

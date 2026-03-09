@@ -7,35 +7,41 @@ interface AddToPlaylistButtonProps {
   track: Track,
   setHovered: Dispatch<SetStateAction<boolean>>,
   setSnackbarOpen: Dispatch<SetStateAction<boolean>>,
+  handleRightClick: Function,
 }
 
-const AddtoPlaylistButton = ({ track, setHovered, setSnackbarOpen }: AddToPlaylistButtonProps) => {
+const AddtoPlaylistButton = ({ track, setHovered, setSnackbarOpen, handleRightClick }: AddToPlaylistButtonProps) => {
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const [menuItems, setMenuItems] = useState<null | Playlist[]>(null);
 
 
-  const onDisplayPlaylistsMenu = async (e: MouseEvent) => {
+  const handleDisplayPlaylistsMenu = async (e: MouseEvent) => {
     const playlists = await getPlaylists();
     setMenuItems(playlists.items);
     setAnchorEl(e.target as HTMLButtonElement);
   }
 
-  const onAddToPlaylist = (e: MouseEvent) => {
+  const handleAddToPlaylist = (e: MouseEvent) => {
     const playlistId = (e.currentTarget as HTMLElement).dataset.id as string;
 
     addItemsToPlaylist(playlistId, [track.uri]);
     
     setSnackbarOpen(true);
-    onClosePlaylistMenu();
+    handleClosePlaylistMenu();
   }
 
-  const onClosePlaylistMenu = () => {
+  const handleClosePlaylistMenu = () => {
     setAnchorEl(null);
     setHovered(false);
     setMenuItems(null);
   }
+
+  // const handleRightClick = (e: SyntheticEvent | MouseEvent) => {
+  //   e.preventDefault();
+  //   setAnchorEl(e.target as HTMLButtonElement);
+  // }
 
   return (
     <>
@@ -46,7 +52,8 @@ const AddtoPlaylistButton = ({ track, setHovered, setSnackbarOpen }: AddToPlayli
         aria-controls={open ? "menuid" : undefined}
         aria-haspopup="true"
         aria-expanded={open ? "true" : undefined}
-        onClick={(e) => onDisplayPlaylistsMenu(e as unknown as MouseEvent)}
+        onClick={(e) => handleDisplayPlaylistsMenu(e as unknown as MouseEvent)}
+        onContextMenu={handleRightClick}
       >
         +
       </IconButton>
@@ -54,7 +61,7 @@ const AddtoPlaylistButton = ({ track, setHovered, setSnackbarOpen }: AddToPlayli
         id={track.id + "add-to-playlist-menu"}
         anchorEl={anchorEl}
         open={open}
-        onClose={onClosePlaylistMenu}
+        onClose={handleClosePlaylistMenu}
         slotProps={{
           list: {
             "aria-labelledby": `${track.id}-add-to-playlist-button`
@@ -64,7 +71,7 @@ const AddtoPlaylistButton = ({ track, setHovered, setSnackbarOpen }: AddToPlayli
         {menuItems?.map(item => <MenuItem
           key={item.id}
           data-id={item.id}
-          onClick={e => onAddToPlaylist(e as unknown as MouseEvent)}
+          onClick={e => handleAddToPlaylist(e as unknown as MouseEvent)}
         >
           {item.name}
         </MenuItem>
