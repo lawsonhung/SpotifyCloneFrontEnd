@@ -1,10 +1,11 @@
-import { Box, Button, ButtonGroup, IconButton, ListItem, Menu, MenuItem, Typography } from "@mui/material";
+import { Box, Button, ButtonGroup, IconButton, ListItem, Menu, MenuItem, Snackbar, Typography } from "@mui/material";
 import type { Playlist, Track } from "@spotify/web-api-ts-sdk";
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode, type SyntheticEvent } from "react";
 import { useDispatch } from "react-redux";
 import { setCurrentTrack } from "../../features/currentTrack/currentTrackSlice";
 import { addItemsToPlaylist, getPlaylists, getTrack } from "../../api";
 import { setPlaylists } from "../../features/library/library";
+import type { SnackbarCloseReason } from "@mui/material";
 
 interface MainDisplayTrackItemProps {
   track: Track,
@@ -29,6 +30,7 @@ const MainDisplayTrackItem = ({ track, index }: MainDisplayTrackItemProps) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const [menuItems, setMenuItems] = useState<null | Playlist[]>(null);
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
 
   const durationInMinutesSeconds = (): string => {
     const totalSeconds = Math.floor(track.duration_ms / 1000);
@@ -52,6 +54,7 @@ const MainDisplayTrackItem = ({ track, index }: MainDisplayTrackItemProps) => {
     console.log("playlist id", playlistId)
     console.log("track", track);
     const addToPlaylistRes = await addItemsToPlaylist(playlistId, [track.uri]);
+    setSnackbarOpen(true);
 
     onClosePlaylistMenu();
   }
@@ -60,6 +63,11 @@ const MainDisplayTrackItem = ({ track, index }: MainDisplayTrackItemProps) => {
     setAnchorEl(null);
     setHovered(false);
     setMenuItems(null);
+  }
+
+  const onCloseSnackbar = (e: SyntheticEvent | Event, reason?: SnackbarCloseReason) => {
+    if (reason === "clickaway") return
+    setSnackbarOpen(false);
   }
 
   return (
@@ -71,6 +79,13 @@ const MainDisplayTrackItem = ({ track, index }: MainDisplayTrackItemProps) => {
         ...(hovered && { backgroundColor: "#00000080", }),
       }}
     >
+
+      <Snackbar 
+        open={snackbarOpen}
+        autoHideDuration={6000}
+        message="Added to playlist"
+        onClose={onCloseSnackbar}
+      />
 
       <Button
         variant="text"
