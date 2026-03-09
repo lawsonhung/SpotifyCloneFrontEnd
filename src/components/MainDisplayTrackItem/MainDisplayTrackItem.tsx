@@ -1,11 +1,10 @@
-import { Box, Button, ButtonGroup, IconButton, ListItem, Menu, MenuItem, Snackbar, Typography } from "@mui/material";
-import type { Playlist, Track } from "@spotify/web-api-ts-sdk";
-import { useEffect, useRef, useState, type ReactNode, type SyntheticEvent } from "react";
+import { Box, Button, ButtonGroup, ListItem, Snackbar, Typography } from "@mui/material";
+import type { Track } from "@spotify/web-api-ts-sdk";
+import { useEffect, useRef, useState, type SyntheticEvent } from "react";
 import { useDispatch } from "react-redux";
 import { setCurrentTrack } from "../../features/currentTrack/currentTrackSlice";
-import { addItemsToPlaylist, getPlaylists, getTrack } from "../../api";
-import { setPlaylists } from "../../features/library/library";
 import type { SnackbarCloseReason } from "@mui/material";
+import AddtoPlaylistButton from "../AddToPlaylistButton/AddToPlaylistButton";
 
 interface MainDisplayTrackItemProps {
   track: Track,
@@ -27,9 +26,6 @@ const MainDisplayTrackItem = ({ track, index }: MainDisplayTrackItemProps) => {
   }, [])
 
   const [hovered, setHovered] = useState(false);
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
-  const [menuItems, setMenuItems] = useState<null | Playlist[]>(null);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
 
   const durationInMinutesSeconds = (): string => {
@@ -41,28 +37,6 @@ const MainDisplayTrackItem = ({ track, index }: MainDisplayTrackItemProps) => {
 
   const onSetTrack = () => {
     dispatch(setCurrentTrack(track));
-  }
-
-  const onDisplayPlaylistsMenu = async (e: MouseEvent) => {
-    const playlists = await getPlaylists();
-    setMenuItems(playlists.items);
-    setAnchorEl(e.target as HTMLButtonElement);
-  }
-
-  const onAddToPlaylist = async (e: MouseEvent) => {
-    const playlistId = (e.currentTarget as HTMLElement).dataset.id as string;
-    console.log("playlist id", playlistId)
-    console.log("track", track);
-    const addToPlaylistRes = await addItemsToPlaylist(playlistId, [track.uri]);
-    setSnackbarOpen(true);
-
-    onClosePlaylistMenu();
-  }
-
-  const onClosePlaylistMenu = () => {
-    setAnchorEl(null);
-    setHovered(false);
-    setMenuItems(null);
   }
 
   const onCloseSnackbar = (e: SyntheticEvent | Event, reason?: SnackbarCloseReason) => {
@@ -80,7 +54,7 @@ const MainDisplayTrackItem = ({ track, index }: MainDisplayTrackItemProps) => {
       }}
     >
 
-      <Snackbar 
+      <Snackbar
         open={snackbarOpen}
         autoHideDuration={6000}
         message="Added to playlist"
@@ -157,38 +131,11 @@ const MainDisplayTrackItem = ({ track, index }: MainDisplayTrackItemProps) => {
       </Button>
 
       {hovered ?
-        <>
-          <IconButton
-            id={track.id + "-add-to-playlist-button"}
-            aria-label="add to playlist"
-            aria-controls={open ? "menuid" : undefined}
-            aria-haspopup="true"
-            aria-expanded={open ? "true" : undefined}
-            onClick={(e) => onDisplayPlaylistsMenu(e as unknown as MouseEvent)}
-          >
-            +
-          </IconButton>
-          <Menu
-            id={track.id + "add-to-playlist-menu"}
-            anchorEl={anchorEl}
-            open={open}
-            onClose={onClosePlaylistMenu}
-            slotProps={{
-              list: {
-                "aria-labelledby": `${track.id}-add-to-playlist-button`
-              }
-            }}
-          >
-            {menuItems?.map(item => <MenuItem
-              key={item.id}
-              data-id={item.id}
-              onClick={e => onAddToPlaylist(e as unknown as MouseEvent)}
-            >
-              {item.name}
-            </MenuItem>
-            )}
-          </Menu>
-        </>
+        <AddtoPlaylistButton 
+        track={track} 
+        setHovered={setHovered} 
+        setSnackbarOpen={setSnackbarOpen}
+        />
         :
         null
       }
