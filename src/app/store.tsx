@@ -3,6 +3,7 @@ import tokenReducer from "../features/token/tokenSlice";
 import currentTrackReducer from "../features/currentTrack/currentTrackSlice";
 import mainDisplayItemReducer from "../features/mainDisplayItem/mainDisplayItem";
 import userDataReducer from "../features/userData/userDataSlice";
+import libraryReducer from "../features/library/library";
 
 export const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ export const store = configureStore({
     currentTrack: currentTrackReducer,
     mainDisplayItem: mainDisplayItemReducer,
     userData: userDataReducer,
+    library: libraryReducer,
   }
 })
 

@@ -3,6 +3,7 @@ import type { Playlist } from "@spotify/web-api-ts-sdk";
 import { useDispatch } from "react-redux";
 import { setAlbumName, setAlbums, setMainDisplayItem, setNextPageOfAlbumsUrl, setNextPageOfTracksUrl, setTracks } from "../../features/mainDisplayItem/mainDisplayItem";
 import { getPlaylistItems } from "../../api/services/playlist";
+import { setNextPageOfPlaylistsUrl } from "../../features/library/library";
 
 interface LibraryPlaylistItemProps {
   playlist: Playlist,
@@ -16,12 +17,11 @@ const LibraryPlaylistItem = ({ playlist }: LibraryPlaylistItemProps) => {
     dispatch(setAlbumName(""));
     dispatch(setAlbums([]));
     dispatch(setNextPageOfAlbumsUrl(""));
-    
+
     const playlistItems = await getPlaylistItems(playlist.id);
-    console.log("playlistItems", playlistItems);
-    
+
     dispatch(setMainDisplayItem(playlist));
-    dispatch(setTracks(playlistItems.items.map((playListItem: {item: Object} ) => playListItem.item)));
+    dispatch(setTracks(playlistItems.items.map((playListItem: { item: Object }) => playListItem.item)));
     dispatch(setNextPageOfTracksUrl(playlistItems.next));
   }
 
@@ -58,16 +58,20 @@ const LibraryPlaylistItem = ({ playlist }: LibraryPlaylistItemProps) => {
             paddingRight: "0.5em",
           }}
         >
-          <Box
-            component={"img"}
-            src={playlist.images[0].url}
-            alt={playlist.name}
-            sx={{
-              objectFit: "cover",
-              height: "100%",
-              width: "100%",
-            }}
-          />
+          {playlist.images ?
+            <Box
+              component={"img"}
+              src={playlist.images[0].url}
+              alt={playlist.name}
+              sx={{
+                objectFit: "cover",
+                height: "100%",
+                width: "100%",
+              }}
+            />
+            :
+            null
+          }
         </ListItemIcon>
 
         <Stack
