@@ -1,6 +1,6 @@
 import { Box, Button, ButtonGroup, IconButton, ListItem, Menu, MenuItem, Typography } from "@mui/material";
 import type { Playlist, Track } from "@spotify/web-api-ts-sdk";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { useDispatch } from "react-redux";
 import { setCurrentTrack } from "../../features/currentTrack/currentTrackSlice";
 import { getPlaylists, getTrack } from "../../api";
@@ -37,17 +37,22 @@ const MainDisplayTrackItem = ({ track, index }: MainDisplayTrackItemProps) => {
     return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
   }
 
-  const handleClick = () => {
+  const onSetTrack = () => {
     dispatch(setCurrentTrack(track));
   }
 
-  const onAddToPlaylist = async (e: MouseEvent) => {
+  const onDisplayPlaylistsMenu = async (e: MouseEvent) => {
     const playlists = await getPlaylists();
     setMenuItems(playlists.items);
     setAnchorEl(e.target as HTMLButtonElement);
   }
 
-  const handleCloseAddtoPlaylist = () => {
+  const onAddToPlaylist = (e: MouseEvent) => {
+    console.log("id", (e.currentTarget as HTMLElement).dataset.id)
+    onClosePlaylistMenu();
+  }
+
+  const onClosePlaylistMenu = () => {
     setAnchorEl(null);
     setHovered(false);
     setMenuItems(null);
@@ -65,7 +70,7 @@ const MainDisplayTrackItem = ({ track, index }: MainDisplayTrackItemProps) => {
 
       <Button
         variant="text"
-        onClick={handleClick}
+        onClick={onSetTrack}
         sx={{
           flex: "1 1 100%",
         }}
@@ -140,7 +145,7 @@ const MainDisplayTrackItem = ({ track, index }: MainDisplayTrackItemProps) => {
             aria-controls={open ? "menuid" : undefined}
             aria-haspopup="true"
             aria-expanded={open ? "true" : undefined}
-            onClick={(e) => onAddToPlaylist(e as unknown as MouseEvent)}
+            onClick={(e) => onDisplayPlaylistsMenu(e as unknown as MouseEvent)}
           >
             +
           </IconButton>
@@ -148,7 +153,7 @@ const MainDisplayTrackItem = ({ track, index }: MainDisplayTrackItemProps) => {
             id={track.id + "add-to-playlist-menu"}
             anchorEl={anchorEl}
             open={open}
-            onClose={handleCloseAddtoPlaylist}
+            onClose={onClosePlaylistMenu}
             slotProps={{
               list: {
                 "aria-labelledby": `${track.id}-add-to-playlist-button`
@@ -157,14 +162,12 @@ const MainDisplayTrackItem = ({ track, index }: MainDisplayTrackItemProps) => {
           >
             {menuItems?.map(item => <MenuItem
               key={item.id}
-              onClick={handleCloseAddtoPlaylist}
+              data-id={item.id}
+              onClick={e => onAddToPlaylist(e as unknown as MouseEvent)}
             >
               {item.name}
             </MenuItem>
             )}
-            <MenuItem onClick={handleCloseAddtoPlaylist}>
-              PlaylistNamePlaceholder
-            </MenuItem>
           </Menu>
         </>
         :
@@ -173,7 +176,7 @@ const MainDisplayTrackItem = ({ track, index }: MainDisplayTrackItemProps) => {
 
       <Button
         variant="text"
-        onClick={handleClick}
+        onClick={onSetTrack}
         sx={{
           justifyContent: "flex-end",
           flex: "1",

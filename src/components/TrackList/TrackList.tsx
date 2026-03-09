@@ -3,9 +3,8 @@ import type { RootState } from "../../app/store";
 import { Button, Stack, Typography } from "@mui/material";
 import type { Playlist, Track } from "@spotify/web-api-ts-sdk";
 import MainDisplayTrackItem from "../MainDisplayTrackItem/MainDisplayTrackItem";
-import { getNextPageOfItems, getPlaylists } from "../../api";
+import { getNextPageOfItems } from "../../api";
 import { setNextPageOfTracksUrl, setTracks } from "../../features/mainDisplayItem/mainDisplayItem";
-import { useState } from "react";
 
 const TrackList = () => {
 
@@ -15,13 +14,6 @@ const TrackList = () => {
   const albumName = useSelector((state: RootState) => state.mainDisplayItem.albumName);
   const tracks = useSelector((state: RootState) => state.mainDisplayItem.tracks);
   const nextPageOfTracksUrl = useSelector((state: RootState) => state.mainDisplayItem.nextPageOfTracksUrl);
-
-  const [playlists, setPlaylists] = useState<Function | Playlist[]>(async () => {
-    const playlistRes = await getPlaylists();
-    return playlistRes.items;
-  });
-
-  console.log("playlists", playlists)
 
   const handleClick = async () => {
     const nextPage = await getNextPageOfItems(nextPageOfTracksUrl);
