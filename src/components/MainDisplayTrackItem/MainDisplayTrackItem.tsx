@@ -1,9 +1,10 @@
 import { Box, Button, ButtonGroup, IconButton, ListItem, Menu, MenuItem, Typography } from "@mui/material";
-import type { Track } from "@spotify/web-api-ts-sdk";
+import type { Playlist, Track } from "@spotify/web-api-ts-sdk";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { setCurrentTrack } from "../../features/currentTrack/currentTrackSlice";
-import { getTrack } from "../../api";
+import { getPlaylists, getTrack } from "../../api";
+import { setPlaylists } from "../../features/library/library";
 
 interface MainDisplayTrackItemProps {
   track: Track,
@@ -27,6 +28,7 @@ const MainDisplayTrackItem = ({ track, index }: MainDisplayTrackItemProps) => {
   const [hovered, setHovered] = useState(false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+  const [menuItems, setMenuItems] = useState<null | Playlist[]>(null);
 
   const durationInMinutesSeconds = (): string => {
     const totalSeconds = Math.floor(track.duration_ms / 1000);
@@ -40,12 +42,15 @@ const MainDisplayTrackItem = ({ track, index }: MainDisplayTrackItemProps) => {
   }
 
   const onAddToPlaylist = async (e: MouseEvent) => {
+    const playlists = await getPlaylists();
+    setMenuItems(playlists.items);
     setAnchorEl(e.target as HTMLButtonElement);
   }
 
   const handleCloseAddtoPlaylist = () => {
     setAnchorEl(null);
     setHovered(false);
+    setMenuItems(null);
   }
 
   return (
@@ -145,11 +150,18 @@ const MainDisplayTrackItem = ({ track, index }: MainDisplayTrackItemProps) => {
             open={open}
             onClose={handleCloseAddtoPlaylist}
             slotProps={{
-              list : {
+              list: {
                 "aria-labelledby": `${track.id}-add-to-playlist-button`
               }
             }}
           >
+            {menuItems?.map(item => <MenuItem
+              key={item.id}
+              onClick={handleCloseAddtoPlaylist}
+            >
+              {item.name}
+            </MenuItem>
+            )}
             <MenuItem onClick={handleCloseAddtoPlaylist}>
               PlaylistNamePlaceholder
             </MenuItem>

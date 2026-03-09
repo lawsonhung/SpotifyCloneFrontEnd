@@ -14,8 +14,7 @@ const Player = () => {
 
   const getOAuthToken: Props["getOAuthToken"] = async (cb: Function) => {
     const response = await refreshToken();
-    console.log("getting OAuth token");
-    console.log("response", response)
+    console.log("getting OAuth token", response)
     let { access_token } = response;
     dispatch(setToken(access_token));
     cb(token);
