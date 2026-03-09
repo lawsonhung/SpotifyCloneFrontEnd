@@ -1,4 +1,4 @@
-import { Box, Button, ListItem, Typography } from "@mui/material";
+import { Box, Button, ButtonGroup, IconButton, ListItem, Typography } from "@mui/material";
 import type { Track } from "@spotify/web-api-ts-sdk";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
@@ -38,87 +38,109 @@ const MainDisplayTrackItem = ({ track, index }: MainDisplayTrackItemProps) => {
   }
 
   return (
-    <Button
+    <ButtonGroup
       key={track.id}
-      variant="text"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      onClick={handleClick}
+      sx={{
+        ...(hovered && { backgroundColor: "#00000080", }),
+      }}
     >
 
-      <Box
+      <Button
+        variant="text"
+        onClick={handleClick}
         sx={{
-          width: "2em",
-        }}
-      >
-        {hovered ?
-          <Typography
-            color="textSecondary"
-            marginRight="1em"
-          >
-            ▶
-          </Typography>
-          :
-          <Typography
-            color="textSecondary"
-            marginRight="1em"
-          >
-            {index}
-          </Typography>
-        }
-      </Box>
-
-      <Box
-        sx={{
-          display: "flex",
-          width: "100%",
+          flex: "1 1 100%",
         }}
       >
 
-        {imgUrl.current ?
-          <Box
-            component={"img"}
-            src={imgUrl.current}
-            alt={track.name}
+        <Box
+          sx={{
+            width: "2em",
+          }}
+        >
+          {hovered ?
+            <Typography
+              color="textSecondary"
+              marginRight="1em"
+            >
+              ▶
+            </Typography>
+            :
+            <Typography
+              color="textSecondary"
+              marginRight="1em"
+            >
+              {index}
+            </Typography>
+          }
+        </Box>
+
+        <Box
+          sx={{
+            display: "flex",
+            width: "100%",
+          }}
+        >
+
+          {imgUrl.current ?
+            <Box
+              component={"img"}
+              src={imgUrl.current}
+              alt={track.name}
+              sx={{
+                objectFit: "cover",
+                maxHeight: "3em",
+              }}
+            />
+            :
+            null
+          }
+
+          <ListItem
             sx={{
-              objectFit: "cover",
-              maxHeight: "3em",
+              textTransform: "none",
             }}
-          />
-          :
-          null
-        }
+          >
+            <Typography variant="body1" color="textPrimary">
+              {track.name}
+              {track.explicit ?
+                " • Explicit"
+                :
+                null
+              }
+            </Typography>
+          </ListItem>
 
-        <ListItem
-          sx={{
-            textTransform: "none",
-            flex: "1 1 100%"
-          }}
+        </Box>
+      </Button>
+
+      {hovered ?
+        <Button
+          variant="text"
         >
-          <Typography variant="body1" color="textPrimary">
-            {track.name}
-            {track.explicit ?
-              " • Explicit"
-              :
-              null
-            }
-          </Typography>
-        </ListItem>
+          +
+        </Button>
+        :
+        null
+      }
 
-        <ListItem
-          sx={{
-            justifyContent: "flex-end",
-            flex: "1",
-          }}
-        >
-          <Typography color="textSecondary" fontSize="0.9em">
-            {durationInMinutesSeconds()}
-          </Typography>
-        </ListItem>
+      <Button
+        variant="text"
+        onClick={handleClick}
+        sx={{
+          justifyContent: "flex-end",
+          flex: "1",
+        }}
+      >
+        <Typography color="textSecondary" fontSize="0.9em">
+          {durationInMinutesSeconds()}
+        </Typography>
+      </Button>
 
-      </Box>
 
-    </Button>
+    </ButtonGroup>
   )
 }
 
