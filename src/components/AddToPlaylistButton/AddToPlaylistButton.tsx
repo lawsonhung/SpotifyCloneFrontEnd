@@ -22,13 +22,12 @@ const AddtoPlaylistButton = ({ track, setHovered, setSnackbarOpen }: AddToPlayli
     setAnchorEl(e.target as HTMLButtonElement);
   }
 
-  const onAddToPlaylist = async (e: MouseEvent) => {
+  const onAddToPlaylist = (e: MouseEvent) => {
     const playlistId = (e.currentTarget as HTMLElement).dataset.id as string;
-    console.log("playlist id", playlistId)
-    console.log("track", track);
-    const addToPlaylistRes = await addItemsToPlaylist(playlistId, [track.uri]);
-    setSnackbarOpen(true);
 
+    addItemsToPlaylist(playlistId, [track.uri]);
+    
+    setSnackbarOpen(true);
     onClosePlaylistMenu();
   }
 

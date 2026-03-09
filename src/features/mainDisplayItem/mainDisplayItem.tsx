@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import type { Album, Artist, Audiobook, Episode, Playlist, Show, Track } from "@spotify/web-api-ts-sdk";
 
 interface MainDisplayItemInterface {
-  value: {},
+  value: {} | Track | Album | Artist | Playlist | Show | Episode | Audiobook,
   albumName: string,
   tracks: Track[],
   nextPageOfTracksUrl: string,
@@ -10,7 +10,7 @@ interface MainDisplayItemInterface {
   nextPageOfAlbumsUrl: string,
 }
 
-export type MainDisplayItemState = Track | Album | Artist | Playlist | Show | Episode | Audiobook | MainDisplayItemInterface;
+export type MainDisplayItemState = MainDisplayItemInterface;
 
 const initialState: MainDisplayItemState = {
   value: {},

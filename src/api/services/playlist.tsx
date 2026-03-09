@@ -21,7 +21,22 @@ export const createPlaylist = async (name: string) => {
 
 export const addItemsToPlaylist = async (playlistId: string, uriArray: string[]) => {
   const url = `/playlists/${playlistId}/items`;
-  const payload = {"uris": uriArray};
+  const payload = { "uris": uriArray };
   const res = await SpotifyAPIClient.post(url, payload);
+  return res.data;
+}
+
+export const deleteItemFromPlaylist = async (playlistId: string, uriString: string) => {
+  const url = `/playlists/${playlistId}/items`;
+  const payload = {
+    data: {
+      "items": [
+        {
+          "uri": uriString,
+        }
+      ],
+    }
+  };
+  const res = await SpotifyAPIClient.delete(url, payload);
   return res.data;
 }

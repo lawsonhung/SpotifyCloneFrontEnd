@@ -1,10 +1,12 @@
-import { Box, Button, ButtonGroup, ListItem, Snackbar, Typography } from "@mui/material";
-import type { Track } from "@spotify/web-api-ts-sdk";
+import { Box, Button, ButtonGroup, ListItem, Menu, MenuItem, Snackbar, Typography } from "@mui/material";
+import type { Playlist, Track } from "@spotify/web-api-ts-sdk";
 import { useEffect, useRef, useState, type SyntheticEvent } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setCurrentTrack } from "../../features/currentTrack/currentTrackSlice";
 import type { SnackbarCloseReason } from "@mui/material";
 import AddtoPlaylistButton from "../AddToPlaylistButton/AddToPlaylistButton";
+import type { RootState } from "../../app/store";
+import { deleteItemFromPlaylist } from "../../api";
 
 interface MainDisplayTrackItemProps {
   track: Track,
@@ -14,6 +16,9 @@ interface MainDisplayTrackItemProps {
 const MainDisplayTrackItem = ({ track, index }: MainDisplayTrackItemProps) => {
 
   const dispatch = useDispatch();
+
+  const mainDisplayItem = useSelector((state: RootState) => state.mainDisplayItem.value)
+  const mainDisplayType = (mainDisplayItem as Playlist).type
 
   const imgUrl = useRef<string | null>(null);
 
@@ -27,6 +32,7 @@ const MainDisplayTrackItem = ({ track, index }: MainDisplayTrackItemProps) => {
 
   const [hovered, setHovered] = useState(false);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const durationInMinutesSeconds = (): string => {
     const totalSeconds = Math.floor(track.duration_ms / 1000);
@@ -39,9 +45,24 @@ const MainDisplayTrackItem = ({ track, index }: MainDisplayTrackItemProps) => {
     dispatch(setCurrentTrack(track));
   }
 
-  const onCloseSnackbar = (e: SyntheticEvent | Event, reason?: SnackbarCloseReason) => {
+  const onCloseSnackbar = (_: SyntheticEvent | Event, reason?: SnackbarCloseReason) => {
     if (reason === "clickaway") return
     setSnackbarOpen(false);
+  }
+
+  const handleRightClick = (e: SyntheticEvent | MouseEvent) => {
+    e.preventDefault();
+    setAnchorEl(e.target as HTMLButtonElement);
+  }
+
+  const handleContextMenuClose = () => {
+    setAnchorEl(null);
+    setHovered(false);
+  }
+
+  const handleDeletePlaylist = (_: MouseEvent) => {
+    deleteItemFromPlaylist((mainDisplayItem as Playlist).id, track.uri);
+    handleContextMenuClose();
   }
 
   return (
@@ -67,6 +88,7 @@ const MainDisplayTrackItem = ({ track, index }: MainDisplayTrackItemProps) => {
         sx={{
           flex: "1 1 100%",
         }}
+        onContextMenu={handleRightClick}
       >
 
         <Box
@@ -131,10 +153,10 @@ const MainDisplayTrackItem = ({ track, index }: MainDisplayTrackItemProps) => {
       </Button>
 
       {hovered ?
-        <AddtoPlaylistButton 
-        track={track} 
-        setHovered={setHovered} 
-        setSnackbarOpen={setSnackbarOpen}
+        <AddtoPlaylistButton
+          track={track}
+          setHovered={setHovered}
+          setSnackbarOpen={setSnackbarOpen}
         />
         :
         null
@@ -153,7 +175,17 @@ const MainDisplayTrackItem = ({ track, index }: MainDisplayTrackItemProps) => {
         </Typography>
       </Button>
 
-
+      {(mainDisplayType == "playlist") ?
+        <Menu
+          anchorEl={anchorEl}
+          open={Boolean(anchorEl)}
+          onClose={handleContextMenuClose}
+        >
+          <MenuItem onClick={e => handleDeletePlaylist(e as unknown as MouseEvent)}>Delete</MenuItem>
+        </Menu>
+        : 
+        null
+      }
     </ButtonGroup>
   )
 }
