@@ -1,5 +1,5 @@
 import { Button, Paper, Stack, Typography } from "@mui/material"
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { getPlaylists } from "../../api/services/playlist";
 import LibraryPlaylistItem from "../../components/LibraryPlaylistItem/LibraryPlaylistItem";
 import type { Page, Playlist } from "@spotify/web-api-ts-sdk";

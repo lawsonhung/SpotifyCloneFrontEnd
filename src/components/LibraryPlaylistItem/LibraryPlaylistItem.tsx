@@ -3,7 +3,6 @@ import type { Playlist } from "@spotify/web-api-ts-sdk";
 import { useDispatch } from "react-redux";
 import { setAlbumName, setAlbums, setMainDisplayItem, setNextPageOfAlbumsUrl, setNextPageOfTracksUrl, setTracks } from "../../features/mainDisplayItem/mainDisplayItem";
 import { getPlaylistItems } from "../../api/services/playlist";
-import { setNextPageOfPlaylistsUrl } from "../../features/library/library";
 
 interface LibraryPlaylistItemProps {
   playlist: Playlist,

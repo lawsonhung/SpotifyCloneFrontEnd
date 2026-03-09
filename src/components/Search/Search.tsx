@@ -38,15 +38,15 @@ const Search = ({ searchResults, setSearchResults }: SearchProps) => {
     if (item.type == "track")
       dispatch(setCurrentTrack(item));
     else {
-      // dispatch(setMainDisplayItem(item));
+      dispatch(setMainDisplayItem(item));
       const albumsRes = await getAlbumsBy(item.id);
-      // dispatch(setAlbumName(albumsRes.items[0].name));
-      // dispatch(setAlbums(albumsRes.items));
-      // dispatch(setNextPageOfAlbumsUrl(albumsRes.next));
+      dispatch(setAlbumName(albumsRes.items[0].name));
+      dispatch(setAlbums(albumsRes.items));
+      dispatch(setNextPageOfAlbumsUrl(albumsRes.next));
 
-      // const tracksRes = await getTracksInAlbum(albumsRes.items[0].id);
-      // dispatch(setTracks(tracksRes.items));
-      // dispatch(setNextPageOfTracksUrl(tracksRes.next));
+      const tracksRes = await getTracksInAlbum(albumsRes.items[0].id);
+      dispatch(setTracks(tracksRes.items));
+      dispatch(setNextPageOfTracksUrl(tracksRes.next));
     }
   }
 

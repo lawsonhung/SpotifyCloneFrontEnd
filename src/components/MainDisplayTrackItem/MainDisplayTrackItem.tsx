@@ -1,6 +1,6 @@
 import { Box, Button, ListItem, Typography } from "@mui/material";
 import type { Track } from "@spotify/web-api-ts-sdk";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { setCurrentTrack } from "../../features/currentTrack/currentTrackSlice";
 import { getTrack } from "../../api";
@@ -14,14 +14,14 @@ const MainDisplayTrackItem = ({ track, index }: MainDisplayTrackItemProps) => {
 
   const dispatch = useDispatch();
 
-  const [imgUrl, setImgUrl] = useState<string | null>(null);
+  const imgUrl = useRef<string | null>(null);
 
   useEffect(() => {
     const getTrackInfo = async () => {
       const trackInfo = await getTrack(track.id);
-      setImgUrl(trackInfo.album.images[1].url);
+      imgUrl.current = trackInfo.album.images[1].url;
     }
-    // getTrackInfo();
+    getTrackInfo();
   }, [])
 
   const [hovered, setHovered] = useState(false);
@@ -75,10 +75,10 @@ const MainDisplayTrackItem = ({ track, index }: MainDisplayTrackItemProps) => {
         }}
       >
 
-        {imgUrl ?
+        {imgUrl.current ?
           <Box
             component={"img"}
-            src={imgUrl}
+            src={imgUrl.current}
             alt={track.name}
             sx={{
               objectFit: "cover",
