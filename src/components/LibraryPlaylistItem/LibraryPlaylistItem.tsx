@@ -1,8 +1,9 @@
-import { Box, ListItem, ListItemButton, ListItemIcon, Stack, Typography } from "@mui/material";
+import { Box, ListItem, ListItemButton, ListItemIcon, Menu, MenuItem, Stack, Typography } from "@mui/material";
 import type { Playlist } from "@spotify/web-api-ts-sdk";
 import { useDispatch } from "react-redux";
 import { setAlbumName, setAlbums, setMainDisplayItem, setNextPageOfAlbumsUrl, setNextPageOfTracksUrl, setTracks } from "../../features/mainDisplayItem/mainDisplayItem";
-import { getPlaylistItems } from "../../api/services/playlist";
+import { deletePlaylist, getPlaylistItems } from "../../api/services/playlist";
+import { useState, type SyntheticEvent } from "react";
 
 interface LibraryPlaylistItemProps {
   playlist: Playlist,
@@ -11,6 +12,8 @@ interface LibraryPlaylistItemProps {
 const LibraryPlaylistItem = ({ playlist }: LibraryPlaylistItemProps) => {
 
   const dispatch = useDispatch();
+
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
 
   const handleClick = async () => {
     dispatch(setAlbumName(""));
@@ -22,6 +25,20 @@ const LibraryPlaylistItem = ({ playlist }: LibraryPlaylistItemProps) => {
     dispatch(setMainDisplayItem(playlist));
     dispatch(setTracks(playlistItems.items.map((playListItem: { item: Object }) => playListItem.item)));
     dispatch(setNextPageOfTracksUrl(playlistItems.next));
+  }
+
+  const handleRightClick = (e: SyntheticEvent | MouseEvent) => {
+    e.preventDefault();
+    setAnchorEl(e.target as HTMLButtonElement);
+  }
+
+  const handleContextMenuClose = () => {
+    setAnchorEl(null);
+  }
+
+  const handleDeletePlaylist = (_: MouseEvent) => {
+    deletePlaylist(playlist.uri);
+    handleContextMenuClose();
   }
 
   return (
@@ -49,6 +66,7 @@ const LibraryPlaylistItem = ({ playlist }: LibraryPlaylistItemProps) => {
         }}
         disabled={playlist.owner.id !== import.meta.env.VITE_MY_SPOTIFY_ID}
         onClick={handleClick}
+        onContextMenu={handleRightClick}
       >
 
         <ListItemIcon
@@ -108,6 +126,18 @@ const LibraryPlaylistItem = ({ playlist }: LibraryPlaylistItemProps) => {
           </Typography>
         </Stack>
       </ListItemButton>
+
+      <Menu
+        anchorEl={anchorEl}
+        open={Boolean(anchorEl)}
+        onClose={handleContextMenuClose}
+      >
+        <MenuItem
+          onClick={e => handleDeletePlaylist(e as unknown as MouseEvent)}
+        >
+          Delete
+        </MenuItem>
+      </Menu>
     </ListItem >
   )
 }

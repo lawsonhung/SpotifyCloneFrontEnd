@@ -40,3 +40,9 @@ export const deleteItemFromPlaylist = async (playlistId: string, uriString: stri
   const res = await SpotifyAPIClient.delete(url, payload);
   return res.data;
 }
+
+export const deletePlaylist = async (uri: string) => {
+  const url = `/me/library?uris=${uri}`;
+  const res = await SpotifyAPIClient.delete(url);
+  return res.data;
+}

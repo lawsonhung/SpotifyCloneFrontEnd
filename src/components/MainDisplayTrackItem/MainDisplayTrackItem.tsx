@@ -60,7 +60,7 @@ const MainDisplayTrackItem = ({ track, index }: MainDisplayTrackItemProps) => {
     setHovered(false);
   }
 
-  const handleDeletePlaylist = (_: MouseEvent) => {
+  const handleDeleteItemFromPlaylist = (_: MouseEvent) => {
     deleteItemFromPlaylist((mainDisplayItem as Playlist).id, track.uri);
     handleContextMenuClose();
   }
@@ -181,9 +181,13 @@ const MainDisplayTrackItem = ({ track, index }: MainDisplayTrackItemProps) => {
           open={Boolean(anchorEl)}
           onClose={handleContextMenuClose}
         >
-          <MenuItem onClick={e => handleDeletePlaylist(e as unknown as MouseEvent)}>Delete</MenuItem>
+          <MenuItem
+            onClick={e => handleDeleteItemFromPlaylist(e as unknown as MouseEvent)}
+          >
+            Delete
+            </MenuItem>
         </Menu>
-        : 
+        :
         null
       }
     </ButtonGroup>
