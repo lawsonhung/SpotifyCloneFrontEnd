@@ -10,7 +10,7 @@ const SpotifyAPIClient = axios.create({
   },
 });
 
-axiosThrottle.use(SpotifyAPIClient, { requestsPerSecond: 2 });
+// axiosThrottle.use(SpotifyAPIClient, { requestsPerSecond: 2 });
 
 SpotifyAPIClient.interceptors.request.use(config => {
   return config;

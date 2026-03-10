@@ -1,9 +1,11 @@
 import SpotifyAPIClient from "../spotifyClient";
 
-export const search = async (searchTerm: string) => {
+export const search = async (searchTerm: string, signal: AbortSignal) => {
   // const url = `/search?q=${searchTerm}&type=album,artist,playlist,track,show,episode,audiobook`;
   const url = `/search?q=${searchTerm}&type=album,artist,playlist,track`;
-  const res = await SpotifyAPIClient.get(url);
+  const res = await SpotifyAPIClient.get(url, { signal: signal });
+  if (res.status == 200)
+    console.log("👀 Searched for", searchTerm);
   return res.data;
 }
 
@@ -17,7 +19,7 @@ export const getAlbumsBy = async (artistId: string) => {
 export const getTracksInAlbum = async (albumId: string) => {
   console.log("⏳⏳ getting tracks in album");
   const url = `/albums/${albumId}/tracks?limit=5`;
-  console.log("😭 Retry at 10:30pm Monday")
+  console.log("🔒 Locked for error 429 safety")
   // const res = await SpotifyAPIClient.get(url);
   // return res.data;
 }
@@ -25,7 +27,7 @@ export const getTracksInAlbum = async (albumId: string) => {
 export const getTrack = async (trackId: string) => {
   console.log("⏳⏳ getting track");
   const url = `/tracks/${trackId}`;
-  console.log("😭 Retry at 10:30pm Monday")
+  console.log("🔒 Locked for error 429 safety")
   // const res = await SpotifyAPIClient.get(url);
   // return res.data;
 }

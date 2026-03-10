@@ -1,5 +1,5 @@
 import { Autocomplete, TextField, type AutocompleteRenderInputParams } from "@mui/material";
-import { type ChangeEventHandler, type Dispatch, type SetStateAction, type SyntheticEvent } from "react";
+import { useRef, type ChangeEventHandler, type Dispatch, type SetStateAction, type SyntheticEvent } from "react";
 import { getAlbumsBy, getTracksInAlbum, search } from "../../api/services/search";
 import type { Playlist } from "@spotify/web-api-ts-sdk";
 import SearchMenuItem from "../SearchMenuItem/SearchMenuItem";
@@ -7,6 +7,7 @@ import type { SearchMenuItemOption, SearchMenuItemType } from "../../types/Searc
 import { useDispatch } from "react-redux";
 import { setCurrentTrack } from "../../features/currentTrack/currentTrackSlice";
 import { setAlbumName, setAlbums, setMainDisplayItem, setNextPageOfAlbumsUrl, setNextPageOfTracksUrl, setTracks } from "../../features/mainDisplayItem/mainDisplayItem";
+import axios from "axios";
 
 interface SearchProps {
   searchResults: SearchMenuItemType[],
@@ -16,21 +17,34 @@ interface SearchProps {
 const Search = ({ searchResults, setSearchResults }: SearchProps) => {
 
   const dispatch = useDispatch();
+  const controllerRef = useRef<null | AbortController>(null);
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = async (e) => {
-    const results = await search(e.target.value);
-    let allSearchResults = [];
-    allSearchResults.push(...results.tracks.items);
-    allSearchResults.push(...results.artists.items);
-    allSearchResults.push(...results.albums.items);
-    results.playlists.items.map((playlist: Playlist) => {
-      if (playlist) allSearchResults.push(playlist);
-    })
-    // allSearchResults.push(...results.shows.items);
-    // allSearchResults.push(...results.episodes.items);
-    // allSearchResults.push(...results.audiobooks.items);
+    if (controllerRef.current)
+      controllerRef.current.abort();
 
-    setSearchResults(allSearchResults);
+    controllerRef.current = new AbortController();
+
+    try {
+      const results = await search(e.target.value, controllerRef.current.signal);
+      let allSearchResults = [];
+      allSearchResults.push(...results.tracks.items);
+      allSearchResults.push(...results.artists.items);
+      allSearchResults.push(...results.albums.items);
+      results.playlists.items.map((playlist: Playlist) => {
+        if (playlist) allSearchResults.push(playlist);
+      })
+      // allSearchResults.push(...results.shows.items);
+      // allSearchResults.push(...results.episodes.items);
+      // allSearchResults.push(...results.audiobooks.items);
+
+      setSearchResults(allSearchResults);
+    } catch (error) {
+      if (axios.isCancel(error))
+        console.log("Request canceled:", error.message);
+      else
+        console.error("Request failed:", error);
+    }
   }
 
   const handleAutocompleteChange = async (_: SyntheticEvent, newValue: SearchMenuItemOption | null) => {
@@ -45,8 +59,8 @@ const Search = ({ searchResults, setSearchResults }: SearchProps) => {
       dispatch(setNextPageOfAlbumsUrl(albumsRes.next));
 
       const tracksRes = await getTracksInAlbum(albumsRes.items[0].id);
-      dispatch(setTracks(tracksRes.items));
-      dispatch(setNextPageOfTracksUrl(tracksRes.next));
+      // dispatch(setTracks(tracksRes.items));
+      // dispatch(setNextPageOfTracksUrl(tracksRes.next));
     }
   }
 
@@ -54,7 +68,7 @@ const Search = ({ searchResults, setSearchResults }: SearchProps) => {
     <Autocomplete
       renderInput={(params: AutocompleteRenderInputParams): React.ReactNode => {
         return <TextField
-        {...params}
+          {...params}
           name="searchResults"
           label="Search"
           variant="standard"

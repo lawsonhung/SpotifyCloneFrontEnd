@@ -2,7 +2,7 @@ import { Box, Button, Container, Grid, Stack, Typography } from "@mui/material";
 import type { Album } from "@spotify/web-api-ts-sdk";
 import { getTracksInAlbum } from "../../api";
 import { useDispatch } from "react-redux";
-import { setAlbumName, setNextPageOfTracksUrl, setTracks } from "../../features/mainDisplayItem/mainDisplayItem";
+import { setAlbumName, setMainDisplayItem, setNextPageOfTracksUrl, setTracks } from "../../features/mainDisplayItem/mainDisplayItem";
 
 interface MainDisplayAlbumItem {
   album: Album;
@@ -15,9 +15,10 @@ const MainDisplayAlbumItem = ({ album }: MainDisplayAlbumItem) => {
 
   const handleClick = async () => {
     const tracks = await getTracksInAlbum(album.id);
+    dispatch(setMainDisplayItem(album));
     dispatch(setAlbumName(album.name));
-    dispatch(setTracks(tracks.items));
-    dispatch(setNextPageOfTracksUrl(tracks.next));
+    // dispatch(setTracks(tracks.items));
+    // dispatch(setNextPageOfTracksUrl(tracks.next));
   }
 
   return (

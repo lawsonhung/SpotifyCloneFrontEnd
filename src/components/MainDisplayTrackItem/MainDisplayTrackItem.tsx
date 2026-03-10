@@ -1,11 +1,11 @@
 import { Box, Button, ButtonGroup, ListItem, Menu, MenuItem, Typography } from "@mui/material";
-import type { Playlist, Track } from "@spotify/web-api-ts-sdk";
+import type { Album, Playlist, Track } from "@spotify/web-api-ts-sdk";
 import { useEffect, useRef, useState, type SyntheticEvent } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setCurrentTrack } from "../../features/currentTrack/currentTrackSlice";
 import AddtoPlaylistButton from "../AddToPlaylistButton/AddToPlaylistButton";
 import type { RootState } from "../../app/store";
-import { deleteItemFromPlaylist } from "../../api";
+import { deleteItemFromPlaylist, getTrack } from "../../api";
 import { setSnackbarMessage, setSnackbarOpen } from "../../features/snackbar/snackbar";
 
 interface MainDisplayTrackItemProps {
@@ -23,15 +23,19 @@ const MainDisplayTrackItem = ({ track, index }: MainDisplayTrackItemProps) => {
   const imgUrl = useRef<string | null>(null);
 
   useEffect(() => {
-    // const getTrackInfo = async () => {
-    //   const trackInfo = await getTrack(track.id);
-    //   imgUrl.current = trackInfo.album.images[1].url;
-    // }
-    // getTrackInfo();
+    const getTrackInfo = async () => {
+      if (mainDisplayType == "album"
+        && (mainDisplayItem as Album).images.length > 1)
+        imgUrl.current = (mainDisplayItem as Album).images[1].url;
+      else {
+        // const trackInfo = await getTrack(track.id);
+        // imgUrl.current = trackInfo.album.images[1].url;
+      }
+    }
+    getTrackInfo();
   }, [])
 
   const [hovered, setHovered] = useState(false);
-
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [showComponent, setShowComponent] = useState<boolean>(true);
 
