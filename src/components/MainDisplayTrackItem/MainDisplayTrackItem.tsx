@@ -6,7 +6,7 @@ import { setCurrentTrack } from "../../features/currentTrack/currentTrackSlice";
 import AddtoPlaylistButton from "../AddToPlaylistButton/AddToPlaylistButton";
 import type { RootState } from "../../app/store";
 import { deleteItemFromPlaylist } from "../../api";
-import { setMessage, setOpen } from "../../features/snackbar/snackbar";
+import { setSnackbarMessage, setSnackbarOpen } from "../../features/snackbar/snackbar";
 
 interface MainDisplayTrackItemProps {
   track: Track,
@@ -59,8 +59,8 @@ const MainDisplayTrackItem = ({ track, index }: MainDisplayTrackItemProps) => {
   const handleDeleteItemFromPlaylist = (_: MouseEvent) => {
     deleteItemFromPlaylist((mainDisplayItem as Playlist).id, track.uri);
     handleContextMenuClose();
-    dispatch(setMessage(`Deleted ${track.name} from ${(mainDisplayItem as Playlist).name}`));
-    dispatch(setOpen(true));
+    dispatch(setSnackbarMessage(`Deleted ${track.name} from ${(mainDisplayItem as Playlist).name}`));
+    dispatch(setSnackbarOpen(true));
     setShowComponent(false);
   }
 

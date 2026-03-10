@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { setAlbumName, setAlbums, setMainDisplayItem, setNextPageOfAlbumsUrl, setNextPageOfTracksUrl, setTracks } from "../../features/mainDisplayItem/mainDisplayItem";
 import { deletePlaylist, getPlaylistItems } from "../../api/services/playlist";
 import { useState, type SyntheticEvent } from "react";
+import { setSnackbarMessage, setSnackbarOpen } from "../../features/snackbar/snackbar";
 
 interface LibraryPlaylistItemProps {
   playlist: Playlist,
@@ -40,6 +41,9 @@ const LibraryPlaylistItem = ({ playlist }: LibraryPlaylistItemProps) => {
   const handleDeletePlaylist = (_: MouseEvent) => {
     deletePlaylist(playlist.uri);
     handleContextMenuClose();
+    setShowComponent(false);
+    dispatch(setSnackbarOpen(true));
+    dispatch(setSnackbarMessage(`Deleted ${playlist.name}`));
   }
 
   return (

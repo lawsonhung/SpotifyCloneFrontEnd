@@ -2,7 +2,7 @@ import { Snackbar, type SnackbarCloseReason } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../../app/store";
 import type { SyntheticEvent } from "react";
-import { setOpen } from "../../features/snackbar/snackbar";
+import { setSnackbarOpen } from "../../features/snackbar/snackbar";
 
 const MainSnackbar = () => {
 
@@ -13,7 +13,7 @@ const MainSnackbar = () => {
 
   const handleCloseSnackbar = (_: SyntheticEvent | Event, reason?: SnackbarCloseReason) => {
     if (reason === "clickaway") return;
-    dispatch(setOpen(false));
+    dispatch(setSnackbarOpen(false));
   }
 
   return (

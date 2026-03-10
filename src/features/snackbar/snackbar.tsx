@@ -14,15 +14,15 @@ export const snackbarSlice = createSlice({
   name: "snackbar",
   initialState,
   reducers: {
-    setOpen: (state, action: PayloadAction<boolean>) => {
+    setSnackbarOpen: (state, action: PayloadAction<boolean>) => {
       state.open = action.payload;
     },
-    setMessage: (state, action: PayloadAction<string | null>) => {
+    setSnackbarMessage: (state, action: PayloadAction<string | null>) => {
       state.message = action.payload;
     },
   }
 })
 
-export const {setOpen, setMessage} = snackbarSlice.actions;
+export const {setSnackbarOpen, setSnackbarMessage} = snackbarSlice.actions;
 
 export default snackbarSlice.reducer;

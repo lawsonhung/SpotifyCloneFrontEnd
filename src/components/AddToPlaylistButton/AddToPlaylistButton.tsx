@@ -3,7 +3,7 @@ import type { Playlist, Track } from "@spotify/web-api-ts-sdk";
 import { useState, type Dispatch, type SetStateAction } from "react";
 import { addItemsToPlaylist, getPlaylists } from "../../api";
 import { useDispatch } from "react-redux";
-import { setMessage, setOpen } from "../../features/snackbar/snackbar";
+import { setSnackbarMessage, setSnackbarOpen } from "../../features/snackbar/snackbar";
 
 interface AddToPlaylistButtonProps {
   track: Track,
@@ -31,8 +31,8 @@ const AddtoPlaylistButton = ({ track, setHovered, handleRightClick }: AddToPlayl
 
     addItemsToPlaylist(playlistId, [track.uri]);
 
-    dispatch(setMessage(`Added ${track.name} to ${playlistName}`));
-    dispatch(setOpen(true));
+    dispatch(setSnackbarMessage(`Added ${track.name} to ${playlistName}`));
+    dispatch(setSnackbarOpen(true));
     handleClosePlaylistMenu();
   }
 
