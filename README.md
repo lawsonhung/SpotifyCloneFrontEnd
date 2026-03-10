@@ -56,9 +56,9 @@ npm run dev
 [![Vite][Vite]][Vite-url]  
 
 <!-- MARKDOWN LINKS & IMAGES -->
-[backend-shield]: https://img.shields.io/badge/Backend-Black?style=for-the-badge&color=555
+[backend-shield]: https://img.shields.io/badge/SpotifyClone_Backend-black?style=for-the-badge&logo=spotify&logoColor=1ED760
 [backend-url]: https://github.com/lawsonhung/SpotifyCloneBackEnd
-[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
+[linkedin-shield]: https://img.shields.io/badge/linkedin-2a67bc?style=for-the-badge&logo=linkedin&logoColor=white
 [linkedin-url]: https://www.linkedin.com/in/hirelawson/
 [SpotifyRequestToken]: https://img.shields.io/badge/Request_an_Access_Token-black?style=for-the-badge&logo=spotify&logoColor=1ED760
 [SpotifyRequestToken-url]: https://developer.spotify.com/documentation/web-api/tutorials/getting-started#request-an-access-token
