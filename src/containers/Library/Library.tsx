@@ -1,42 +1,38 @@
 import { Button, Paper, Stack, Typography } from "@mui/material"
-import { useEffect, useRef } from "react";
+import { useEffect, useState } from "react";
 import { getPlaylists } from "../../api/services/playlist";
 import LibraryPlaylistItem from "../../components/LibraryPlaylistItem/LibraryPlaylistItem";
 import type { Page, Playlist } from "@spotify/web-api-ts-sdk";
 import LibraryHeader from "../../components/LibraryHeader/LibraryHeader";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { getNextPageOfItems } from "../../api";
-import type { RootState } from "../../app/store";
-import { setNextPageOfPlaylistsUrl } from "../../features/library/library";
 
 const Library = () => {
 
   const dispatch = useDispatch();
 
-  const playlists = useRef<Page<Playlist> | null>(null);
-  const nextPageOfPlaylistsUrlRef = useRef<string | null>(null);
-
-  useSelector((state: RootState) => state.library.nextPageOfPlaylistsUrl);
+  const [playlists, setPlaylists] = useState<Page<Playlist> | null>(null);
+  const [nextPageOfPlaylistsUrl, setNextPageOfPlaylistsUrl] = useState<string | null>(null);
 
   useEffect(() => {
-    const populatePlaylists = async () => {
+    const initializeState = async () => {
       const playlistsRes = await getPlaylists();
-      playlists.current = playlistsRes;
-      nextPageOfPlaylistsUrlRef.current = playlistsRes.next;
+      console.log("playlistsRes", playlistsRes);
+      setPlaylists(playlistsRes);
+      setNextPageOfPlaylistsUrl(playlistsRes.next);
     }
-    populatePlaylists();
-  }, [])
+
+    initializeState();
+  }, []);
 
   const handleClick = async () => {
     let nextPage;
 
-    if (nextPageOfPlaylistsUrlRef.current)
-      nextPage = await getNextPageOfItems(nextPageOfPlaylistsUrlRef.current);
+    if (nextPageOfPlaylistsUrl)
+      nextPage = await getNextPageOfItems(nextPageOfPlaylistsUrl);
 
-    nextPageOfPlaylistsUrlRef.current = nextPage.next;
-    playlists.current?.items.push(...nextPage.items);
-
-    dispatch(setNextPageOfPlaylistsUrl(nextPage.next));
+    setNextPageOfPlaylistsUrl(nextPage.next);
+    (playlists as Page<Playlist>).items.push(...nextPage.items);
   }
 
   return (
@@ -60,13 +56,12 @@ const Library = () => {
           whiteSpace: "nowrap",
         }}
       >
-        {playlists.current?.items.map((playlist: Playlist) => {
+        {playlists && (playlists as unknown as Page<Playlist>).items.map((playlist: Playlist) => {
           return (<LibraryPlaylistItem key={playlist.id} playlist={playlist} />
           )
-        }
-        )}
+        })}
 
-        {nextPageOfPlaylistsUrlRef.current && <Button
+        {nextPageOfPlaylistsUrl && <Button
           variant="text"
           sx={{
             justifyContent: "left",

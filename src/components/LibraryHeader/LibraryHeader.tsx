@@ -1,11 +1,21 @@
 import { IconButton, Stack, Typography } from "@mui/material";
 import { createPlaylist } from "../../api";
+import { useDispatch, useSelector } from "react-redux";
+import { setPlaylists } from "../../features/library/library";
+import type { RootState } from "../../app/store";
+import { setSnackbarMessage, setSnackbarOpen } from "../../features/snackbar/snackbar";
 
 const LibraryHeader = () => {
 
+  const dispatch = useDispatch();
+
+  const playlists = useSelector((state: RootState) => state.library.playlists);
+
   const handleClick = async () => {
     const newPlaylist = await createPlaylist("New playlist");
-    console.log("newPlaylist", newPlaylist);
+    // dispatch(setPlaylists([newPlaylist, ...playlists]));
+    dispatch(setSnackbarMessage("Created New playlist"));
+    dispatch(setSnackbarOpen(true));
   }
 
   return (
