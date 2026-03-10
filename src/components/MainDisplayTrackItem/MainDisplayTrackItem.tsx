@@ -35,8 +35,8 @@ const MainDisplayTrackItem = ({ track, index }: MainDisplayTrackItemProps) => {
 
         controllerRef.current = new AbortController();
         try {
-          const trackInfo = await getTrack(track.id, controllerRef.current.signal);
-          imgUrl.current = trackInfo.album.images[1].url;
+          // const trackInfo = await getTrack(track.id, controllerRef.current.signal);
+          // imgUrl.current = trackInfo.album.images[1].url;
         } catch (error) {
           if (axios.isCancel(error))
             console.log("Request canceled", error.message);
