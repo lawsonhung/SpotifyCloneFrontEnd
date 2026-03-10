@@ -21,6 +21,10 @@ const Results = () => {
             borderRadius: "8px",
             flex: "1",
             overflow: "scroll",
+            paddingLeft: "1em",
+            paddingRight: "1em",
+            paddingTop: "0.5em",
+            paddingBottom: "0.5em",
           }}
         >
           <SuggestedArtists />
