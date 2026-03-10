@@ -55,6 +55,9 @@ npm run dev
 [![Redux Toolkit][ReduxToolkit]][ReduxToolkit-url]  
 [![Vite][Vite]][Vite-url]  
 
+## Acknowledgements
+[![Shieldsio][Shieldsio]][Shieldsio-url]  
+
 <!-- MARKDOWN LINKS & IMAGES -->
 [backend-shield]: https://img.shields.io/badge/SpotifyClone_Backend-black?style=for-the-badge&logo=spotify&logoColor=1ED760
 [backend-url]: https://github.com/lawsonhung/SpotifyCloneBackEnd
@@ -81,3 +84,6 @@ npm run dev
 [ReduxToolkit-url]: https://redux-toolkit.js.org/
 [Vite]: https://img.shields.io/badge/Vite-16161d?style=for-the-badge&logo=vite&logoColor=9135FF
 [Vite-url]: https://vite.dev/
+
+[Shieldsio]: https://img.shields.io/badge/README_Badges_Made_With_shields.io-black
+[Shieldsio-url]: https://shields.io/badges
