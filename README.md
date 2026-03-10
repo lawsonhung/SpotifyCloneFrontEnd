@@ -23,7 +23,10 @@ git clone https://github.com/lawsonhung/SpotifyCloneFrontEnd.git
 ```sh
 npm i
 ```
-3. Create a `.env` in the root directory and set the `PORT` and `MONGO_URI`. Your `VITE_CLIENT_ID` (Spotify client ID) and `VITE_CLIENT_SECRET` (Spotify client secret) goes here as well
+3. Create a `.env` in the root directory and set the `VITE_REACT_APP_BASE_URL` and `VITE_BACKEND_API_BASE_URL`. Your `VITE_CLIENT_ID` (Spotify client ID) and `VITE_CLIENT_SECRET` (Spotify client secret) goes here as well. Make a GET request with your access token to `https://api.spotify.com/v1/me` to get your Spotify ID  
+[Spotify Web API - Get Current User's Profile](https://developer.spotify.com/documentation/web-api/reference/get-current-users-profile)  
+The default for a Vite React app is probably `http://localhost:5173/`  
+The default backend API is usually `http://localhost:3000/`  
 ```sh
 touch .env
 ```
@@ -32,7 +35,11 @@ VITE_REACT_APP_BASE_URL=REACT_APP_URL_HERE
 VITE_BACKEND_API_BASE_URL=BACKEND_URL_HERE
 VITE_CLIENT_ID=SPOTIFY_CLIENT_ID_HERE
 VITE_CLIENT_SECRET=SPOTIFY_CLIENT_SECRET_HERE
-VITE_MY_SPOTIFY_ID=
+VITE_MY_SPOTIFY_ID=YOUR_SPOTIFY_ID_HERE
+```
+5. Run the project `dev` command
+```sh
+npm run dev
 ```
 
 ### Built With
