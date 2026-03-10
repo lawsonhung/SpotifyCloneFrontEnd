@@ -1,9 +1,11 @@
-import { IconButton, Menu, MenuItem } from "@mui/material";
+import { Box, Icon, IconButton, Menu, MenuItem } from "@mui/material";
 import type { Playlist, Track } from "@spotify/web-api-ts-sdk";
 import { useState, type Dispatch, type SetStateAction } from "react";
 import { addItemsToPlaylist, getPlaylists } from "../../api";
 import { useDispatch } from "react-redux";
 import { setSnackbarMessage, setSnackbarOpen } from "../../features/snackbar/snackbar";
+import addCircle from "../../assets/AddCircle.svg";
+import addCircleFilled from "../../assets/addCircleFilled.svg";
 
 interface AddToPlaylistButtonProps {
   track: Track,
@@ -54,8 +56,27 @@ const AddtoPlaylistButton = ({ track, setHovered, handleRightClick }: AddToPlayl
         aria-expanded={open ? "true" : undefined}
         onClick={(e) => handleDisplayPlaylistsMenu(e as unknown as MouseEvent)}
         onContextMenu={handleRightClick}
+        sx={{
+          "&:hover": {
+            backgroundColor: "transparent",
+            "& .addIcon": {
+              display: "none",
+            },
+            "& .addIconHover": {
+              display: "block",
+            },
+          },
+          "& .addIconHover": {
+            display: "none",
+          }
+        }}
       >
-        +
+        <Icon className="addIcon">
+          <Box component={"img"} src={addCircle} alt="Add track to playlist" />
+        </Icon>
+        <Icon className="addIconHover">
+          <Box component={"img"} src={addCircleFilled} alt="Add track to playlist hover" />
+        </Icon>
       </IconButton>
       <Menu
         id={track.id + "add-to-playlist-menu"}
