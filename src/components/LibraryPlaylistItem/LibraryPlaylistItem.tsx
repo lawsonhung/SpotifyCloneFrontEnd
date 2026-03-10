@@ -81,8 +81,7 @@ const LibraryPlaylistItem = ({ playlist }: LibraryPlaylistItemProps) => {
               paddingRight: "0.5em",
             }}
           >
-            {playlist.images ?
-              <Box
+            {playlist.images && playlist.images.length > 0 && <Box
                 component={"img"}
                 src={playlist.images[0].url}
                 alt={playlist.name}
@@ -91,10 +90,7 @@ const LibraryPlaylistItem = ({ playlist }: LibraryPlaylistItemProps) => {
                   height: "100%",
                   width: "100%",
                 }}
-              />
-              :
-              null
-            }
+              /> }
           </ListItemIcon>
 
           <Stack

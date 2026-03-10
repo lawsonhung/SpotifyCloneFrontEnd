@@ -13,7 +13,7 @@ const LibraryHeader = () => {
 
   const handleClick = async () => {
     const newPlaylist = await createPlaylist("New playlist");
-    // dispatch(setPlaylists([newPlaylist, ...playlists]));
+    dispatch(setPlaylists([newPlaylist, ...playlists]));
     dispatch(setSnackbarMessage("Created New playlist"));
     dispatch(setSnackbarOpen(true));
   }
