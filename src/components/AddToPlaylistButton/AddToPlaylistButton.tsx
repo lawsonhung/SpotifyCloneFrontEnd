@@ -8,9 +8,10 @@ interface AddToPlaylistButtonProps {
   setHovered: Dispatch<SetStateAction<boolean>>,
   setSnackbarOpen: Dispatch<SetStateAction<boolean>>,
   handleRightClick: Function,
+  setSnackBarMsg: Dispatch<SetStateAction<string | null>>
 }
 
-const AddtoPlaylistButton = ({ track, setHovered, setSnackbarOpen, handleRightClick }: AddToPlaylistButtonProps) => {
+const AddtoPlaylistButton = ({ track, setHovered, setSnackbarOpen, handleRightClick, setSnackBarMsg }: AddToPlaylistButtonProps) => {
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -25,9 +26,11 @@ const AddtoPlaylistButton = ({ track, setHovered, setSnackbarOpen, handleRightCl
 
   const handleAddToPlaylist = (e: MouseEvent) => {
     const playlistId = (e.currentTarget as HTMLElement).dataset.id as string;
+    const playlistName = (e.currentTarget as HTMLElement).dataset.name;
 
     addItemsToPlaylist(playlistId, [track.uri]);
-    
+
+    setSnackBarMsg(`Added ${track.name} to ${playlistName}`);
     setSnackbarOpen(true);
     handleClosePlaylistMenu();
   }
@@ -38,14 +41,10 @@ const AddtoPlaylistButton = ({ track, setHovered, setSnackbarOpen, handleRightCl
     setMenuItems(null);
   }
 
-  // const handleRightClick = (e: SyntheticEvent | MouseEvent) => {
-  //   e.preventDefault();
-  //   setAnchorEl(e.target as HTMLButtonElement);
-  // }
-
   return (
     <>
 
+      {/* @ts-expect-error */}
       <IconButton
         id={track.id + "-add-to-playlist-button"}
         aria-label="add to playlist"
@@ -71,6 +70,7 @@ const AddtoPlaylistButton = ({ track, setHovered, setSnackbarOpen, handleRightCl
         {menuItems?.map(item => <MenuItem
           key={item.id}
           data-id={item.id}
+          data-name={item.name}
           onClick={e => handleAddToPlaylist(e as unknown as MouseEvent)}
         >
           {item.name}

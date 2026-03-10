@@ -35,11 +35,11 @@ const TrackList = () => {
       </Typography>
 
       {tracks.map((track: Track, index: number) => {
-        return <MainDisplayTrackItem 
-        track={track} 
-        key={track.id} 
-        index={index + 1}
-         />
+        return <MainDisplayTrackItem
+          track={track}
+          key={track.id}
+          index={index + 1}
+        />
       })}
 
       {nextPageOfTracksUrl ?

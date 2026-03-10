@@ -32,6 +32,7 @@ const MainDisplayTrackItem = ({ track, index }: MainDisplayTrackItemProps) => {
 
   const [hovered, setHovered] = useState(false);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMsg, setSnackbarMsg] = useState<string | null>(null);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const durationInMinutesSeconds = (): string => {
@@ -63,6 +64,8 @@ const MainDisplayTrackItem = ({ track, index }: MainDisplayTrackItemProps) => {
   const handleDeleteItemFromPlaylist = (_: MouseEvent) => {
     deleteItemFromPlaylist((mainDisplayItem as Playlist).id, track.uri);
     handleContextMenuClose();
+    setSnackbarMsg(`Deleted ${track.name} from ${(mainDisplayItem as Playlist).name}`);
+    setSnackbarOpen(true);
   }
 
   return (
@@ -78,7 +81,7 @@ const MainDisplayTrackItem = ({ track, index }: MainDisplayTrackItemProps) => {
       <Snackbar
         open={snackbarOpen}
         autoHideDuration={6000}
-        message="Added to playlist"
+        message={snackbarMsg}
         onClose={onCloseSnackbar}
       />
 
@@ -158,6 +161,7 @@ const MainDisplayTrackItem = ({ track, index }: MainDisplayTrackItemProps) => {
           setHovered={setHovered}
           setSnackbarOpen={setSnackbarOpen}
           handleRightClick={handleRightClick}
+          setSnackBarMsg={setSnackbarMsg}
         />
         :
         null
