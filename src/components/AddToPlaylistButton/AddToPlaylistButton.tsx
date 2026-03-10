@@ -2,21 +2,22 @@ import { IconButton, Menu, MenuItem } from "@mui/material";
 import type { Playlist, Track } from "@spotify/web-api-ts-sdk";
 import { useState, type Dispatch, type SetStateAction } from "react";
 import { addItemsToPlaylist, getPlaylists } from "../../api";
+import { useDispatch } from "react-redux";
+import { setMessage, setOpen } from "../../features/snackbar/snackbar";
 
 interface AddToPlaylistButtonProps {
   track: Track,
   setHovered: Dispatch<SetStateAction<boolean>>,
-  setSnackbarOpen: Dispatch<SetStateAction<boolean>>,
   handleRightClick: Function,
-  setSnackBarMsg: Dispatch<SetStateAction<string | null>>
 }
 
-const AddtoPlaylistButton = ({ track, setHovered, setSnackbarOpen, handleRightClick, setSnackBarMsg }: AddToPlaylistButtonProps) => {
+const AddtoPlaylistButton = ({ track, setHovered, handleRightClick }: AddToPlaylistButtonProps) => {
+
+  const dispatch = useDispatch();
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const [menuItems, setMenuItems] = useState<null | Playlist[]>(null);
-
 
   const handleDisplayPlaylistsMenu = async (e: MouseEvent) => {
     const playlists = await getPlaylists();
@@ -30,8 +31,8 @@ const AddtoPlaylistButton = ({ track, setHovered, setSnackbarOpen, handleRightCl
 
     addItemsToPlaylist(playlistId, [track.uri]);
 
-    setSnackBarMsg(`Added ${track.name} to ${playlistName}`);
-    setSnackbarOpen(true);
+    dispatch(setMessage(`Added ${track.name} to ${playlistName}`));
+    dispatch(setOpen(true));
     handleClosePlaylistMenu();
   }
 

@@ -9,6 +9,7 @@ import { Box, Stack } from "@mui/material";
 import Library from "../../containers/Library/Library";
 import { getMyInfo } from "../../api";
 import { setUserData } from "../../features/userData/userDataSlice";
+import MainSnackbar from "../../components/MainSnackbar/MainSnackbar";
 
 const Home = () => {
 
@@ -35,6 +36,8 @@ const Home = () => {
         backgroundColor: "black",
       }}
     >
+
+      <MainSnackbar />
 
       <Search setSearchResults={setSearchResults} searchResults={searchResults} />
 

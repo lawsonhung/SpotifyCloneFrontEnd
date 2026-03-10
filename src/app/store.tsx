@@ -4,6 +4,7 @@ import currentTrackReducer from "../features/currentTrack/currentTrackSlice";
 import mainDisplayItemReducer from "../features/mainDisplayItem/mainDisplayItem";
 import userDataReducer from "../features/userData/userDataSlice";
 import libraryReducer from "../features/library/library";
+import snackbarReducer from "../features/snackbar/snackbar";
 
 export const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ export const store = configureStore({
     mainDisplayItem: mainDisplayItemReducer,
     userData: userDataReducer,
     library: libraryReducer,
+    snackbar: snackbarReducer,
   }
 })
 
