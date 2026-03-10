@@ -1,15 +1,16 @@
 # SpotifyClone
-A clone of Spotify
-[Back End](https://github.com/lawsonhung/SpotifyCloneBackEnd)
+A clone of Spotify  
+[![backend-shield][backend-shield]][backend-url]
 
 ## Hire Me!
-Currently seeking Frontend Software Engineering roles - [LinkedIn](https://www.linkedin.com/in/hirelawson/)
+Currently seeking Frontend Software Engineering roles  
+[![LinkedIn-shield][LinkedIn-shield]][LinkedIn-url]
 
 ## Getting Started
 
 ### Prerequisites
-You need a Spotify Premium account for the project to work properly and request an access token. Grab the Spotify Client ID and client secret from your dashboard. You need this to set the `VITE_CLIENT_ID` and `VITE_CLIENT_SECRET` in step 3 of Getting Started below.  
-[Spotify Docs - Request an Access Token](https://developer.spotify.com/documentation/web-api/tutorials/getting-started#request-an-access-token)
+You need a Spotify Premium account for the project to work properly and request an access token. Grab the Spotify client ID and client secret from your dashboard. You need this to set the `VITE_CLIENT_ID` and `VITE_CLIENT_SECRET` in step 3 of Getting Started below.  
+[![SpotifyRequestToken][SpotifyRequestToken]][SpotifyRequestToken-url]
 
 ### Installation
 
@@ -23,8 +24,9 @@ git clone https://github.com/lawsonhung/SpotifyCloneFrontEnd.git
 ```sh
 npm i
 ```
-3. Create a `.env` in the root directory and set the `VITE_REACT_APP_BASE_URL` and `VITE_BACKEND_API_BASE_URL`. Your `VITE_CLIENT_ID` (Spotify client ID) and `VITE_CLIENT_SECRET` (Spotify client secret) goes here as well. Make a GET request with your access token to `https://api.spotify.com/v1/me` to get your Spotify ID  
-[Spotify Web API - Get Current User's Profile](https://developer.spotify.com/documentation/web-api/reference/get-current-users-profile)  
+3. Create a `.env` in the root directory and set the `VITE_REACT_APP_BASE_URL` and `VITE_BACKEND_API_BASE_URL`. Your `VITE_CLIENT_ID` (Spotify client ID) and `VITE_CLIENT_SECRET` (Spotify client secret) goes here as well.  
+Make a GET request with your access token to `https://api.spotify.com/v1/me` to get your Spotify ID  
+[![SpotifyGetUserProfile][SpotifyGetUserProfile]][SpotifyGetUserProfile-url]  
 The default for a Vite React app is probably `http://localhost:5173/`  
 The default backend API is usually `http://localhost:3000/`  
 ```sh
@@ -54,6 +56,15 @@ npm run dev
 [![Vite][Vite]][Vite-url]  
 
 <!-- MARKDOWN LINKS & IMAGES -->
+[backend-shield]: https://img.shields.io/badge/Backend-Black?style=for-the-badge&color=555
+[backend-url]: https://github.com/lawsonhung/SpotifyCloneBackEnd
+[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
+[linkedin-url]: https://www.linkedin.com/in/hirelawson/
+[SpotifyRequestToken]: https://img.shields.io/badge/Request_an_Access_Token-black?style=for-the-badge&logo=spotify&logoColor=1ED760
+[SpotifyRequestToken-url]: https://developer.spotify.com/documentation/web-api/tutorials/getting-started#request-an-access-token
+[SpotifyGetUserProfile]: https://img.shields.io/badge/Get_Current_User's_Profile-black?style=for-the-badge&logo=spotify&logoColor=1ED760
+[SpotifyGetUserProfile-url]: https://developer.spotify.com/documentation/web-api/reference/get-current-users-profile
+
 [React]: https://img.shields.io/badge/React-24272E?style=for-the-badge&logo=react&logoColor=61DAFB
 [React-url]: https://react.dev/
 [TypeScript]: https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=TypeScript&logoColor=white
