@@ -39,6 +39,7 @@ const SuggestedArtists = () => {
           />
         })}
       </Grid>
+      
     </Box>
   )
 }

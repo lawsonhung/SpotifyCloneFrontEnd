@@ -1,73 +1,65 @@
-# React + TypeScript + Vite
+# SpotifyClone
+A clone of Spotify
+[Back End](https://github.com/lawsonhung/SpotifyCloneBackEnd)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Hire Me!
+Currently seeking Frontend Software Engineering roles - [LinkedIn](https://www.linkedin.com/in/hirelawson/)
 
-Currently, two official plugins are available:
+## Getting Started
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Prerequisites
+You need a Spotify Premium account for the project to work properly and request an access token. Grab the Spotify Client ID and client secret from your dashboard. You need this to set the `VITE_CLIENT_ID` and `VITE_CLIENT_SECRET` in step 3 of Getting Started below.  
+[Spotify Docs - Request an Access Token](https://developer.spotify.com/documentation/web-api/tutorials/getting-started#request-an-access-token)
 
-## React Compiler
+### Installation
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+How to get a local copy up and running
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+1. Clone the repo
+```sh
+git clone https://github.com/lawsonhung/SpotifyCloneFrontEnd.git
+```
+2. Install NPM packages
+```sh
+npm i
+```
+3. Create a `.env` in the root directory and set the `PORT` and `MONGO_URI`. Your `VITE_CLIENT_ID` (Spotify client ID) and `VITE_CLIENT_SECRET` (Spotify client secret) goes here as well
+```sh
+touch .env
+```
+```sh
+VITE_REACT_APP_BASE_URL=REACT_APP_URL_HERE
+VITE_BACKEND_API_BASE_URL=BACKEND_URL_HERE
+VITE_CLIENT_ID=SPOTIFY_CLIENT_ID_HERE
+VITE_CLIENT_SECRET=SPOTIFY_CLIENT_SECRET_HERE
+VITE_MY_SPOTIFY_ID=
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### Built With
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+[![React][React]][React-url]  
+[![TypeScript][TypeScript]][TypeScript-url]  
+[![Spotify][Spotify]][Spotify-url]  
+[![SpotifyWebPlayback][SpotifyWebPlayback]][SpotifyWebPlayback-url]  
+[![Axios][Axios]][Axios-url]  
+[![Material UI][MaterialUI]][MaterialUI-url]  
+[![Redux Toolkit][ReduxToolkit]][ReduxToolkit-url]  
+[![Vite][Vite]][Vite-url]  
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+<!-- MARKDOWN LINKS & IMAGES -->
+[React]: https://img.shields.io/badge/React-24272E?style=for-the-badge&logo=react&logoColor=61DAFB
+[React-url]: https://react.dev/
+[TypeScript]: https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=TypeScript&logoColor=white
+[TypeScript-url]: https://www.typescriptlang.org/
+[Spotify]: https://img.shields.io/badge/Spotify_Web_API-black?style=for-the-badge&logo=spotify&logoColor=%231ED760
+[Spotify-url]: https://developer.spotify.com/documentation/web-api
+[SpotifyWebPlayback]: https://img.shields.io/badge/React--Spotify--Web--Playback-black?style=for-the-badge&logo=spotify&logoColor=%231ED760
+[SpotifyWebPlayback-url]: https://github.com/gilbarbara/react-spotify-web-playback
+[Axios]: https://img.shields.io/badge/Axios-5A29E4?style=for-the-badge&logo=Axios&logoColor=white
+[Axios-url]: https://axios-http.com/
+[MaterialUI]: https://img.shields.io/badge/Material_UI-0f1214?style=for-the-badge&logo=mui&logoColor=007FFF
+[MaterialUI-url]: https://mui.com/material-ui/
+[ReduxToolkit]: https://img.shields.io/badge/Redux_Toolkit-252525?style=for-the-badge&logo=redux&logoColor=764ABC
+[ReduxToolkit-url]: https://redux-toolkit.js.org/
+[Vite]: https://img.shields.io/badge/Vite-16161d?style=for-the-badge&logo=vite&logoColor=9135FF
+[Vite-url]: https://vite.dev/
