@@ -113,19 +113,15 @@ const MainDisplayTrackItem = ({ track, index }: MainDisplayTrackItemProps) => {
             }}
           >
 
-            {imgUrl.current ?
-              <Box
-                component={"img"}
-                src={imgUrl.current}
-                alt={track.name}
-                sx={{
-                  objectFit: "cover",
-                  maxHeight: "3em",
-                }}
-              />
-              :
-              null
-            }
+            {imgUrl.current && <Box
+              component={"img"}
+              src={imgUrl.current}
+              alt={track.name}
+              sx={{
+                objectFit: "cover",
+                maxHeight: "3em",
+              }}
+            />}
 
             <ListItem
               sx={{
@@ -134,26 +130,18 @@ const MainDisplayTrackItem = ({ track, index }: MainDisplayTrackItemProps) => {
             >
               <Typography variant="body1" color="textPrimary">
                 {track.name}
-                {track.explicit ?
-                  " • Explicit"
-                  :
-                  null
-                }
+                {track.explicit && " • Explicit"}
               </Typography>
             </ListItem>
 
           </Box>
         </Button>
 
-        {hovered ?
-          <AddtoPlaylistButton
-            track={track}
-            setHovered={setHovered}
-            handleRightClick={handleRightClick}
-          />
-          :
-          null
-        }
+        {hovered && <AddtoPlaylistButton
+          track={track}
+          setHovered={setHovered}
+          handleRightClick={handleRightClick}
+        />}
 
         <Button
           variant="text"
@@ -169,20 +157,17 @@ const MainDisplayTrackItem = ({ track, index }: MainDisplayTrackItemProps) => {
           </Typography>
         </Button>
 
-        {(mainDisplayType == "playlist") ?
-          <Menu
-            anchorEl={anchorEl}
-            open={Boolean(anchorEl)}
-            onClose={handleContextMenuClose}
+        {(mainDisplayType == "playlist") && <Menu
+          anchorEl={anchorEl}
+          open={Boolean(anchorEl)}
+          onClose={handleContextMenuClose}
+        >
+          <MenuItem
+            onClick={e => handleDeleteItemFromPlaylist(e as unknown as MouseEvent)}
           >
-            <MenuItem
-              onClick={e => handleDeleteItemFromPlaylist(e as unknown as MouseEvent)}
-            >
-              Delete
-            </MenuItem>
-          </Menu>
-          :
-          null
+            Delete
+          </MenuItem>
+        </Menu>
         }
       </ButtonGroup>
       }

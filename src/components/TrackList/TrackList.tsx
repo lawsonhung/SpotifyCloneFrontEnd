@@ -42,29 +42,26 @@ const TrackList = () => {
         />
       })}
 
-      {nextPageOfTracksUrl ?
-        <Button
-          variant="text"
+      {nextPageOfTracksUrl && <Button
+        variant="text"
+        sx={{
+          justifyContent: "left",
+          width: "fit-content",
+        }}
+        onClick={handleClick}
+      >
+        <Typography color="textSecondary"
           sx={{
-            justifyContent: "left",
-            width: "fit-content",
-          }}
-          onClick={handleClick}
-        >
-          <Typography color="textSecondary"
-            sx={{
-              textTransform: "none",
-              fontWeight: "bold",
-              "&:hover": {
-                color: "white",
-              }
-            }}>
-            See more
-          </Typography>
-        </Button>
-        :
-        null
-      }
+            textTransform: "none",
+            fontWeight: "bold",
+            "&:hover": {
+              color: "white",
+            }
+          }}>
+          See more
+        </Typography>
+      </Button>}
+      
     </Stack>
   )
 }

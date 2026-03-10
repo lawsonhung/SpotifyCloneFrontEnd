@@ -22,14 +22,13 @@ const AlbumList = () => {
   return (
     <Box>
 
-      {albums.length > 1 ?
-        <Typography variant="h4" fontWeight={"bold"}>Albums</Typography>
-        :
-        null}
+      {albums.length > 1 && <Typography variant="h4" fontWeight={"bold"}>
+        Albums
+      </Typography>}
 
-      <Grid 
-      container 
-      columns={5}
+      <Grid
+        container
+        columns={5}
       >
         {albums.map((album: Album) => {
           return <MainDisplayAlbumItem
@@ -39,29 +38,25 @@ const AlbumList = () => {
         })}
       </Grid>
 
-      {nextPageOfAlbumsUrl ?
-        <Button
-          variant="text"
+      {nextPageOfAlbumsUrl && <Button
+        variant="text"
+        sx={{
+          justifyContent: "left",
+          width: "fit-content",
+        }}
+        onClick={handleClick}
+      >
+        <Typography color="textSecondary"
           sx={{
-            justifyContent: "left",
-            width: "fit-content",
-          }}
-          onClick={handleClick}
-        >
-          <Typography color="textSecondary"
-            sx={{
-              textTransform: "none",
-              fontWeight: "bold",
-              "&:hover": {
-                color: "white",
-              }
-            }}>
-            See more
-          </Typography>
-        </Button>
-        :
-        null
-      }
+            textTransform: "none",
+            fontWeight: "bold",
+            "&:hover": {
+              color: "white",
+            }
+          }}>
+          See more
+        </Typography>
+      </Button>}
 
     </Box>
   )
