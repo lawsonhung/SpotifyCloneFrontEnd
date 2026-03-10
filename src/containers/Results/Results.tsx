@@ -4,6 +4,7 @@ import { Box, Typography } from "@mui/material";
 import TrackList from "../../components/TrackList/TrackList";
 import AlbumList from "../../components/AlbumList/AlbumList";
 import ResultsHeader from "../../components/ResultsHeader/ResultsHeader";
+import SuggestedArtists from "../../components/SuggestedArtists/SuggestedArtists";
 
 const Results = () => {
 
@@ -13,17 +14,17 @@ const Results = () => {
     <>
       {Object.keys(mainDisplayItem.value).length == 0 ?
 
-        <Typography variant="h1"
+        <Box
           sx={{
-            textAlign: "center",
-            width: "100%",
             height: "100%",
             background: "linear-gradient(#2F3060, #181818)",
             borderRadius: "8px",
+            flex: "1",
+            overflow: "scroll",
           }}
         >
-          Look for something
-        </Typography>
+          <SuggestedArtists />
+        </Box>
 
         :
 

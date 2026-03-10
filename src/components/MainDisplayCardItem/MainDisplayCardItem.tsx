@@ -1,22 +1,23 @@
 import { Box, Button, Container, Grid, Stack, Typography } from "@mui/material";
-import type { Album } from "@spotify/web-api-ts-sdk";
+import type { Album, Artist } from "@spotify/web-api-ts-sdk";
 import { getTracksInAlbum } from "../../api";
 import { useDispatch } from "react-redux";
 import { setAlbumName, setMainDisplayItem, setNextPageOfTracksUrl, setTracks } from "../../features/mainDisplayItem/mainDisplayItem";
 import { useRef } from "react";
 import axios from "axios";
 
-interface MainDisplayAlbumItem {
-  album: Album;
+interface MainDisplayCardItem {
+  item: Album | Artist;
 }
 
-const MainDisplayAlbumItem = ({ album }: MainDisplayAlbumItem) => {
+const MainDisplayCardItem = ({ item }: MainDisplayCardItem) => {
 
   const dispatch = useDispatch();
 
   const controllerRef = useRef<null | AbortController>(null);
 
-  const year = album.release_date.slice(0, 4);
+  let year = null;
+   if (item.type == "album") year = (item as Album).release_date.slice(0, 4);
 
   const handleClick = async () => {
     if (controllerRef.current)
@@ -25,9 +26,9 @@ const MainDisplayAlbumItem = ({ album }: MainDisplayAlbumItem) => {
     controllerRef.current = new AbortController();
 
     try {
-      const tracks = await getTracksInAlbum(album.id);
-      dispatch(setMainDisplayItem(album));
-      dispatch(setAlbumName(album.name));
+      const tracks = await getTracksInAlbum(item.id);
+      dispatch(setMainDisplayItem(item));
+      dispatch(setAlbumName(item.name));
       dispatch(setTracks(tracks.items));
       dispatch(setNextPageOfTracksUrl(tracks.next));
     } catch (error) {
@@ -51,8 +52,8 @@ const MainDisplayAlbumItem = ({ album }: MainDisplayAlbumItem) => {
           >
             <Box
               component={"img"}
-              src={album.images[0].url}
-              alt={album.name}
+              src={item.images[0].url}
+              alt={item.name}
               sx={{
                 objectFit: "cover",
                 width: "100%",
@@ -67,10 +68,10 @@ const MainDisplayAlbumItem = ({ album }: MainDisplayAlbumItem) => {
               textAlign: "left",
             }}
           >
-            {album.name}
+            {item.name}
           </Typography>
 
-          <Typography
+          {item.type == "album" && <Typography
             variant="subtitle2"
             color="textSecondary"
             sx={{
@@ -79,7 +80,7 @@ const MainDisplayAlbumItem = ({ album }: MainDisplayAlbumItem) => {
             }}
           >
             {year} • Album
-          </Typography>
+          </Typography>}
 
         </Stack>
       </Button>
@@ -87,4 +88,4 @@ const MainDisplayAlbumItem = ({ album }: MainDisplayAlbumItem) => {
   )
 }
 
-export default MainDisplayAlbumItem;
+export default MainDisplayCardItem;

@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../../app/store";
 import { Box, Button, Grid, Typography } from "@mui/material";
 import type { Album } from "@spotify/web-api-ts-sdk";
-import MainDisplayAlbumItem from "../MainDisplayAlbumItem/MainDisplayAlbumItem";
+import MainDisplayCardItem from "../MainDisplayCardItem/MainDisplayCardItem";
 import { getNextPageOfItems } from "../../api";
 import { setAlbums, setNextPageOfAlbumsUrl } from "../../features/mainDisplayItem/mainDisplayItem";
 
@@ -31,8 +31,8 @@ const AlbumList = () => {
         columns={5}
       >
         {albums.map((album: Album) => {
-          return <MainDisplayAlbumItem
-            album={album}
+          return <MainDisplayCardItem
+            item={album}
             key={album.id}
           />
         })}
