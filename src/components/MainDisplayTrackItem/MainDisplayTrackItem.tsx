@@ -7,6 +7,7 @@ import AddtoPlaylistButton from "../AddToPlaylistButton/AddToPlaylistButton";
 import type { RootState } from "../../app/store";
 import { deleteItemFromPlaylist, getTrack } from "../../api";
 import { setSnackbarMessage, setSnackbarOpen } from "../../features/snackbar/snackbar";
+import axios from "axios";
 
 interface MainDisplayTrackItemProps {
   track: Track,
@@ -21,6 +22,7 @@ const MainDisplayTrackItem = ({ track, index }: MainDisplayTrackItemProps) => {
   const mainDisplayType = (mainDisplayItem as Playlist).type;
 
   const imgUrl = useRef<string | null>(null);
+  const controllerRef = useRef<null | AbortController>(null);
 
   useEffect(() => {
     const getTrackInfo = async () => {
@@ -28,8 +30,19 @@ const MainDisplayTrackItem = ({ track, index }: MainDisplayTrackItemProps) => {
         && (mainDisplayItem as Album).images.length > 1)
         imgUrl.current = (mainDisplayItem as Album).images[1].url;
       else {
-        // const trackInfo = await getTrack(track.id);
-        // imgUrl.current = trackInfo.album.images[1].url;
+        if (controllerRef.current)
+          controllerRef.current.abort();
+
+        controllerRef.current = new AbortController();
+        try {
+          const trackInfo = await getTrack(track.id, controllerRef.current.signal);
+          imgUrl.current = trackInfo.album.images[1].url;
+        } catch (error) {
+          if (axios.isCancel(error))
+            console.log("Request canceled", error.message);
+          else
+            console.error("Request failed:", error);
+        }
       }
     }
     getTrackInfo();

@@ -3,22 +3,39 @@ import type { Album } from "@spotify/web-api-ts-sdk";
 import { getTracksInAlbum } from "../../api";
 import { useDispatch } from "react-redux";
 import { setAlbumName, setMainDisplayItem, setNextPageOfTracksUrl, setTracks } from "../../features/mainDisplayItem/mainDisplayItem";
+import { useRef } from "react";
+import axios from "axios";
 
 interface MainDisplayAlbumItem {
   album: Album;
 }
 
 const MainDisplayAlbumItem = ({ album }: MainDisplayAlbumItem) => {
+
   const dispatch = useDispatch();
+
+  const controllerRef = useRef<null | AbortController>(null);
 
   const year = album.release_date.slice(0, 4);
 
   const handleClick = async () => {
-    const tracks = await getTracksInAlbum(album.id);
-    dispatch(setMainDisplayItem(album));
-    dispatch(setAlbumName(album.name));
-    // dispatch(setTracks(tracks.items));
-    // dispatch(setNextPageOfTracksUrl(tracks.next));
+    if (controllerRef.current)
+      controllerRef.current.abort();
+
+    controllerRef.current = new AbortController();
+
+    try {
+      const tracks = await getTracksInAlbum(album.id);
+      dispatch(setMainDisplayItem(album));
+      dispatch(setAlbumName(album.name));
+      dispatch(setTracks(tracks.items));
+      dispatch(setNextPageOfTracksUrl(tracks.next));
+    } catch (error) {
+      if (axios.isCancel(error))
+        console.log("Request canceled", error.message);
+      else 
+        console.log("Request failed", error);
+    }
   }
 
   return (

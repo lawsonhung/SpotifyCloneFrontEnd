@@ -52,15 +52,27 @@ const Search = ({ searchResults, setSearchResults }: SearchProps) => {
     if (item.type == "track")
       dispatch(setCurrentTrack(item));
     else {
-      dispatch(setMainDisplayItem(item));
-      const albumsRes = await getAlbumsBy(item.id);
-      dispatch(setAlbumName(albumsRes.items[0].name));
-      dispatch(setAlbums(albumsRes.items));
-      dispatch(setNextPageOfAlbumsUrl(albumsRes.next));
+      if (controllerRef.current)
+        controllerRef.current.abort();
 
-      const tracksRes = await getTracksInAlbum(albumsRes.items[0].id);
-      // dispatch(setTracks(tracksRes.items));
-      // dispatch(setNextPageOfTracksUrl(tracksRes.next));
+      controllerRef.current = new AbortController();
+
+      try {
+        dispatch(setMainDisplayItem(item));
+        const albumsRes = await getAlbumsBy(item.id);
+        dispatch(setAlbumName(albumsRes.items[0].name));
+        dispatch(setAlbums(albumsRes.items));
+        dispatch(setNextPageOfAlbumsUrl(albumsRes.next));
+
+        const tracksRes = await getTracksInAlbum(albumsRes.items[0].id);
+        dispatch(setTracks(tracksRes.items));
+        dispatch(setNextPageOfTracksUrl(tracksRes.next));
+      } catch (error) {
+        if (axios.isCancel(error))
+          console.log("Request canceled", error.message);
+        else
+          console.error("Request failed", error);
+      }
     }
   }
 

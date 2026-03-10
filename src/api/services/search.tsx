@@ -19,17 +19,19 @@ export const getAlbumsBy = async (artistId: string) => {
 export const getTracksInAlbum = async (albumId: string) => {
   console.log("⏳⏳ getting tracks in album");
   const url = `/albums/${albumId}/tracks?limit=5`;
-  console.log("🔒 Locked for error 429 safety")
-  // const res = await SpotifyAPIClient.get(url);
-  // return res.data;
+  // console.log("🔒 Locked for error 429 safety");
+  const res = await SpotifyAPIClient.get(url);
+  console.log("👀 getTracksInAlbumRes", res.data);
+  return res.data;
 }
 
-export const getTrack = async (trackId: string) => {
+export const getTrack = async (trackId: string, signal: AbortSignal) => {
   console.log("⏳⏳ getting track");
   const url = `/tracks/${trackId}`;
-  console.log("🔒 Locked for error 429 safety")
-  // const res = await SpotifyAPIClient.get(url);
-  // return res.data;
+  // console.log("🔒 Locked for error 429 safety");
+  const res = await SpotifyAPIClient.get(url, { signal: signal });
+  console.log("👀 getTrackRes", res.data);
+  return res.data;
 }
 
 export const getNextPageOfItems = async (url: string) => {
