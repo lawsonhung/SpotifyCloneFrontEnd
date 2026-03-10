@@ -1,4 +1,4 @@
-import { Autocomplete, TextField, type AutocompleteRenderInputParams } from "@mui/material";
+import { Autocomplete, Box, TextField, type AutocompleteRenderInputParams } from "@mui/material";
 import { useRef, type ChangeEventHandler, type Dispatch, type SetStateAction, type SyntheticEvent } from "react";
 import { getAlbumsBy, getTracksInAlbum, search } from "../../api/services/search";
 import type { Playlist } from "@spotify/web-api-ts-sdk";
@@ -8,6 +8,7 @@ import { useDispatch } from "react-redux";
 import { setCurrentTrack } from "../../features/currentTrack/currentTrackSlice";
 import { setAlbumName, setAlbums, setMainDisplayItem, setNextPageOfAlbumsUrl, setNextPageOfTracksUrl, setTracks } from "../../features/mainDisplayItem/mainDisplayItem";
 import axios from "axios";
+import searchIcon from "../../assets/search.svg";
 
 interface SearchProps {
   searchResults: SearchMenuItemType[],
@@ -79,14 +80,21 @@ const Search = ({ searchResults, setSearchResults }: SearchProps) => {
   return (
     <Autocomplete
       renderInput={(params: AutocompleteRenderInputParams): React.ReactNode => {
-        return <TextField
-          {...params}
-          name="searchResults"
-          label="Search"
-          variant="standard"
-          value={searchResults}
-          onChange={handleChange}
-        />
+        return <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
+          <Box component={"img"} src={searchIcon} alt="Search icon" height="2.5em" alignSelf="center" />
+          <TextField
+            {...params}
+            name="searchResults"
+            label="Search"
+            variant="standard"
+            value={searchResults}
+            onChange={handleChange}
+            margin="dense"
+            sx={{
+              marginTop: "0",
+            }}
+          />
+        </Box>
       }}
       filterOptions={x => x}
       options={
@@ -109,8 +117,8 @@ const Search = ({ searchResults, setSearchResults }: SearchProps) => {
         width: "50%",
         alignSelf: "center",
         backgroundColor: "#313131",
-        borderRadius: "24px",
-        paddingLeft: "1.5em",
+        borderRadius: "2em",
+        paddingLeft: "0.5em",
         paddingRight: "1.5em",
         marginTop: "0.5em",
         marginBottom: "0.5em",
