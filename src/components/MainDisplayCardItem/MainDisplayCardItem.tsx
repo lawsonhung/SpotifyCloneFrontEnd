@@ -1,8 +1,8 @@
 import { Box, Button, Card, CardActionArea, CardContent, CardMedia, Container, Grid, Stack, Typography } from "@mui/material";
 import type { Album, Artist } from "@spotify/web-api-ts-sdk";
-import { getTracksInAlbum } from "../../api";
+import { getAlbumsBy, getTracksInAlbum } from "../../api";
 import { useDispatch } from "react-redux";
-import { setAlbumName, setMainDisplayItem, setNextPageOfTracksUrl, setTracks } from "../../features/mainDisplayItem/mainDisplayItem";
+import { setAlbumName, setAlbums, setMainDisplayItem, setNextPageOfAlbumsUrl, setNextPageOfTracksUrl, setTracks } from "../../features/mainDisplayItem/mainDisplayItem";
 import { useRef } from "react";
 import axios from "axios";
 
@@ -27,11 +27,24 @@ const MainDisplayCardItem = ({ item }: MainDisplayCardItem) => {
     controllerRef.current = new AbortController();
 
     try {
-      const tracks = await getTracksInAlbum(item.id);
-      // dispatch(setMainDisplayItem(item));
-      // dispatch(setAlbumName(item.name));
-      // dispatch(setTracks(tracks.items));
-      // dispatch(setNextPageOfTracksUrl(tracks.next));
+      dispatch(setMainDisplayItem(item));
+
+      let tracks;
+
+      if (item.type == "artist") {
+        const albumsRes = await getAlbumsBy(item.id);
+        dispatch(setAlbumName(albumsRes.items[0].name));
+        dispatch(setAlbums(albumsRes.items));
+        dispatch(setNextPageOfAlbumsUrl(albumsRes.next));
+        tracks = await getTracksInAlbum(albumsRes.items[0].id);
+      } else {
+        tracks = await getTracksInAlbum(item.id);
+        dispatch(setAlbumName(item.name));
+      }
+
+      dispatch(setTracks(tracks.items));
+      dispatch(setNextPageOfTracksUrl(tracks.next));
+      
     } catch (error) {
       if (axios.isCancel(error))
         console.log("Request canceled", error.message);

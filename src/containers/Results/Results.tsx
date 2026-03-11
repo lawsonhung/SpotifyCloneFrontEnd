@@ -12,52 +12,43 @@ const Results = () => {
 
   return (
     <>
-      {Object.keys(mainDisplayItem.value).length == 0 ?
-
-        <Box
-          sx={{
-            height: "100%",
-            background: "linear-gradient(#2F3060, #181818)",
-            borderRadius: "8px",
-            flex: "1",
-            overflow: "scroll",
-            paddingLeft: "1em",
-            paddingRight: "1em",
-            paddingTop: "0.5em",
-            paddingBottom: "0.5em",
-          }}
-        >
-          <SuggestedArtists />
-        </Box>
-
-        :
-
-        <Box
-          sx={{
-            height: "100%",
-            background: "linear-gradient(#2F3060, #181818)",
-            borderRadius: "8px",
-            flex: "1",
-            overflow: "scroll",
-          }}
-        >
-
-          <ResultsHeader />
-
+      <Box
+        sx={{
+          height: "100%",
+          background: "linear-gradient(#2F3060, #181818)",
+          borderRadius: "8px",
+          flex: "1",
+          overflow: "scroll",
+          paddingBottom: "0.5em",
+        }}
+      >
+        {Object.keys(mainDisplayItem.value).length == 0 ?
           <Box
             sx={{
               paddingLeft: "1em",
               paddingRight: "1em",
               paddingTop: "0.5em",
-              paddingBottom: "0.5em",
             }}
           >
-            <TrackList />
-            <AlbumList />
+            <SuggestedArtists />
           </Box>
-        </Box >
+          :
+          <>
+            <ResultsHeader />
+            <Box
+              sx={{
+                paddingLeft: "1em",
+                paddingRight: "1em",
+                paddingTop: "0.5em",
+              }}
+            >
+              <TrackList />
+              <AlbumList />
+            </Box>
+          </>
 
-      }
+        }
+      </Box>
     </>
 
   )

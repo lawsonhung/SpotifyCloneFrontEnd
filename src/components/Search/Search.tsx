@@ -66,8 +66,8 @@ const Search = ({ searchResults, setSearchResults }: SearchProps) => {
         dispatch(setNextPageOfAlbumsUrl(albumsRes.next));
 
         const tracksRes = await getTracksInAlbum(albumsRes.items[0].id);
-        // dispatch(setTracks(tracksRes.items));
-        // dispatch(setNextPageOfTracksUrl(tracksRes.next));
+        dispatch(setTracks(tracksRes.items));
+        dispatch(setNextPageOfTracksUrl(tracksRes.next));
       } catch (error) {
         if (axios.isCancel(error))
           console.log("Request canceled", error.message);

@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../../app/store";
 import type { SearchMenuItemType } from "../../types/SearchMenuItemOption";
 import Player from "../../components/Player/Player";
-import { Box, makeStyles, Stack } from "@mui/material";
+import { Box, Stack } from "@mui/material";
 import Library from "../../containers/Library/Library";
 import { getMyInfo } from "../../api";
 import { setUserData } from "../../features/userData/userDataSlice";
