@@ -1,4 +1,4 @@
-import { Box, Button, Container, Grid, Stack, Typography } from "@mui/material";
+import { Box, Button, Card, CardActionArea, CardContent, CardMedia, Container, Grid, Stack, Typography } from "@mui/material";
 import type { Album, Artist } from "@spotify/web-api-ts-sdk";
 import { getTracksInAlbum } from "../../api";
 import { useDispatch } from "react-redux";
@@ -17,9 +17,10 @@ const MainDisplayCardItem = ({ item }: MainDisplayCardItem) => {
   const controllerRef = useRef<null | AbortController>(null);
 
   let year = null;
-   if (item.type == "album") year = (item as Album).release_date.slice(0, 4);
+  if (item.type == "album") year = (item as Album).release_date.slice(0, 4);
 
   const handleClick = async () => {
+    console.log("card clicked")
     if (controllerRef.current)
       controllerRef.current.abort();
 
@@ -34,56 +35,76 @@ const MainDisplayCardItem = ({ item }: MainDisplayCardItem) => {
     } catch (error) {
       if (axios.isCancel(error))
         console.log("Request canceled", error.message);
-      else 
+      else
         console.log("Request failed", error);
     }
   }
 
   return (
     <Grid size={1}>
-      <Button onClick={handleClick} sx={{ alignItems: "flex-start" }}>
-        <Stack>
+      <Card
+        elevation={0}
+        sx={{
+          height: "100%",
+          display: "flex",
+          flexDirection: "column",
+          bgcolor: "transparent",
+        }}
+      >
 
-          <Container
-            disableGutters
+        <CardActionArea
+          onClick={handleClick}
+          sx={{
+            flexGrow: "1",
+            flexDirection: "column",
+            display: "flex",
+            padding: "1em",
+          }}>
+
+          <CardMedia
+            component="img"
+            image={item.images[1].url}
+            alt={item.name}
             sx={{
               objectFit: "cover",
+              width: "100%",
             }}
-          >
-            <Box
-              component={"img"}
-              src={item.images[0].url}
-              alt={item.name}
+          />
+
+          <CardContent sx={{
+            flex: "1 0 auto",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "flex-start",
+            justifyContent: "flex-end",
+            width: "100%",
+            padding: 0,
+          }}>
+            <Typography
+              color="textPrimary"
               sx={{
-                objectFit: "cover",
-                width: "100%",
+                textTransform: "none",
+                textAlign: "left",
               }}
-            />
-          </Container>
+            >
+              {item.name}
+            </Typography>
 
-          <Typography
-            color="textPrimary"
-            sx={{
-              textTransform: "none",
-              textAlign: "left",
-            }}
-          >
-            {item.name}
-          </Typography>
+            {item.type == "album" && <Typography
+              variant="subtitle2"
+              color="textSecondary"
+              sx={{
+                textTransform: "none",
+                textAlign: "left",
+              }}
+            >
+              {year} • Album
+            </Typography>}
+          </CardContent>
 
-          {item.type == "album" && <Typography
-            variant="subtitle2"
-            color="textSecondary"
-            sx={{
-              textTransform: "none",
-              textAlign: "left",
-            }}
-          >
-            {year} • Album
-          </Typography>}
+        </CardActionArea>
 
-        </Stack>
-      </Button>
+      </Card>
     </Grid>
   )
 }
