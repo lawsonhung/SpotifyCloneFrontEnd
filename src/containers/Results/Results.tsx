@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import type { RootState } from "../../app/store";
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import TrackList from "../../components/TrackList/TrackList";
 import AlbumList from "../../components/AlbumList/AlbumList";
 import ResultsHeader from "../../components/ResultsHeader/ResultsHeader";

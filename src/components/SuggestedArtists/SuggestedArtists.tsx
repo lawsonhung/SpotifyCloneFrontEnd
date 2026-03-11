@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { getMyTopArtists } from "../../api";
-import { Box, Grid, Stack, Typography } from "@mui/material";
+import { Box, Grid, Typography } from "@mui/material";
 import type { Artist, Page } from "@spotify/web-api-ts-sdk";
 import MainDisplayCardItem from "../MainDisplayCardItem/MainDisplayCardItem";
 import { useSelector } from "react-redux";
@@ -27,7 +27,7 @@ const SuggestedArtists = () => {
       <Typography variant="subtitle2" color="textSecondary">
         Made for
       </Typography>
-      <Typography variant="h4" fontWeight="bold">
+      <Typography variant="h5" fontWeight="bold">
         {displayName}
       </Typography>
 
@@ -39,7 +39,7 @@ const SuggestedArtists = () => {
           />
         })}
       </Grid>
-      
+
     </Box>
   )
 }

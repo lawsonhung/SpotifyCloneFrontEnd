@@ -27,10 +27,10 @@ const MainDisplayCardItem = ({ item }: MainDisplayCardItem) => {
 
     try {
       const tracks = await getTracksInAlbum(item.id);
-      dispatch(setMainDisplayItem(item));
-      dispatch(setAlbumName(item.name));
-      dispatch(setTracks(tracks.items));
-      dispatch(setNextPageOfTracksUrl(tracks.next));
+      // dispatch(setMainDisplayItem(item));
+      // dispatch(setAlbumName(item.name));
+      // dispatch(setTracks(tracks.items));
+      // dispatch(setNextPageOfTracksUrl(tracks.next));
     } catch (error) {
       if (axios.isCancel(error))
         console.log("Request canceled", error.message);

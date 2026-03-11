@@ -33,6 +33,7 @@ const Player = () => {
         color: "#FFFFFF",
         sliderHandleColor: "#1DB954",
         trackNameColor: "#FFFFFF",
+        height: 80,
       }}
       showSaveIcon
       play
