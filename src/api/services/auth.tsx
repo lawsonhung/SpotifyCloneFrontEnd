@@ -11,6 +11,7 @@ const setTokenHeadersFor = (client: AxiosInstance, res: AxiosResponse) => {
 }
 
 export const getToken = async (): Promise<string> => {
+  
   const response = await APIClient.get("/auth/token");
 
   setTokenHeadersFor(APIClient, response);

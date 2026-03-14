@@ -1,4 +1,4 @@
-import { Box, Button, Card, CardActionArea, CardContent, CardMedia, Container, Grid, Stack, Typography } from "@mui/material";
+import { Card, CardActionArea, CardContent, CardMedia, Grid, Typography } from "@mui/material";
 import type { Album, Artist } from "@spotify/web-api-ts-sdk";
 import { getAlbumsBy, getTracksInAlbum } from "../../api";
 import { useDispatch } from "react-redux";

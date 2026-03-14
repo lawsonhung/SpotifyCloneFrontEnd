@@ -9,7 +9,7 @@ interface SearchMenuItemProps {
   ownerState: any,
 }
 
-const SearchMenuItem = ({ option, optionProps, state, ownerState }: SearchMenuItemProps) => {
+const SearchMenuItem = ({ option, optionProps }: SearchMenuItemProps) => {
   // console.log(option)
   // console.log(optionProps)
   // console.log(state)

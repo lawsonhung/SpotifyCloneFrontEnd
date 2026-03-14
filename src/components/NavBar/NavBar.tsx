@@ -2,7 +2,8 @@ import Search from "../Search/Search";
 
 const NavBar = () => {
   return (
-    <Search />
+    // <Search />
+    <></>
   )
 }
 
