@@ -1,4 +1,4 @@
-import { Box, Icon, IconButton, Menu, MenuItem } from "@mui/material";
+import { Icon, IconButton, Menu, MenuItem } from "@mui/material";
 import type { Playlist, Track } from "@spotify/web-api-ts-sdk";
 import { useState, type Dispatch, type SetStateAction } from "react";
 import { addItemsToPlaylist, getPlaylists } from "../../api";
