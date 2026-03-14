@@ -4,8 +4,8 @@ import { useState, type Dispatch, type SetStateAction } from "react";
 import { addItemsToPlaylist, getPlaylists } from "../../api";
 import { useDispatch } from "react-redux";
 import { setSnackbarMessage, setSnackbarOpen } from "../../features/snackbar/snackbar";
-import addCircle from "../../assets/AddCircle.svg";
-import addCircleFilled from "../../assets/addCircleFilled.svg";
+import AddCircle from "../../assets/addCircle.svg";
+import AddCircleFilled from "../../assets/addCircleFilled.svg";
 
 interface AddToPlaylistButtonProps {
   track: Track,
@@ -72,10 +72,16 @@ const AddtoPlaylistButton = ({ track, setHovered, handleRightClick }: AddToPlayl
         }}
       >
         <Icon className="addIcon">
-          <Box component={"img"} src={addCircle} alt="Add track to playlist" />
+          {/* <Box component={"img"} src={addCircle} alt="Add track to playlist" /> */}
+          <Box>
+            <AddCircle />
+          </Box>
         </Icon>
         <Icon className="addIconHover">
-          <Box component={"img"} src={addCircleFilled} alt="Add track to playlist hover" />
+          {/* <Box component={"img"} src={addCircleFilled} alt="Add track to playlist hover" /> */}
+          <Box>
+            <AddCircleFilled />
+          </Box>
         </Icon>
       </IconButton>
       <Menu
