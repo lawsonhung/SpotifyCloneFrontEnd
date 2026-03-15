@@ -1,19 +1,18 @@
-import { Icon, IconButton, Menu, MenuItem } from "@mui/material";
+import { Box, Icon, IconButton, Menu, MenuItem } from "@mui/material";
 import type { Playlist, Track } from "@spotify/web-api-ts-sdk";
 import { useState, type Dispatch, type SetStateAction } from "react";
 import { addItemsToPlaylist, getPlaylists } from "../../api";
 import { useDispatch } from "react-redux";
 import { setSnackbarMessage, setSnackbarOpen } from "../../features/snackbar/snackbar";
-// import AddCircle from "../../assets/addCircle.svg";
-// import AddCircleFilled from "../../assets/addCircleFilled.svg";
+import addCircle from "../../assets/addCircle.svg";
+// import addCircleFilled from "../../assets/addCircleFilled.svg";
 
 interface AddToPlaylistButtonProps {
   track: Track,
   setHovered: Dispatch<SetStateAction<boolean>>,
-  handleRightClick: Function,
 }
 
-const AddtoPlaylistButton = ({ track, setHovered, handleRightClick }: AddToPlaylistButtonProps) => {
+const AddtoPlaylistButton = ({ track, setHovered }: AddToPlaylistButtonProps) => {
 
   const dispatch = useDispatch();
 
@@ -47,7 +46,6 @@ const AddtoPlaylistButton = ({ track, setHovered, handleRightClick }: AddToPlayl
   return (
     <>
 
-      {/* @ts-expect-error */}
       <IconButton
         id={track.id + "-add-to-playlist-button"}
         aria-label="add to playlist"
@@ -55,7 +53,6 @@ const AddtoPlaylistButton = ({ track, setHovered, handleRightClick }: AddToPlayl
         aria-haspopup="true"
         aria-expanded={open ? "true" : undefined}
         onClick={(e) => handleDisplayPlaylistsMenu(e as unknown as MouseEvent)}
-        onContextMenu={handleRightClick}
         sx={{
           "&:hover": {
             backgroundColor: "transparent",
@@ -72,17 +69,17 @@ const AddtoPlaylistButton = ({ track, setHovered, handleRightClick }: AddToPlayl
         }}
       >
         <Icon className="addIcon">
-          {/* <Box component={"img"} src={addCircle} alt="Add track to playlist" /> */}
+          <Box component={"img"} src={addCircle} alt="Add track to playlist" />
           {/* <Box>
             <AddCircle />
           </Box> */}
         </Icon>
-        <Icon className="addIconHover">
+        {/* <Icon className="addIconHover"> */}
           {/* <Box component={"img"} src={addCircleFilled} alt="Add track to playlist hover" /> */}
           {/* <Box>
             <AddCircleFilled />
           </Box> */}
-        </Icon>
+        {/* </Icon> */}
       </IconButton>
       <Menu
         id={track.id + "add-to-playlist-menu"}
