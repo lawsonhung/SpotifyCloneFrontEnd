@@ -47,6 +47,9 @@ const TrackList = () => {
         sx={{
           justifyContent: "left",
           width: "fit-content",
+          "&:hover": {
+            backgroundColor: "transparent",
+          },
         }}
         onClick={handleClick}
       >

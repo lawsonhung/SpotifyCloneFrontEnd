@@ -43,6 +43,9 @@ const AlbumList = () => {
         sx={{
           justifyContent: "left",
           width: "fit-content",
+          "&:hover": {
+            backgroundColor: "transparent",
+          },
         }}
         onClick={handleClick}
       >
