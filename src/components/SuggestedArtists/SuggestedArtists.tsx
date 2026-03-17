@@ -37,7 +37,7 @@ const SuggestedArtists = () => {
           spacing="2"
           sx={{
             overflow: "scroll",
-            height: "fit-content",
+            height: "100%",
             flexWrap: "no-wrap",
             width: "fit-content",
           }}

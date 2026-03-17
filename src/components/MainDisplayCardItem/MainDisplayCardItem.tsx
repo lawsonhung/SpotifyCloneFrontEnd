@@ -66,7 +66,7 @@ const MainDisplayCardItem = ({ item }: MainDisplayCardItem) => {
     <Stack
       sx={{
         width: "15em",
-        height: "100%",
+        height: "stretch",
       }}>
       <Card
         elevation={0}
