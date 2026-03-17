@@ -7,7 +7,7 @@ import type { SearchMenuItemType } from "../../types/SearchMenuItemOption";
 import Player from "../../components/Player/Player";
 import { Box, Stack } from "@mui/material";
 import Library from "../../containers/Library/Library";
-import { getMyInfo } from "../../api";
+import { getMyInfo, search } from "../../api";
 import { setUserData } from "../../features/userData/userDataSlice";
 import MainSnackbar from "../../components/MainSnackbar/MainSnackbar";
 
@@ -17,7 +17,7 @@ const Home = () => {
 
   useSelector((state: RootState) => state.token.value);
   const [searchResults, setSearchResults] = useState<(SearchMenuItemType)[]>([]);
-
+  
   useEffect(() => {
     const populateUserInfo = async () => {
       const myInfo = await getMyInfo();

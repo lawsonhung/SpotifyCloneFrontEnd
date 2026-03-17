@@ -93,12 +93,10 @@ const Search = ({ searchResults, setSearchResults }: SearchProps) => {
             sx={{
               marginTop: "0",
             }}
-            slotProps={{
-              input: {
-                disableUnderline: true,
-              }
+            InputProps={{
+              ...params.InputProps,
+              disableUnderline: true,
             }}
-
           />
         </Box>
       }}
@@ -109,6 +107,7 @@ const Search = ({ searchResults, setSearchResults }: SearchProps) => {
         }) || []
       }
       renderOption={(props, option, state, ownerState) => {
+        console.log("renderOption", props)
         const { key, ...optionProps } = props;
         return <SearchMenuItem
           key={option.item.id}
@@ -127,6 +126,7 @@ const Search = ({ searchResults, setSearchResults }: SearchProps) => {
         borderRadius: "2em",
         marginTop: "0.5em",
         marginBottom: "0.5em",
+        paddingInlineEnd: "1em",
         "& .MuiOutlinedInput-root": {
           borderRadius: "100%",
         },
