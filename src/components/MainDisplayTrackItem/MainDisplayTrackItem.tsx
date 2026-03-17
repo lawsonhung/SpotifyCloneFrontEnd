@@ -1,6 +1,6 @@
 import { Box, Button, ButtonGroup, ListItem, Menu, MenuItem, Typography, type PopoverPosition } from "@mui/material";
 import type { Album, Playlist, Track } from "@spotify/web-api-ts-sdk";
-import { useEffect, useRef, useState, type SyntheticEvent } from "react";
+import { useEffect, useRef, useState, type MouseEvent } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setCurrentTrack } from "../../features/currentTrack/currentTrackSlice";
 import AddtoPlaylistButton from "../AddToPlaylistButton/AddToPlaylistButton";

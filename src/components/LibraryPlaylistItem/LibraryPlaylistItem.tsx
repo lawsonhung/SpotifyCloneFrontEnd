@@ -3,7 +3,7 @@ import type { Playlist } from "@spotify/web-api-ts-sdk";
 import { useDispatch } from "react-redux";
 import { setAlbumName, setAlbums, setMainDisplayItem, setNextPageOfAlbumsUrl, setNextPageOfTracksUrl, setTracks } from "../../features/mainDisplayItem/mainDisplayItem";
 import { deletePlaylist, getPlaylistItems } from "../../api/services/playlist";
-import { useState, type SyntheticEvent } from "react";
+import { useState, type MouseEvent } from "react";
 import { setSnackbarMessage, setSnackbarOpen } from "../../features/snackbar/snackbar";
 
 interface LibraryPlaylistItemProps {
