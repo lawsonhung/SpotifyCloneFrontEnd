@@ -1,4 +1,4 @@
-import { Box, Button, ButtonGroup, ListItem, Menu, MenuItem, Typography } from "@mui/material";
+import { Box, Button, ButtonGroup, ListItem, Menu, MenuItem, Typography, type PopoverPosition } from "@mui/material";
 import type { Album, Playlist, Track } from "@spotify/web-api-ts-sdk";
 import { useEffect, useRef, useState, type SyntheticEvent } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -36,7 +36,7 @@ const MainDisplayTrackItem = ({ track, index }: MainDisplayTrackItemProps) => {
         controllerRef.current = new AbortController();
         try {
           const trackInfo = await getTrack(track.id, controllerRef.current.signal);
-          imgUrl.current = trackInfo.album.images[1].url;
+          // imgUrl.current = trackInfo.album.images[1].url;
         } catch (error) {
           if (axios.isCancel(error))
             console.log("Request canceled", error.message);
@@ -49,7 +49,7 @@ const MainDisplayTrackItem = ({ track, index }: MainDisplayTrackItemProps) => {
   }, [])
 
   const [hovered, setHovered] = useState(false);
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [menuAnchorPosition, setMenuAnchorPosition] = useState<null | PopoverPosition>(null);
   const [showComponent, setShowComponent] = useState<boolean>(true);
 
   const durationInMinutesSeconds = (): string => {
@@ -63,13 +63,13 @@ const MainDisplayTrackItem = ({ track, index }: MainDisplayTrackItemProps) => {
     dispatch(setCurrentTrack(track));
   }
 
-  const handleRightClick = (e: SyntheticEvent | MouseEvent) => {
+  const handleRightClick = (e: MouseEvent) => {
     e.preventDefault();
-    setAnchorEl(e.target as HTMLButtonElement);
+    setMenuAnchorPosition({ top: e.clientY, left: e.clientX });
   }
 
   const handleContextMenuClose = () => {
-    setAnchorEl(null);
+    setMenuAnchorPosition(null);
     setHovered(false);
   }
 
@@ -174,9 +174,10 @@ const MainDisplayTrackItem = ({ track, index }: MainDisplayTrackItemProps) => {
         </Button>
 
         {(mainDisplayType == "playlist") && <Menu
-          anchorEl={anchorEl}
-          open={Boolean(anchorEl)}
+          open={!!menuAnchorPosition}
           onClose={handleContextMenuClose}
+          anchorReference="anchorPosition"
+          anchorPosition={menuAnchorPosition as PopoverPosition}
         >
           <MenuItem
             onClick={e => handleDeleteItemFromPlaylist(e as unknown as MouseEvent)}

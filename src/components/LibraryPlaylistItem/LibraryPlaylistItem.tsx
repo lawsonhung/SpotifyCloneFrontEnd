@@ -1,4 +1,4 @@
-import { Box, ListItem, ListItemButton, ListItemIcon, Menu, MenuItem, Stack, Typography } from "@mui/material";
+import { Box, ListItem, ListItemButton, ListItemIcon, Menu, MenuItem, Stack, Typography, type PopoverPosition } from "@mui/material";
 import type { Playlist } from "@spotify/web-api-ts-sdk";
 import { useDispatch } from "react-redux";
 import { setAlbumName, setAlbums, setMainDisplayItem, setNextPageOfAlbumsUrl, setNextPageOfTracksUrl, setTracks } from "../../features/mainDisplayItem/mainDisplayItem";
@@ -14,7 +14,7 @@ const LibraryPlaylistItem = ({ playlist }: LibraryPlaylistItemProps) => {
 
   const dispatch = useDispatch();
 
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
+  const [menuAnchorPosition, setMenuAnchorPosition] = useState<null | PopoverPosition>(null);
   const [showComponent, setShowComponent] = useState<boolean>(true);
 
   const handleClick = async () => {
@@ -29,13 +29,13 @@ const LibraryPlaylistItem = ({ playlist }: LibraryPlaylistItemProps) => {
     dispatch(setNextPageOfTracksUrl(playlistItems.next));
   }
 
-  const handleRightClick = (e: SyntheticEvent | MouseEvent) => {
+  const handleRightClick = (e: MouseEvent) => {
     e.preventDefault();
-    setAnchorEl(e.target as HTMLButtonElement);
+    setMenuAnchorPosition({ top: e.clientY, left: e.clientX });
   }
 
   const handleContextMenuClose = () => {
-    setAnchorEl(null);
+    setMenuAnchorPosition(null);
   }
 
   const handleDeletePlaylist = (_: MouseEvent) => {
@@ -82,15 +82,15 @@ const LibraryPlaylistItem = ({ playlist }: LibraryPlaylistItemProps) => {
             }}
           >
             {playlist.images && playlist.images.length > 0 && <Box
-                component={"img"}
-                src={playlist.images[0].url}
-                alt={playlist.name}
-                sx={{
-                  objectFit: "cover",
-                  height: "100%",
-                  width: "100%",
-                }}
-              /> }
+              component={"img"}
+              src={playlist.images[0].url}
+              alt={playlist.name}
+              sx={{
+                objectFit: "cover",
+                height: "100%",
+                width: "100%",
+              }}
+            />}
           </ListItemIcon>
 
           <Stack
@@ -130,9 +130,10 @@ const LibraryPlaylistItem = ({ playlist }: LibraryPlaylistItemProps) => {
         </ListItemButton>
 
         <Menu
-          anchorEl={anchorEl}
-          open={Boolean(anchorEl)}
+          open={!!menuAnchorPosition}
           onClose={handleContextMenuClose}
+          anchorReference="anchorPosition"
+          anchorPosition={menuAnchorPosition as PopoverPosition}
         >
           <MenuItem
             onClick={e => handleDeletePlaylist(e as unknown as MouseEvent)}
