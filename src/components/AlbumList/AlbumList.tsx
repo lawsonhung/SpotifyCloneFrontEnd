@@ -28,15 +28,15 @@ const AlbumList = () => {
 
       <Grid
         container
-        sx={{
-          justifyContent: "space-between",
-        }}
       >
         {albums.map((album: Album) => {
-          return <MainDisplayCardItem
-            item={album}
-            key={album.id}
-          />
+          return <Grid size={3}>
+            <MainDisplayCardItem
+              item={album}
+              key={album.id}
+            />
+          </Grid>
+
         })}
       </Grid>
 
