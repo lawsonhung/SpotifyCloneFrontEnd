@@ -1,5 +1,5 @@
 import axios, { AxiosError } from "axios";
-// import axiosThrottle from "axios-request-throttle";
+import axiosThrottle from "axios-request-throttle";
 
 const API_BASE_URL = "https://api.spotify.com/v1";
 
@@ -10,7 +10,7 @@ const SpotifyAPIClient = axios.create({
   },
 });
 
-// axiosThrottle.use(SpotifyAPIClient, { requestsPerSecond: 2 });
+axiosThrottle.use(SpotifyAPIClient, { requestsPerSecond: 2 });
 
 SpotifyAPIClient.interceptors.request.use(config => {
   return config;
