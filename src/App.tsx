@@ -24,9 +24,9 @@ function App() {
 
   return (
     <>
-      {(!token)
-        ? <Login />
-        : <Home />
+      {(!!token)
+        ? <Home />
+        : <Login />
       }
     </>
   )
