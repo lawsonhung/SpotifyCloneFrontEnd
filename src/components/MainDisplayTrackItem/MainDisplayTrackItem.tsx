@@ -157,6 +157,7 @@ const MainDisplayTrackItem = ({ track, index }: MainDisplayTrackItemProps) => {
         {hovered && <AddtoPlaylistButton
           track={track}
           setHovered={setHovered}
+          handleRightClick={handleRightClick}
         />}
 
         <Button
