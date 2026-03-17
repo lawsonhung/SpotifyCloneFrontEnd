@@ -2,9 +2,11 @@ import { Button } from "@mui/material";
 import "./Login.css";
 
 const Login = () => {
+  const BACKEND_API_BASE_URL = import.meta.env.VITE_PRODUCTION_BACKEND_API_BASE_URL;
+
   return (
     <div className="loginWrapper">
-      <a className="loginAnchor" href="https://spotifyclonebackend-3uiw.onrender.com/api/auth/login">
+      <a className="loginAnchor" href={`${BACKEND_API_BASE_URL}/auth/login`}>
         <Button
           variant="contained"
           size="large"
