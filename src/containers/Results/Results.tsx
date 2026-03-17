@@ -22,32 +22,26 @@ const Results = () => {
           paddingBottom: "0.5em",
         }}
       >
-        {Object.keys(mainDisplayItem.value).length == 0 ?
-          <Box
-            sx={{
-              paddingLeft: "1em",
-              paddingRight: "1em",
-              paddingTop: "0.5em",
-            }}
-          >
+        
+        {Object.keys(mainDisplayItem.value).length >= 1 && <ResultsHeader />}
+
+        <Box
+          sx={{
+            paddingLeft: "1em",
+            paddingRight: "1em",
+            paddingTop: "0.5em",
+          }}
+        >
+          {Object.keys(mainDisplayItem.value).length == 0 ?
             <SuggestedArtists />
-          </Box>
-          :
-          <>
-            <ResultsHeader />
-            <Box
-              sx={{
-                paddingLeft: "1em",
-                paddingRight: "1em",
-                paddingTop: "0.5em",
-              }}
-            >
+            :
+            <>
               <TrackList />
               <AlbumList />
-            </Box>
-          </>
+            </>
 
-        }
+          }
+        </Box>
       </Box>
     </>
 
