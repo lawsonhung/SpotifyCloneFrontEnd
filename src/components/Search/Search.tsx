@@ -80,8 +80,8 @@ const Search = ({ searchResults, setSearchResults }: SearchProps) => {
   return (
     <Autocomplete
       renderInput={(params: AutocompleteRenderInputParams): React.ReactNode => {
-        return <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
-          <Box component={"img"} src={searchIcon} alt="Search icon" height="2.5em" alignSelf="center" />
+        return <Box sx={{ display: 'flex', alignItems: 'flex-end', height: "100%" }}>
+          <Box component={"img"} src={searchIcon} alt="Search icon" height="100%" alignSelf="center" padding="0.5em" />
           <TextField
             {...params}
             name="searchResults"
@@ -125,8 +125,6 @@ const Search = ({ searchResults, setSearchResults }: SearchProps) => {
         alignSelf: "center",
         backgroundColor: "#313131",
         borderRadius: "2em",
-        paddingLeft: "0.5em",
-        paddingRight: "1.5em",
         marginTop: "0.5em",
         marginBottom: "0.5em",
         "& .MuiOutlinedInput-root": {
