@@ -16,9 +16,6 @@ const MainDisplayCardItem = ({ item }: MainDisplayCardItem) => {
 
   const controllerRef = useRef<null | AbortController>(null);
 
-  let year = null;
-  if (item.type == "album") year = (item as Album).release_date.slice(0, 4);
-
   const handleClick = async () => {
     console.log("card clicked")
     if (controllerRef.current)
@@ -44,7 +41,7 @@ const MainDisplayCardItem = ({ item }: MainDisplayCardItem) => {
 
       dispatch(setTracks(tracks.items));
       dispatch(setNextPageOfTracksUrl(tracks.next));
-      
+
     } catch (error) {
       if (axios.isCancel(error))
         console.log("Request canceled", error.message);
@@ -53,11 +50,23 @@ const MainDisplayCardItem = ({ item }: MainDisplayCardItem) => {
     }
   }
 
+  const subtitleText = () => {
+    switch (item.type) {
+      case "album":
+        const year = (item as Album).release_date.slice(0, 4);
+        return `${year} • Album`;
+      case "artist":
+        return "Artist";
+      default:
+        return "";
+    }
+  }
+
   return (
     <Stack
-    sx={{
-      width: "15em",
-    }}>
+      sx={{
+        width: "15em",
+      }}>
       <Card
         elevation={0}
         sx={{
@@ -106,7 +115,7 @@ const MainDisplayCardItem = ({ item }: MainDisplayCardItem) => {
               {item.name}
             </Typography>
 
-            {item.type == "album" && <Typography
+            <Typography
               variant="subtitle2"
               color="textSecondary"
               sx={{
@@ -114,8 +123,8 @@ const MainDisplayCardItem = ({ item }: MainDisplayCardItem) => {
                 textAlign: "left",
               }}
             >
-              {year} • Album
-            </Typography>}
+              {subtitleText()}
+            </Typography>
           </CardContent>
 
         </CardActionArea>
