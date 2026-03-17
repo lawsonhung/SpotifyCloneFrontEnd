@@ -70,15 +70,9 @@ const AddtoPlaylistButton = ({ track, setHovered }: AddToPlaylistButtonProps) =>
       >
         <Icon className="addIcon">
           <Box component={"img"} src={addCircle} alt="Add track to playlist" />
-          {/* <Box>
-            <AddCircle />
-          </Box> */}
         </Icon>
         <Icon className="addIconHover">
           <Box component={"img"} src={addCircleFilled} alt="Add track to playlist hover" />
-          {/* <Box>
-            <AddCircleFilled />
-          </Box> */}
         </Icon>
       </IconButton>
       <Menu
