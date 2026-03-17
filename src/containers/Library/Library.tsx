@@ -23,7 +23,6 @@ const Library = () => {
 
   const initializeState = async () => {
     const playlistsRes = await getPlaylists();
-    console.log("Library playlists initial state", playlistsRes);
     dispatch(setPlaylists(playlistsRes.items));
     setNextPageOfPlaylistsUrl(playlistsRes.next);
   }
