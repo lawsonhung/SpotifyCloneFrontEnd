@@ -1,4 +1,4 @@
-import { Card, CardActionArea, CardContent, CardMedia, Grid, Typography } from "@mui/material";
+import { Card, CardActionArea, CardContent, CardMedia, Stack, Typography } from "@mui/material";
 import type { Album, Artist } from "@spotify/web-api-ts-sdk";
 import { getAlbumsBy, getTracksInAlbum } from "../../api";
 import { useDispatch } from "react-redux";
@@ -54,7 +54,10 @@ const MainDisplayCardItem = ({ item }: MainDisplayCardItem) => {
   }
 
   return (
-    <Grid size={1}>
+    <Stack
+    sx={{
+      width: "15em",
+    }}>
       <Card
         elevation={0}
         sx={{
@@ -118,7 +121,7 @@ const MainDisplayCardItem = ({ item }: MainDisplayCardItem) => {
         </CardActionArea>
 
       </Card>
-    </Grid>
+    </Stack>
   )
 }
 

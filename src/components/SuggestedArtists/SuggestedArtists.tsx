@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { getMyTopArtists } from "../../api";
-import { Box, Grid, Typography } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
 import type { Artist, Page } from "@spotify/web-api-ts-sdk";
 import MainDisplayCardItem from "../MainDisplayCardItem/MainDisplayCardItem";
 import { useSelector } from "react-redux";
@@ -31,14 +31,22 @@ const SuggestedArtists = () => {
         {displayName}
       </Typography>
 
-      <Grid container columns={5}>
+      <Stack
+        direction="row"
+        spacing="2"
+        sx={{
+          height: "fit-content",
+          flexWrap: "no-wrap",
+          width: "fit-content",
+        }}
+      >
         {artists && (artists as Page<Artist>).items.map(artist => {
           return <MainDisplayCardItem
             item={artist}
             key={artist.id}
           />
         })}
-      </Grid>
+      </Stack>
 
     </Box>
   )

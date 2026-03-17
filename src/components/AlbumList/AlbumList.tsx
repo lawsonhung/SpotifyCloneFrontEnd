@@ -28,7 +28,9 @@ const AlbumList = () => {
 
       <Grid
         container
-        columns={5}
+        sx={{
+          justifyContent: "space-between",
+        }}
       >
         {albums.map((album: Album) => {
           return <MainDisplayCardItem
