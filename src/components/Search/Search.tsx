@@ -85,7 +85,7 @@ const Search = ({ searchResults, setSearchResults }: SearchProps) => {
           <TextField
             {...params}
             name="searchResults"
-            label="Search"
+            label="What do you want to listen to?"
             variant="standard"
             value={searchResults}
             onChange={handleChange}
@@ -93,6 +93,12 @@ const Search = ({ searchResults, setSearchResults }: SearchProps) => {
             sx={{
               marginTop: "0",
             }}
+            slotProps={{
+              input: {
+                disableUnderline: true,
+              }
+            }}
+
           />
         </Box>
       }}
