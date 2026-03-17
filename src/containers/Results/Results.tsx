@@ -3,7 +3,7 @@ import type { RootState } from "../../app/store";
 import { Box } from "@mui/material";
 import TrackList from "../../components/TrackList/TrackList";
 import AlbumList from "../../components/AlbumList/AlbumList";
-import ResultsHeader from "../../components/ResultsHeader/ResultsHeader";
+import Banner from "../../components/Banner/Banner";
 import SuggestedArtists from "../../components/SuggestedArtists/SuggestedArtists";
 
 const Results = () => {
@@ -22,8 +22,8 @@ const Results = () => {
           paddingBottom: "0.5em",
         }}
       >
-        
-        {Object.keys(mainDisplayItem.value).length >= 1 && <ResultsHeader />}
+
+        {Object.keys(mainDisplayItem.value).length >= 1 && <Banner />}
 
         <Box
           sx={{
