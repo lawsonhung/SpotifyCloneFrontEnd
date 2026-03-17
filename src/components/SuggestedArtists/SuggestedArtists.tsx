@@ -22,7 +22,7 @@ const SuggestedArtists = () => {
   };
 
   return (
-    <Box>
+    <>
 
       <Typography variant="subtitle2" color="textSecondary">
         Made for
@@ -31,24 +31,27 @@ const SuggestedArtists = () => {
         {displayName}
       </Typography>
 
-      <Stack
-        direction="row"
-        spacing="2"
-        sx={{
-          height: "fit-content",
-          flexWrap: "no-wrap",
-          width: "fit-content",
-        }}
-      >
-        {artists && (artists as Page<Artist>).items.map(artist => {
-          return <MainDisplayCardItem
-            item={artist}
-            key={artist.id}
-          />
-        })}
-      </Stack>
+      <Box overflow="scroll">
+        <Stack
+          direction="row"
+          spacing="2"
+          sx={{
+            overflow: "scroll",
+            height: "fit-content",
+            flexWrap: "no-wrap",
+            width: "fit-content",
+          }}
+        >
+          {artists && (artists as Page<Artist>).items.map(artist => {
+            return <MainDisplayCardItem
+              item={artist}
+              key={artist.id}
+            />
+          })}
+        </Stack>
+      </Box>
 
-    </Box>
+    </>
   )
 }
 
