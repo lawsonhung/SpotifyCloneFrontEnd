@@ -88,7 +88,7 @@ const MainDisplayTrackItem = ({ track, index }: MainDisplayTrackItemProps) => {
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
         sx={{
-          ...(hovered && { backgroundColor: "#00000080", }),
+          backgroundColor: hovered ? "#90caf914" : "palette.primary.dark",
         }}
       >
 
