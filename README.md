@@ -44,6 +44,13 @@ VITE_MY_SPOTIFY_ID=YOUR_SPOTIFY_ID_HERE
 npm run dev
 ```
 
+## Screenshots
+![Made for](public/Made_For.png)
+![Playlist](public/Playlist.png)
+![Search](public/Search.png)
+![TrackList](public/TrackList.png)
+![AlbumList](public/AlbumList.png)
+
 ### Built With
 
 [![React][React]][React-url]  
