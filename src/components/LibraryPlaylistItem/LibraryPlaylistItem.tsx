@@ -137,6 +137,7 @@ const LibraryPlaylistItem = ({ playlist }: LibraryPlaylistItemProps) => {
         >
           <MenuItem
             onClick={e => handleDeletePlaylist(e as unknown as MouseEvent)}
+            disabled
           >
             Delete
           </MenuItem>
