@@ -182,6 +182,7 @@ const MainDisplayTrackItem = ({ track, index }: MainDisplayTrackItemProps) => {
         >
           <MenuItem
             onClick={e => handleDeleteItemFromPlaylist(e as unknown as MouseEvent)}
+            disabled
           >
             Delete
           </MenuItem>
